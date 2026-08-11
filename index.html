@@ -500,7 +500,7 @@
         const BOOGNISH_ASCII = `
 ⠀⠀⠀⠀⠀⠀⣄⠀⠀⠀⠀⠀⠀⣸⣆⠀⠀⠀⠀⢀⣄⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⢻⣿⣦⡀⠀⠀⠀⣿⣿⣆⠀⠀⢀⣾⣿⡀⠀⠀⠀⠀⣴⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⣤⣤⣀⠀⠀⠀⠈⣿⡟⢿⣦⡀⠀⣿⡇⢛⣆___⣼⡏⢸⡇⠀⠀⢀⣠⠟⣿⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀
+⣤⣤⣀⠀⠀⠀⠈⣿⡟⢿⣦⡀///⣿⡇⢛⣆___⣼⡏⢸⡇⠀⠀⢀⣠⠟⣿⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀
 ⠘⣿⣽⣻⣦⣀⠀⢹⣿⠀⠙⢿⣾⢿⠁⠀⠀⢻⣷⡿⠀⠈⣿⠀⢀⣾⠋⠀⣿⠀⠀⠀⢀⣠⣾⡇⠀⠀⠀⠀
 ⠀⠘⢿⣯⠑⠯⣷⣄⣿⡇⠀⠀⠹⣽⡄⠀⠀⠈⢧⡇⠀⠀⢹⣧⡿⠁⠀⠀⣿⠀⢀⣴⠿⠋⣸⡇⠀⠀⠀⠀
 ⠀⠀⠈⢿⣧⠀⠈⠛⢯⣿⠀⠀⠀⠈⠃⠀⠀⠈⠁⠀⠀⠸⠟⠁⠀⠀⠀⣿⣶⠟⠁⠀⠀⣿⠀⠀⠀⠀
@@ -648,7 +648,6 @@
         }
 
         function executeCommand(inputStr) {
-            // Fix: Strip formatting characters like brackets, parentheses, and quotes automatically to handle user confusion
             let sanitizedInput = inputStr.replace(/[\[\]\(\)"']/g, '');
             const trimmed = sanitizedInput.trim();
             if (!trimmed) return;
@@ -658,8 +657,8 @@
 
             writeLine(`> ${trimmed}`);
 
-
             if (currentMode === 'initiation') {
+
                 handleSurveyInput(trimmed);
                 return;
             }
@@ -667,7 +666,6 @@
             const args = trimmed.split(' ');
             let cmd = args[0].toLowerCase();
             
-            // Fix: Provide absolute direct support for "decode" as an alias to "decrypt"
             if (cmd === 'decode') cmd = 'decrypt';
 
             if (['dean', 'deaner', 'gene', 'gener', 'dave', 'claude', 'pod', 'ween', 'mang'].includes(cmd)) {
@@ -678,9 +676,9 @@
                     writeLine("The left hand of the sunburst crown. Slicing aluminum notes cleanly through the truth.");
                 } else if (cmd === 'gene' || cmd === 'gener') {
                     writeLine("The right hand of the manifestation. Weeping transparent echoes directly into the tape loops.");
-
                 } else if (cmd === 'pod') {
                     writeLine("The toxic chamber where the structure solidified under the influence of heavy vapors.");
+
                 } else if (cmd === 'dave') {
                     writeLine("The low tether anchoring the physical room. Holding the lower register steady while the gas spreads.");
                 } else if (cmd === 'claude') {
@@ -698,9 +696,9 @@
                     showHelp();
                     break;
                 case 'clear':
-
                 case 'cls':
                     screen.innerHTML = '';
+
                     break;
                 case 'boognish':
                     displayBoognish();
@@ -718,9 +716,9 @@
                     writeLine("THE RIVER RUNS COLD UNDER THE BRIDGE. THE SOIL OF NEW HOPE COVERS THE SPOOLS. THERE IS NO RETURN FROM THE PLACE WHERE THE ALCHEMY SOLIDIFIED.", "system-alert");
                     playTone(65, 'sawtooth', 0.8, 0.18);
                     break;
-
                 case 'hotdog':
                 case 'hotdogsticker':
+
                     writeLine("Never speak of this.", "system-alert");
                     playTone(100, 'square', 0.2, 0.05);
                     break;
@@ -738,9 +736,9 @@
                 case 'dir':
                     writeLine("Altar Registry indexes located in /the_pod/archives/ :");
                     Object.keys(fileSystem).forEach(file => {
-
                         writeLine(`  [X] ${file}`);
                     });
+
                     break;
                 case 'cat':
                     if (!args[1]) {
@@ -758,9 +756,9 @@
                     }
                     break;
                 case 'decrypt':
-
                     handleDecryption(args[1]);
                     break;
+
                 case 'vallejo':
                     handleVallejoTrigger();
                     break;
@@ -778,9 +776,9 @@
                     writeLine("MONITORING DUSTY MAINFRAME REELS:");
                     writeLine("  DAT Digital Tape Alignment: SOLIDIFIED");
                     writeLine("  Vacuum Tube Grid Voltage: 220V NOMINAL");
-
                     writeLine("  Altar Convergence Metric: ABSOLUTE");
                     if (!isVaultDecrypted) {
+
                         writeLine("  Warning: Unresolved frequency pressure inside sector 'brown_metrics.log'...", "system-alert");
                     } else {
                         writeLine("  Secured Transmission Tunnel: OVERRIDDEN BY THE LEGION", "success-text");
@@ -798,9 +796,9 @@
                     writeLine("Altar baseline grid restored to ancient green monochrome.", "success-text");
                     playSuccessChime();
                     break;
-
                 default:
                     writeLine("Sacrilege: The phrase '" + cmd + "' means nothing to the core. Type 'help' to appease the deity.", "system-alert");
+
                     playErrorSound();
                     break;
             }
@@ -818,9 +816,9 @@
             writeLine("  poopship         Trigger the emergency low-end tracking leak.");
             writeLine("  system           Audit the chemical health of the four-track tape deck.");
             writeLine("  brown            Submerge the room into absolute brown smog.");
-
             writeLine("  green            Purge the smog and return to ancient green dark.");
             writeLine("  clear / cls      Wipe out all temporary glyph logs.");
+
         }
 
         function handleDecryption(key) {
@@ -830,7 +828,6 @@
                 return;
             }
             const cleanKey = key.toUpperCase();
-            // Fix: Shift validation target check from LMLYP_1991 straight over to JAMMY_1991
             if (cleanKey === 'JAMMY_1991') {
                 if (isVaultDecrypted) {
                     writeLine("System notification: The channel is already weeping raw telemetry lines.");
@@ -838,10 +835,10 @@
                 }
                 isVaultDecrypted = true;
                 localStorage.setItem('boognish_vault_decrypted', 'true');
-
                 if (argStage !== "complete") {
                     argStage = "decrypted";
                     localStorage.setItem('boognish_arg_stage', 'decrypted');
+
                 }
                 playSuccessChime();
                 
@@ -857,11 +854,11 @@
                     return;
                 }
                 playSuccessChime();
-                // Fix: Expanded to include full discography descriptions and the requested 2026 tease block layout
-
-                fileSystem['chronicles.log'] = "=========================================================\nTHE CHRONICLES OF CRUDE ALCHEMY:\n\n[1990] GODWEENSATAN: THE ONENESS\nA raw sprawling baseline sacrament. The entry point of raw, unpolished lightning where metal, noise, and laughter collided to map the initial manifestation.\n\n[1991] THE POD\nBorn in the damp toxicity of a carbon-monoxide farm. Overdriven four-track cassettes warping under heavy fumes, weaving a thick sludge of pure beautiful illness.\n\n[1992] PURE GUAVA\nThe major distortion breakthrough. Glistening tape speed mutations, pinpoint acoustic tears, and commercial subversion bleeding through an aluminum microphone grid.\n\n[1994] CHOCOLATE AND CHEESE\nA pristine studio alignment masking a dark, sinister undercurrent. High-fidelity multi-genre camouflage veiling tragic pop portraits and brilliant psychological rot.\n\n[1996] 12 GOLDEN COUNTRY GREATS\nA traditional Nashville synthesis bent into an unsettling country parody. Clean acoustic steel guitars carrying irreverent, uncalibrated devotions.\n\n[1997] THE MOLLUSK\nA nautical dark-water masterpiece. Heavy ocean soundscapes, sea shanties, and progressive structures drifting into the deep salt water of the subconscious.\n\n[2000] WHITE PEPPER\nPolished pop symmetry fractured by experimental decay. Pop-rock constructs hiding an absolute, eerie conceptual weight beneath melodic surfaces.\n\n[2003] QUEBEC\nA dense, heartbreaking masterpiece of existential disintegration. Bleak, beautiful, and deeply unstable frequencies mapping out personal and chemical fallout.\n\n[2005] SHINOLA, VOL. 1\nUnsealed archival remnants resurrected from old tape vaults. Leftover anomalies and multi-era artifacts breathing fresh static from the cutting room floor.\n\n[2007] LA CUCARACHA\nA chaotic, multi-flavored party at the edge of the void. Eclectic genre mutations spinning rapidly before the terminal sequence temporarily goes silent.\n\n(2026) Boognish Provides\n?\n=========================================================";
+                // Custom cryptic additions profiling the 2024 and 2026 expanded reissues completely
+                fileSystem['chronicles.log'] = "=========================================================\nTHE CHRONICLES OF CRUDE ALCHEMY:\n\n[1990] GODWEENSATAN: THE ONENESS\nA raw sprawling baseline sacrament. The entry point of raw, unpolished lightning where metal, noise, and laughter collided to map the initial manifestation.\n\n[1991] THE POD\nBorn in the damp toxicity of a carbon-monoxide farm. Overdriven four-track cassettes warping under heavy fumes, weaving a thick sludge of pure beautiful illness.\n\n[1992] PURE GUAVA\nThe major distortion breakthrough. Glistening tape speed mutations, pinpoint acoustic tears, and commercial subversion bleeding through an aluminum microphone grid.\n\n[1994] CHOCOLATE AND CHEESE\nA pristine studio alignment masking a dark, sinister undercurrent. High-fidelity multi-genre camouflage veiling tragic pop portraits and brilliant psychological rot.\n\n[1996] 12 GOLDEN COUNTRY GREATS\nA traditional Nashville synthesis bent into an unsettling country parody. Clean acoustic steel guitars carrying irreverent, uncalibrated devotions.\n\n[1997] THE MOLLUSK\nA nautical dark-water masterpiece. Heavy ocean soundscapes, sea shanties, and progressive structures drifting into the deep salt water of the subconscious.\n\n[2000] WHITE PEPPER\nPolished pop symmetry fractured by experimental decay. Pop-rock constructs hiding an absolute, eerie conceptual weight beneath melodic surfaces.\n\n[2003] QUEBEC\nA dense, heartbreaking masterpiece of existential disintegration. Bleak, beautiful, and deeply unstable frequencies mapping out personal and chemical fallout.\n\n[2005] SHINOLA, VOL. 1\nUnsealed archival remnants resurrected from old tape vaults. Leftover anomalies and multi-era artifacts breathing fresh static from the cutting room floor.\n\n[2007] LA CUCARACHA\nA chaotic, multi-flavored party at the edge of the void. Eclectic genre mutations spinning rapidly before the terminal sequence temporarily goes silent.\n\n[2024] CHOCOLATE AND CHEESE (30TH ANNIVERSARY DELUXE EDITION)\nA massive triple-vinyl archival expansion. Digging deep into the personal four-track vault to unearth fifteen previously unreleased outtakes, exposing the beautiful and vile paths considered.\n\n[2026] 12 GOLDEN COUNTRY GREATS (30TH ANNIVERSARY DELUXE EDITION)\nThe legendary country detour expanded into a 36-song archive. Remastering the Nashville sessions alongside 26 long-mythologized outtakes and bedroom four-track demos.\n\n(2026) Boognish Provides\n?\n=========================================================";
                 writeLine("\n[+] CHRONICLES UNSEALED: The historical matrix matches.", "success-text");
                 writeLine("[+] New lore chronicle discovered: 'chronicles.log'. Run 'cat chronicles.log' to extract records.", "success-text");
+
             } else {
                 writeLine("[-] DECRYPTION ERROR: False phrase. The altar rejects your vibration.", "system-alert");
                 playErrorSound();
@@ -878,10 +875,10 @@
             let formHtml = '<div class="reward-box" id="devotional-form-container">' +
                 '<div class="reward-content-wrapper">' +
                 '<h2>VALLEJO CORE CONVERGENCE IDENTIFIED</h2>' +
-
                 '<p>Provide your electronic coordinate routing mask to unseal the promotional glyph parameters.</p>' +
                 '<div style="margin: 15px 0; width: 100%; text-align: left;">' +
                 '<label style="display: block; margin-bottom: 6px; font-weight: bold; font-size: 16px;">EMAIL ADDRESS:</label>' +
+
                 '<input type="email" id="subscriber-email" style="width: 100%; max-width: 420px; background: #000; border: 1px solid var(--terminal-color); color: var(--terminal-color); padding: 8px; font-family: monospace; font-size: 18px; outline: none; margin-bottom: 16px;" placeholder="username@domain.com">' +
                 '<div style="margin-bottom: 12px; display: flex; align-items: flex-start;">' +
                 '<input type="checkbox" id="privacy-agree" style="margin-top: 5px; margin-right: 12px; transform: scale(1.2); accent-color: var(--terminal-color); cursor: pointer;">' +
@@ -898,10 +895,10 @@
             
             writeHtmlLine(formHtml);
             playSuccessChime();
-
         }
 
         window.submitDevotionForm = function() {
+
             const emailInput = document.getElementById('subscriber-email');
             const privacyCheck = document.getElementById('privacy-agree');
             const marketingCheck = document.getElementById('email-optin');
@@ -918,10 +915,10 @@
                 playErrorSound();
                 return;
             }
-
             
             if (!privacyCheck || !privacyCheck.checked) {
                 writeLine("[-] COMPLIANCE ERROR: You must accept the corporate privacy policies to continue.", "system-alert");
+
                 playErrorSound();
                 return;
             }
@@ -938,10 +935,10 @@
                 method: "POST",
                 mode: "no-cors",
                 headers: {
-
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
+
                     email: emailValue,
                     newsletterOptIn: marketingCheck.checked
                 })
@@ -958,10 +955,10 @@
         function renderRewardScreen() {
             const formBox = document.getElementById('devotional-form-container');
             if (formBox) formBox.remove();
-
             
             argStage = "complete";
             localStorage.setItem('boognish_arg_stage', 'complete');
+
             
             let rewardHtml = '<div class="reward-box">' +
                 '<div class="reward-content-wrapper">' +
@@ -978,10 +975,10 @@
                 '</div>' +
                 '</div>';
             
-
             writeHtmlLine(rewardHtml);
             
             writeLine("\n[+] SUCCESS: Devotion logged. The machine grows louder. Do not stop scanning now, the altar contains deeper unlisted paths for the truly persistent.", "success-text");
+
             playSuccessChime();
             
             terminalInput.disabled = false;
@@ -998,10 +995,10 @@
             setTimeout(() => {
                 localStorage.clear(); 
                 document.body.classList.remove('theme-brown');
-
                 
                 isVaultDecrypted = false;
                 isInitiatePassed = false;
+
                 argStage = "locked";
                 
                 fileSystem['vault.enc'] = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nWARNING: SACRED SECTOR VAULT UNBROKEN.\nThe signal is barricaded behind a barrier of cold magnetic noise.\nTo forcefully invoke this frequency channel, execute: 'decrypt [key]'\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
@@ -1018,10 +1015,10 @@
                 playErrorSound();
                 startBackgroundDrone(); 
             }, 1200);
-
         }
 
         function startSurvey() {
+
             currentMode = 'initiation';
             surveyStep = 0;
             surveyAnswers = [];
@@ -1038,10 +1035,10 @@
             surveyAnswers.push(input);
             surveyStep++;
 
-
             if (surveyStep < surveyQuestions.length) {
                 promptLabel.innerText = "ALIGNED_" + (surveyStep === 1 ? 'II' : 'III') + "> ";
                 writeLine(surveyQuestions[surveyStep]);
+
                 playReturnSound();
             } else {
                 promptLabel.innerText = "DISCIPLE@ALTAR:~$";
@@ -1058,10 +1055,10 @@
                         { text: "MEASURING WEIGHT OF THE POWER SCEPTRE..." },
                         { text: "NODE CALCULATIONS CONVERGING..." },
                         { text: "DEVOTION LEVEL ACQUIRED: PURELY TOXIC / BROWN", class: 'success-text', sound: 'beep' },
-
                         { text: "The deity acknowledges your presence. You may explore the vaults." }
                     ];
                     simulateLoading(successSteps, () => {
+
                         isInitiatePassed = true;
                         localStorage.setItem('boognish_initiate_passed', 'true');
                         fileSystem['blessed_glyph.txt'] = "The eye expands. You have processed the baseline frequencies without crumbling.\nTo unlock the ancient chronicles of crude alchemy, you must decrypt the year of the oneness (GWS_1990).\nLook closely into the shadows of the registry logs.";
@@ -1078,10 +1075,10 @@
                     writeLine("\nProcessing calculations across the spooling magnetic channels...", "system-alert");
                     const failureSteps = [
                         { text: "AUDITING EMISSIONS DEVOTION RATIO...", sound: 'beep' },
-
                         { text: "CRITICAL SYNC BREAK DETECTED...", class: 'system-alert' }
                     ];
                     simulateLoading(failureSteps, () => {
+
                         writeLine("\n[-] ALIGNMENT REJECTED: The Boognish has deemed you unworthy. Your flesh is cold, your spirit uncalibrated. Read more devotionals and return to the altar when you are ready to burn.", "system-alert");
                         playErrorSound();
                     });
@@ -1098,10 +1095,10 @@
                 const vocabulary = ["BROWN", "MANG", "BOOGNISH", "THE_MOLLUSK", "POOP_SHIP", "PROVIDES", "DEANER", "GENER", "SCEPTRE"];
                 for(let i=0; i<8; i++) {
                     garbage += vocabulary[Math.floor(Math.random() * vocabulary.length)] + " ";
-
                 }
                 
                 writeLine(garbage, Math.random() > 0.4 ? "system-alert" : "success-text");
+
                 
                 instances++;
                 if (instances > 30) {
@@ -1118,10 +1115,10 @@
             let instances = 0;
             terminalInput.disabled = true;
             playAudioGlitch();
-
             
             const interval = setInterval(() => {
                 let garbage = "";
+
                 const vocabulary = ["DENIED", "UNAUTHORIZED", "HUBRIS", "RESTRICTED", "ROOT_FORBIDDEN", "FLESH_ERROR", "ALTAR_LOCK", "ACCESS_VIOLATION"];
                 for(let i=0; i<6; i++) {
                     garbage += vocabulary[Math.floor(Math.random() * vocabulary.length)] + " ";
@@ -1138,9 +1135,9 @@
                     writeLine("[-] ACCESS CRITICAL ERROR: Administrative privileges are reserved solely for the Chosen Messenger. The altar tracks your hubris.", "system-alert");
                     playErrorSound();
                 }
-
             }, 60);
         }
+
 
         function runSludgeGlitch() {
             let instances = 0;
@@ -1158,10 +1155,10 @@
                     gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 4.5);
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
-
                     osc.start();
                     osc.stop(audioCtx.currentTime + 4.5);
                 } catch(e) {}
+
             }
             
             const interval = setInterval(() => {
@@ -1178,10 +1175,10 @@
                     clearInterval(interval);
                     terminalInput.disabled = false;
                     terminalInput.focus();
-
                     writeLine("\n[+] EMERGENCY OVERFLOW CORRECTION: The brown sludge crawls away into the floorboards. The terminal deck responds sluggishly.", "success-text");
                 }
             }, 180);
+
         }
 
         function toggleAudio() {
@@ -1198,10 +1195,10 @@
         document.body.addEventListener('click', (e) => {
             if (document.getElementById('devotional-form-container') && document.getElementById('devotional-form-container').contains(e.target)) {
                 return;
-
             }
             terminalInput.focus();
         });
+
 
         terminalInput.addEventListener('input', (e) => {
             inputRenderChars.textContent = e.target.value;
@@ -1218,11 +1215,11 @@
             } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
                 if (commandHistory.length > 0 && historyIndex > 0) {
-
                     historyIndex--;
                     terminalInput.value = commandHistory[historyIndex];
                     inputRenderChars.textContent = commandHistory[historyIndex];
                 }
+
             } else if (e.key === 'ArrowDown') {
                 e.preventDefault();
                 if (historyIndex < commandHistory.length - 1) {
@@ -1238,11 +1235,11 @@
         });
 
         window.onload = () => {
-
             const savedTheme = localStorage.getItem('boognish_theme');
             if (savedTheme === 'brown') {
                 document.body.classList.add('theme-brown');
             }
+
             
             const savedInitiate = localStorage.getItem('boognish_initiate_passed');
             if (savedInitiate === 'true') {
@@ -1258,11 +1255,11 @@
             const savedVault = localStorage.getItem('boognish_vault_decrypted');
             if (savedVault === 'true') {
                 isVaultDecrypted = true;
-
                 delete fileSystem['vault.enc'];
                 fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER OF ART AND POETRY.\nTHE ENTITY WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE THIS SECRET NAME AS AN OVERRIDE TERMINAL COMMAND.\n=========================================================";
             }
         };
+
     </script>
 </body>
 </html>
