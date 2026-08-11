@@ -169,25 +169,32 @@
 
         .reward-box {
             border: 2px dashed var(--terminal-color);
-            padding: 15px;
+            padding: 20px;
             margin: 15px 0;
             background: rgba(181, 107, 18, 0.08);
+            text-align: left; /* Force crisp uniform left alignment */
+        }
+
+        .reward-box h2, .reward-box p {
+            text-align: left; /* Safeguard children layout boundaries */
         }
 
         .reward-link {
-            color: #fff;
+            color: #000000; /* Dark text configuration for strong readability contrast */
             background: var(--terminal-color);
-            padding: 5px 10px;
+            padding: 6px 14px;
             text-decoration: none;
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 12px;
             font-weight: bold;
             text-shadow: none;
+            transition: opacity 0.15s ease;
         }
 
         .reward-link:hover {
             background: #ffffff;
             color: #000000;
+            opacity: 0.95;
         }
 
         /* Input Bar */
@@ -349,13 +356,6 @@
     </div>
 
     <script>
-        // =========================================================================
-        // ARG CONFIGURATION: PASTE YOUR PRIVATE LINKS HERE
-        // =========================================================================
-        const UNRELEASED_SONG_1_URL = "https://www.google.com/drive"; // Update with actual track URL
-        const UNRELEASED_SONG_2_URL = "https://www.youtube.com";       // Update with actual track URL
-        // =========================================================================
-
         // --- Sound Synth Engine (Native Web Audio API) ---
         let audioEnabled = true;
         let audioCtx = null;
@@ -455,7 +455,7 @@
 
         // Altar Divinations Database
         const BOOGNISH_BLESSINGS = [
-            "Up on the hill, a red balloon arises.\nFour-track static breathes cold inside your skull.\nThe master dictates: go carve the pumpkin hollow.",
+            "Up on the hill, a red balloon arrives.\nFour-track static breathes cold inside your skull.\nThe master dictates: go carve the pumpkin hollow.",
             "The Stallion rides fast through the mud of old tears,\nSeven crown spikes reflecting back your fears,\nSubmit your raw frame, for the brown frequency nears.",
             "Breathe deep the emissions from the hidden waste pipeline,\nTaste the aluminum scrapings from the tube loop outline,\nYour devotion aligns cleanly with the altar layout design.",
             "Cold linoleum,\nTape loops spinning in the dark,\nBoognish fills the room."
@@ -593,7 +593,7 @@
             const args = trimmed.split(' ');
             const cmd = args[0].toLowerCase();
 
-            // Secret Ween variant command routing checks (with 'mang' included)
+            // Secret Ween variant command routing checks
             if (['dean', 'deaner', 'gene', 'gener', 'dave', 'claude', 'pod', 'ween', 'mang'].includes(cmd)) {
                 writeLine("\n--- SECURED CHRONICLE DETECTED ---", "system-alert");
                 if (cmd === 'ween') {
@@ -629,8 +629,13 @@
                     playTone(200, 'sawtooth', 0.5, 0.08);
                     break;
                 case 'mollusk':
-                    writeLine("IT IS NOT YET TIME.", "system-alert");
+                    writeLine("YOU LOOK DIRECTLY INTO THE DARK SALT WATER. IT IS NOT YET TIME.", "system-alert");
                     playTone(80, 'sawtooth', 0.6, 0.15);
+                    break;
+                case 'hotdog':
+                case 'hotdogsticker':
+                    writeLine("Never speak of this.", "system-alert");
+                    playTone(100, 'square', 0.2, 0.05);
                     break;
                 case 'blessing':
                     const randomIndex = Math.floor(Math.random() * BOOGNISH_BLESSINGS.length);
@@ -664,10 +669,8 @@
                 case 'decrypt':
                     handleDecryption(args[1]);
                     break;
-                case 'stallion3':
-                case 'stallion_pt3':
-                case 'stallion':
-                    handleStallionTrigger();
+                case 'vallejo':
+                    handleVallejoTrigger();
                     break;
                 case 'initiate':
                     startSurvey();
@@ -713,7 +716,6 @@
             writeLine("Available Altar Liturgies:");
             writeLine("  help             Summon the manual of standard incantations.");
             writeLine("  boognish         Manifest the divine true sunburst geometry.");
-            writeLine("  mollusk          Look directly down into the dark salt water.");
             writeLine("  blessing         Receive a message from the almighty.");
             writeLine("  ls / dir         Read the catalog of encrypted testimonies.");
             writeLine("  cat [file]       Extract targeted text logs.");
@@ -748,9 +750,9 @@
                 playSuccessChime();
                 
                 delete fileSystem['vault.enc'];
-                fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE EARLY FREQUENCIES AND ACCEPT THE FEAST,\nYOU MUST NAME THE THIRD PART OF THE NOBLE CHARGING STALLION STEED.\n\nEXECUTE THE NAME OF THE STEED AS A MASTER OVERRIDE TERMINAL COMMAND.\n=========================================================";
+                fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER OF ART AND POETRY.\nHE WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE HIS SACRED NAME AS A MASTER OVERRIDE TERMINAL COMMAND.\n=========================================================";
                 
-                writeLine("\n[+] VAULT FRACTURED: The internal algorithms have matched.", "success-text");
+                writeLine("\n[+] ...VAULT FRACTURED: The internal algorithms have matched.", "success-text");
                 writeLine("[+] Tearing out hidden tape indexes...", "success-text");
                 writeLine("[+] New memory block unsealed: 'sceptre.txt'. Run 'cat sceptre.txt' to observe instructions.", "success-text");
             } else if (cleanKey === 'GWS_1990') {
@@ -769,7 +771,7 @@
         }
 
         // ARG Stage Final Resolver
-        function handleStallionTrigger() {
+        function handleVallejoTrigger() {
             if (!isVaultDecrypted) {
                 writeLine("Ritual error: You have not yet cracked the seals of the outer files.", "system-alert");
                 playErrorSound();
@@ -781,11 +783,11 @@
             terminalInput.disabled = true;
             playSuccessChime();
             
-            writeLine("\n>>> WARNING: MASTER OVERRIDE CAPTURED BY STALLION LEGION...", "system-alert");
+            writeLine("\n>>> WARNING: MASTER OVERRIDE CAPTURED BY ARTISTRY SHIP MATRIX...", "system-alert");
             
             const celebrationSteps = [
-                { text: "DRAINING RESIDUAL CASSETTE FLUID...", sound: 'beep' },
-                { text: "THE SCEPTRES ARE ALIGNED..." },
+                { text: "CRUISING THE WAVE DEPTH FLUIDS...", sound: 'beep' },
+                { text: "THE CROWN COMPONENT DIALS ALIGN..." },
                 { text: "HEAR THE SOUND OF THE GOD COMMUNICATING...", class: "system-alert" },
                 { text: "ACCESS PROVISION CONFIRMED. BOOGNISH PROVIDES." }
             ];
@@ -793,12 +795,15 @@
             simulateLoading(celebrationSteps, () => {
                 writeHtmlLine(`
                     <div class="reward-box">
-                        <h2 style="color: #ffaa00; margin-bottom: 10px; text-shadow: 0 0 10px rgba(255,170,0,0.5);">BOOGNISH PROVIDES: ARCHIVE CONTROLLER EXTRACTION</h2>
+                        <h2 style="color: #ffaa00; margin-bottom: 10px; text-shadow: 0 0 10px rgba(255,170,0,0.5);">BOOGNISH PROVIDES: TRANSACTION OVERRIDE GLYPH</h2>
                         <p style="margin-bottom: 12px; line-height: 1.5; font-style: italic; opacity: 0.9;">
                             Whisper nothing of what the glass has revealed. Breathe this transmission into no other ear. If the circle fractures, the line will fall forever silent and the altar will receive no further offerings. Guard the reels.
                         </p>
-                        <a href="${UNRELEASED_SONG_1_URL}" target="_blank" class="reward-link">🎵 ACCESS REEL I: "Boognish Provides"</a>
-                        <a href="${UNRELEASED_SONG_2_URL}" target="_blank" class="reward-link" style="margin-left: 10px;">🎵 ACCESS REEL II: "Boognish Provides"</a>
+                        <p style="font-size: 22px; font-weight: bold; color: #fff; margin: 15px 0; letter-spacing: 2px;">PROMO CODE: VALLEJO25</p>
+                        <p style="font-size: 14px; opacity: 0.85; line-height: 1.5; margin-bottom: 10px;">
+                            The first 250 disciples to present this glyph at the store checkout gates receive a 25% discount off their total offering counter.
+                        </p>
+                        <a href="https://store.ween.com/" target="_blank" class="reward-link">ENTER OFFICIAL WEEN STORE</a>
                         <p style="margin-top: 15px; font-size: 11px; opacity: 0.8; color: #ff3300;">THE SCEPTRE REELS ARE BURNING. COGNITIVE LOCKOUT ACTIVE.</p>
                     </div>
                 `);
@@ -1029,7 +1034,7 @@
             if (savedVault === 'true') {
                 isVaultDecrypted = true;
                 delete fileSystem['vault.enc'];
-                fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE EARLY FREQUENCIES AND ACCEPT THE FEAST,\nYOU MUST NAME THE THIRD PART OF THE NOBLE CHARGING STALLION STEED.\n\nEXECUTE THE NAME OF THE STEED AS A MASTER OVERRIDE TERMINAL COMMAND.\n=========================================================";
+                fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER OF ART AND POETRY.\nHE WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE HIS SACRED NAME AS A MASTER OVERRIDE TERMINAL COMMAND.\n=========================================================";
             }
         };
     </script>
