@@ -1,3 +1,5 @@
+# Ween Boognish ARG Terminal Microsite
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +19,7 @@
         body.theme-brown {
             --terminal-color: #b56b12;
             --terminal-glow: rgba(181, 107, 18, 0.4);
+
             --terminal-bg: #0d0600;
             --terminal-scanline: rgba(181, 107, 18, 0.04);
             --ascii-color: #d47a1c;
@@ -36,6 +39,7 @@
             color: var(--terminal-color);
             font-size: 19px; /* Increased base global font size for better legibility */
             overflow: hidden;
+
             position: relative;
             transition: background-color 0.5s ease, color 0.3s ease;
         }
@@ -55,6 +59,7 @@
             text-align: center;
             text-shadow: 0 0 5px var(--terminal-glow);
             transition: background-color 0.5s ease;
+
         }
 
         .splash-content {
@@ -73,6 +78,7 @@
             0%, 100% { opacity: 0.5; }
             50% { opacity: 1; }
         }
+
 
         /* CRT Screen Effects */
         body::before {
@@ -93,6 +99,7 @@
             top: 0; left: 0; bottom: 0; right: 0;
             background: linear-gradient(var(--terminal-scanline) 50%, transparent 50%);
             background-size: 100% 8px;
+
             z-index: 11;
             pointer-events: none;
             animation: scanline 15s linear infinite;
@@ -111,6 +118,7 @@
             animation: crt-flicker 0.25s infinite;
             box-shadow: inset 0 0 100px rgba(0,0,0,0.95);
         }
+
 
         @keyframes crt-flicker {
             0% { opacity: 0.96; }
@@ -131,6 +139,7 @@
             text-shadow: 0 0 5px var(--terminal-glow);
         }
 
+
         .terminal-screen {
             flex-grow: 1;
             overflow-y: auto;
@@ -150,6 +159,7 @@
             border-radius: 4px;
         }
 
+
         /* Output typography */
         .line {
             line-height: 1.4;
@@ -168,44 +178,54 @@
             text-shadow: 0 0 6px rgba(255, 170, 0, 0.6);
         }
 
+        /* Enforce absolute left alignment on the container and all structural children */
+
         .reward-box {
-            border: 2px dashed var(--terminal-color);
-            padding: 24px; /* Slightly padded out box margins further */
-            margin: 15px 0;
-            background: rgba(181, 107, 18, 0.08);
-            text-align: left; /* Force crisp uniform left alignment */
+            border: 2px dashed var(--terminal-color) !important;
+            padding: 24px !important;
+            margin: 15px 0 !important;
+            background: rgba(181, 107, 18, 0.08) !important;
+            text-align: left !important; 
+            display: block !important;
+            width: 100% !important;
         }
 
         .reward-box h2 {
-            font-size: 24px; /* Boosted reward title hierarchy */
-            text-align: left;
+            font-size: 24px !important; 
+            text-align: left !important;
+            margin-bottom: 12px !important;
+            display: block !important;
         }
 
         .reward-box p {
-            font-size: 20px; /* Made the inner reward block text prominently larger */
-            line-height: 1.5;
-            margin-bottom: 12px;
-            text-align: left;
+            font-size: 20px !important; 
+
+            line-height: 1.5 !important;
+            margin-bottom: 12px !important;
+            text-align: left !important;
+            display: block !important;
         }
 
         .reward-link {
-            color: #000000; /* Dark text configuration for strong readability contrast */
-            background: var(--terminal-color);
-            padding: 8px 16px; /* Enhanced padding scales layout density beautifully */
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 14px;
-            margin-right: 15px; /* Offset separation spacing cleanly */
-            font-weight: bold;
-            font-size: 18px; /* Bigger button fonts */
-            text-shadow: none;
-            transition: opacity 0.15s ease;
+            color: #000000 !important; /* Dark text configuration for strong readability contrast */
+            background: var(--terminal-color) !important;
+            padding: 8px 16px !important; 
+            text-decoration: none !important;
+            display: inline-block !important;
+            margin-top: 14px !important;
+            margin-right: 15px !important; 
+            font-weight: bold !important;
+            font-size: 18px !important; 
+            text-shadow: none !important;
+            text-align: left !important;
+            transition: opacity 0.15s ease !important;
+
         }
 
         .reward-link:hover {
-            background: #ffffff;
-            color: #000000;
-            opacity: 0.95;
+            background: #ffffff !important;
+            color: #000000 !important;
+            opacity: 0.95 !important;
         }
 
         /* Input Bar */
@@ -219,6 +239,7 @@
         body.theme-brown .input-container {
             border-top: 1px solid rgba(181, 107, 18, 0.2);
         }
+
 
         .prompt {
             font-weight: bold;
@@ -239,6 +260,7 @@
             background: transparent;
             border: none;
             outline: none;
+
             color: transparent;
             caret-color: transparent;
             font-family: 'Courier New', Courier, monospace;
@@ -258,6 +280,7 @@
             z-index: 1;
             display: flex;
             align-items: center;
+
             width: 100%;
         }
 
@@ -277,6 +300,7 @@
         }
 
         /* Quick Utility Controls Header */
+
         .terminal-header {
             display: flex;
             justify-content: space-between;
@@ -295,6 +319,7 @@
         .header-title {
             letter-spacing: 2px;
         }
+
 
         .audio-toggle {
             cursor: pointer;
@@ -315,6 +340,7 @@
             display: inline-block;
             text-align: left;
             margin: 15px 0;
+
             max-width: 100%;
             overflow-x: auto;
         }
@@ -337,6 +363,7 @@
 </head>
 <body>
 
+
     <!-- Splash Gate for guaranteed Audio Context triggering across target viewports -->
     <div id="splash-screen" onclick="awakenAltar()">
         <div class="splash-content">
@@ -356,6 +383,7 @@
         <main class="terminal-screen" id="screen">
             <!-- Content filled by JavaScript -->
         </main>
+
 
         <footer class="input-container">
             <span class="prompt" id="prompt-label">DISCIPLE@ALTAR:~$</span>
@@ -377,6 +405,7 @@
             }
         }
 
+
         function playTone(freq, type, duration, volume = 0.1) {
             if (!audioEnabled) return;
             try {
@@ -396,6 +425,7 @@
                 osc.start();
                 osc.stop(audioCtx.currentTime + duration);
             } catch (e) {}
+
         }
 
         function playKeySound() {
@@ -415,6 +445,7 @@
             const notes = [146.83, 174.61, 220.00, 293.66]; // Minor key chord for darker mood
             notes.forEach((freq, idx) => {
                 setTimeout(() => playTone(freq, 'sawtooth', 0.35, 0.05), idx * 120);
+
             });
         }
 
@@ -452,6 +483,7 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠻⣿⣢⣄⣀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣷⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠯⢿⣓⣒⣲⢖⣒⣲⡿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`;
 
+
         // =========================================================================
         // PLACE CUSTOM EXTRA ASCII ART IN THIS CONSTANT CONTAINER ELEMENT
         // =========================================================================
@@ -472,6 +504,7 @@
             "Cold linoleum,\nTape loops spinning in the dark,\nBoognish fills the room."
         ];
 
+
         // ARG State Tracking
         let isVaultDecrypted = false;
         let isInitiatePassed = false;
@@ -491,6 +524,7 @@
         let surveyAnswers = [];
 
         const surveyQuestions = [
+
             "Question I: Do you surrender your sensory nerves completely to the crown of the seven spikes? (Y/N)",
             "Question II: What scale of human fear are you prepared to breathe out when the brown frequency drops? (Type a selection: 1-10)",
             "Question III: The sky dripped in a demon sweat the night she left. When the wind blows cold, does it all become clear to you now? (Y/N)"
@@ -510,6 +544,7 @@
             // Emit a deep, ominous bass synth pulse instantly on click
             playTone(48, 'sawtooth', 3.0, 0.25);
             playTone(49, 'sawtooth', 3.0, 0.25); // Detuning layer for a rich, unsettling chorus rumble
+
             
             document.getElementById('splash-screen').style.display = 'none';
             
@@ -529,6 +564,7 @@
         function writeLine(text, className = '') {
             const line = document.createElement('div');
             line.className = `line ${className}`;
+
             line.textContent = text;
             screen.appendChild(line);
             screen.scrollTop = screen.scrollHeight;
@@ -548,6 +584,7 @@
 
         function simulateLoading(steps, callback) {
             let i = 0;
+
             terminalInput.disabled = true;
             
             function nextStep() {
@@ -567,6 +604,7 @@
 
         function runBootSequence() {
             const bootSteps = [
+
                 { text: "AWAKENING ENGINES IN THE DARK...", sound: 'beep' },
                 { text: "OPENING SEVENTH APERTURE VALVE..." },
                 { text: "TAPING FEEDBACK CYCLES........................ UNSTABLE", sound: 'beep' },
@@ -587,6 +625,7 @@
             simulateLoading(bootSteps);
         }
 
+
         function executeCommand(inputStr) {
             const trimmed = inputStr.trim();
             if (!trimmed) return;
@@ -606,6 +645,7 @@
 
             // Secret Ween variant command routing checks
             if (['dean', 'deaner', 'gene', 'gener', 'dave', 'claude', 'pod', 'ween', 'mang'].includes(cmd)) {
+
                 writeLine("\n--- SECURED CHRONICLE DETECTED ---", "system-alert");
                 if (cmd === 'ween') {
                     writeLine("The collective noun for the children of the crown. We gather on the linoleum floor.");
@@ -625,6 +665,7 @@
                 writeLine("----------------------------------\n");
                 playTone(120, 'square', 0.3, 0.06);
                 return;
+
             }
 
             switch (cmd) {
@@ -644,6 +685,7 @@
                     playTone(80, 'sawtooth', 0.6, 0.15);
                     break;
                 case 'hotdog':
+
                 case 'hotdogsticker':
                     writeLine("Never speak of this.", "system-alert");
                     playTone(100, 'square', 0.2, 0.05);
@@ -663,6 +705,7 @@
                     });
                     break;
                 case 'cat':
+
                     if (!args[1]) {
                         writeLine("Ritual breakdown: cat [index_name]", "system-alert");
                         playErrorSound();
@@ -682,6 +725,7 @@
                     break;
                 case 'vallejo':
                     handleVallejoTrigger();
+
                     break;
                 case 'initiate':
                     startSurvey();
@@ -701,6 +745,7 @@
                     if (!isVaultDecrypted) {
                         writeLine("  Warning: Unresolved frequency pressure inside sector 'brown_metrics.log'...", "system-alert");
                     } else {
+
                         writeLine("  Secured Transmission Tunnel: OVERRIDDEN BY THE LEGION", "success-text");
                     }
                     break;
@@ -720,6 +765,7 @@
                     writeLine("Sacrilege: The phrase '" + cmd + "' means nothing to the core. Type 'help' to appease the deity.", "system-alert");
                     playErrorSound();
                     break;
+
             }
         }
 
@@ -738,6 +784,7 @@
             writeLine("  green            Purge the smog and return to ancient green dark.");
             writeLine("  clear / cls      Wipe out all temporary glyph logs.");
         }
+
 
         // ARG Decryption Engine
         function handleDecryption(key) {
@@ -758,6 +805,7 @@
                     argStage = "decrypted";
                     localStorage.setItem('boognish_arg_stage', 'decrypted');
                 }
+
                 playSuccessChime();
                 
                 delete fileSystem['vault.enc'];
@@ -777,6 +825,7 @@
                 writeLine("[+] New lore chronicle discovered: 'chronicles.log'. Run 'cat chronicles.log' to extract records.", "success-text");
             } else {
                 writeLine("[-] DECRYPTION ERROR: False phrase. The altar rejects your vibration.", "system-alert");
+
                 playErrorSound();
             }
         }
@@ -796,6 +845,7 @@
             
             writeLine("\n>>> WARNING: MASTER OVERRIDE CAPTURED BY ARTISTRY SHIP MATRIX...", "system-alert");
             
+
             const celebrationSteps = [
                 { text: "CRUISING THE WAVE DEPTH FLUIDS...", sound: 'beep' },
                 { text: "THE CROWN COMPONENT DIALS ALIGN..." },
@@ -806,20 +856,23 @@
             simulateLoading(celebrationSteps, () => {
                 writeHtmlLine(`
                     <div class="reward-box">
-                        <h2>BOOGNISH PROVIDES: TRANSACTION OVERRIDE GLYPH</h2>
-                        <p style="font-style: italic; opacity: 0.95;">
+                        <h2 style="text-align: left !important;">BOOGNISH PROVIDES: TRANSACTION OVERRIDE GLYPH</h2>
+                        <p style="font-style: italic; opacity: 0.95; text-align: left !important;">
                             Whisper nothing of what the glass has revealed. Breathe this transmission into no other ear. If the circle fractures, the line will fall forever silent and the altar will receive no further offerings. Guard the reels and you will soon be rewarded.
                         </p>
-                        <p style="font-size: 26px; font-weight: bold; color: #fff; margin: 18px 0; letter-spacing: 2px;">PROMO CODE: VALLEJO25</p>
-                        <p style="opacity: 0.95; margin-bottom: 15px;">
+                        <p style="font-size: 26px; font-weight: bold; color: #fff; margin: 18px 0; letter-spacing: 2px; text-align: left !important;">PROMO CODE: VALLEJO25</p>
+                        <p style="opacity: 0.95; margin-bottom: 15px; text-align: left !important;">
                             The first 250 disciples to present this glyph at the store checkout gates receive a 25% discount off their total offering counter.
                         </p>
-                        <p style="font-size: 17px; opacity: 0.85; border-top: 1px dashed rgba(0,255,102,0.3); padding-top: 12px; margin-bottom: 8px;">
+                        <p style="font-size: 17px; opacity: 0.85; border-top: 1px dashed rgba(0,255,102,0.3); padding-top: 12px; margin-bottom: 8px; text-align: left !important;">
+
                             To ensure transmission longevity and receive further special offerings directly from the alignment core, register your coordinate nodes below:
                         </p>
                         <a href="https://store.ween.com/" target="_blank" class="reward-link">ENTER OFFICIAL WEEN STORE</a>
-                        <a href="https://store.ween.com/#contact_form" target="_blank" class="reward-link" style="background: #ffaa00;">SUBSCRIBE TO TRANSMISSIONS</a>
-                        <p style="margin-top: 25px; font-size: 22px; font-weight: bold; line-height: 1.4; color: #ff3300; text-shadow: 0 0 10px rgba(255,51,0,0.8); border: 2px solid #ff3300; padding: 12px; display: inline-block; background: rgba(255,51,0,0.05);">THE SCEPTRE REELS ARE BURNING. COGNITIVE LOCKOUT ACTIVE.</p>
+                        <a href="https://store.ween.com/#contact_form" target="_blank" class="reward-link" style="background: #ffaa00 !important;">SUBSCRIBE TO TRANSMISSIONS</a>
+                        <div style="margin-top: 25px; display: block; text-align: left !important;">
+                            <p style="font-size: 22px; font-weight: bold; line-height: 1.4; color: #ff3300; text-shadow: 0 0 10px rgba(255,51,0,0.8); border: 2px solid #ff3300; padding: 12px; display: inline-block; background: rgba(255,51,0,0.05); text-align: left !important; margin: 0;">THE SCEPTRE REELS ARE BURNING. COGNITIVE LOCKOUT ACTIVE.</p>
+                        </div>
                     </div>
                 `);
                 playSuccessChime();
@@ -832,6 +885,7 @@
             surveyAnswers = [];
             clearScreen();
             writeLine("Commencing Devotional Altar Alignment. Do not look away from the glass.");
+
             playReturnSound();
             setTimeout(() => {
                 promptLabel.innerText = "ALIGNED_I> ";
@@ -851,6 +905,7 @@
                 promptLabel.innerText = "DISCIPLE@ALTAR:~$";
                 currentMode = 'normal';
                 
+
                 // Strict validation matrix configuration
                 const ans1 = surveyAnswers[0].toUpperCase().trim();
                 const ans2 = surveyAnswers[1].trim();
@@ -870,6 +925,7 @@
                         localStorage.setItem('boognish_initiate_passed', 'true');
                         fileSystem['blessed_glyph.txt'] = "The eye expands. You have processed the baseline frequencies without crumbling.\nTo unlock the ancient chronicles of crude alchemy, you must decrypt the year of the oneness (GWS_1990).\nLook closely into the shadows of the registry logs.";
                         
+
                         // History tracking layout loop response
                         if (argStage === "complete") {
                             writeLine("\n[+] ACCESS ELEVATED: You have won the Boognish's favor, but who knows what else lies under the surface...", "success-text");
@@ -889,6 +945,7 @@
                         writeLine("\n[-] ALIGNMENT REJECTED: The Boognish has deemed you unworthy. Your flesh is cold, your spirit uncalibrated. Read more devotionals and return to the altar when you are ready to burn.", "system-alert");
                         playErrorSound();
                     });
+
                 }
             }
         }
@@ -908,6 +965,7 @@
                 
                 instances++;
                 if (instances > 30) {
+
                     clearInterval(interval);
                     clearScreen();
                     terminalInput.disabled = false;
@@ -927,6 +985,7 @@
                 const vocabulary = ["DENIED", "UNAUTHORIZED", "HUBRIS", "RESTRICTED", "ROOT_FORBIDDEN", "FLESH_ERROR", "ALTAR_LOCK", "ACCESS_VIOLATION"];
                 for(let i=0; i<6; i++) {
                     garbage += vocabulary[Math.floor(Math.random() * vocabulary.length)] + " ";
+
                 }
                 
                 writeLine(garbage, "system-alert");
@@ -946,6 +1005,7 @@
         // Tastefully eerie, crawling low-frequency sludge simulation protocol
         function runSludgeGlitch() {
             let instances = 0;
+
             terminalInput.disabled = true;
             
             if (audioEnabled) {
@@ -965,6 +1025,7 @@
                 } catch(e) {}
             }
             
+
             const interval = setInterval(() => {
                 let garbage = "";
                 const sludgeVocab = ["CRUCIAL_MUD", "SLUDGE_SPOOL", "JUICE_STAIN", "MANG_HEAVY", "POOP_SHIP", "MUTILATED", "STALLION_FLUID"];
@@ -983,6 +1044,7 @@
                 }
             }, 180);
         }
+
 
         function toggleAudio() {
             audioEnabled = !audioEnabled;
@@ -1003,6 +1065,7 @@
             if (e.key === 'Enter') {
                 playReturnSound();
                 const cmd = terminalInput.value;
+
                 executeCommand(cmd);
                 terminalInput.value = '';
                 inputRenderChars.textContent = '';
@@ -1022,6 +1085,7 @@
                 } else {
                     historyIndex = commandHistory.length;
                     terminalInput.value = '';
+
                     inputRenderChars.textContent = '';
                 }
             }
@@ -1041,6 +1105,7 @@
             }
             
             const savedArgStage = localStorage.getItem('boognish_arg_stage');
+
             if (savedArgStage) {
                 argStage = savedArgStage;
             }
@@ -1055,3 +1120,5 @@
     </script>
 </body>
 </html>
+
+
