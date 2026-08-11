@@ -145,6 +145,7 @@
             overflow-y: auto;
             margin-bottom: 20px;
             padding-right: 10px;
+            text-align: left !important; /* Force baseline display engine layout left */
         }
 
         /* Scrollbar Styling */
@@ -166,6 +167,7 @@
             margin-bottom: 8px;
             white-space: pre-wrap;
             word-wrap: break-word;
+            text-align: left !important;
         }
 
         .system-alert {
@@ -178,8 +180,8 @@
             text-shadow: 0 0 6px rgba(255, 170, 0, 0.6);
         }
 
-        /* Flexbox structure enforces clean, uniform left margins for all inner content objects */
 
+        /* Flexbox structure forces clean, uniform left margins for all inner content objects */
         .reward-box {
             border: 2px dashed var(--terminal-color) !important;
             padding: 24px !important;
@@ -191,17 +193,17 @@
             justify-content: flex-start !important;
             text-align: left !important; 
             width: 100% !important;
+            max-width: 750px !important; /* Hard constraint bounds layout container tightly */
         }
 
         /* Content block limiter ensures text layout lines match item boundaries perfectly */
         .reward-content-wrapper {
             display: flex !important;
             flex-direction: column !important;
+
             align-items: flex-start !important;
             justify-content: flex-start !important;
-
             text-align: left !important;
-            max-width: 850px !important; /* Prevents long paragraphs from wandering across wide viewports */
             width: 100% !important;
         }
 
@@ -218,8 +220,8 @@
             line-height: 1.5 !important;
             margin-bottom: 14px !important;
             text-align: left !important;
-            align-self: flex-start !important;
 
+            align-self: flex-start !important;
             width: 100% !important;
         }
 
@@ -261,6 +263,7 @@
             border-top: 1px solid rgba(0, 255, 102, 0.2);
 
             padding-top: 15px;
+            text-align: left !important;
         }
         
         body.theme-brown .input-container {
@@ -272,14 +275,16 @@
             margin-right: 10px;
             white-space: nowrap;
             letter-spacing: 1px;
+            text-align: left !important;
         }
 
         .input-wrapper {
             flex-grow: 1;
             position: relative;
+
             display: flex;
             align-items: center;
-
+            text-align: left !important;
         }
 
         #terminal-input {
@@ -296,10 +301,11 @@
             top: 0;
             height: 100%;
             z-index: 2;
+
+            text-align: left !important;
         }
 
         #visual-input-render {
-
             font-size: 19px; /* Matched to global baseline layout scaling */
             color: var(--terminal-color);
             white-space: pre-wrap;
@@ -308,18 +314,19 @@
             display: flex;
             align-items: center;
             width: 100%;
+            text-align: left !important;
         }
 
         .cursor {
             display: inline-block;
             width: 11px;
             height: 22px; /* Scaled cursor height slightly to wrap larger text vectors neatly */
+
             background-color: var(--terminal-color);
             box-shadow: 0 0 5px var(--terminal-color);
             animation: blink 0.8s infinite;
             margin-left: 1px;
         }
-
 
         @keyframes blink {
             0%, 49% { opacity: 1; }
@@ -334,13 +341,13 @@
             margin-bottom: 20px;
             border-bottom: 1px dashed rgba(0, 255, 102, 0.2);
             padding-bottom: 10px;
+
             font-size: 14px; /* Scaled up header bar text slightly */
             opacity: 0.8;
         }
 
         body.theme-brown .terminal-header {
             border-bottom: 1px dashed rgba(181, 107, 18, 0.2);
-
         }
 
         .header-title {
@@ -354,13 +361,13 @@
             background: transparent;
             color: var(--terminal-color);
             font-family: monospace;
+
             transition: all 0.2s ease;
         }
 
         .audio-toggle:hover {
             background: var(--terminal-color);
             color: var(--terminal-bg);
-
         }
 
         .ascii-container {
@@ -374,13 +381,13 @@
         .ascii-art {
             font-family: monospace;
             white-space: pre;
+
             line-height: 1.1;
             color: var(--ascii-color);
         }
 
         .ascii-caption {
             text-align: center;
-
             font-weight: bold;
             letter-spacing: 3px;
             margin-top: 8px;
@@ -394,12 +401,12 @@
     <div id="splash-screen" onclick="awakenAltar()">
         <div class="splash-content">
             === APPROACH THE ALTAR OF THE CROWN ===
+
             <span class="splash-sub">[ TOUCH THE MONITORS TO AWAKEN THE CROWN ]</span>
         </div>
     </div>
 
     <div class="crt-overlay"></div>
-
 
     <div class="terminal-container">
         <header class="terminal-header">
@@ -414,12 +421,12 @@
         <footer class="input-container">
             <span class="prompt" id="prompt-label">DISCIPLE@ALTAR:~$</span>
             <div class="input-wrapper">
+
                 <input type="text" id="terminal-input" autofocus autocomplete="off" spellcheck="false" aria-label="Terminal Input">
                 <div id="visual-input-render"><span id="input-text-chars"></span><span class="cursor"></span></div>
             </div>
         </footer>
     </div>
-
 
     <script>
         // --- Sound Synth Engine (Native Web Audio API) ---
@@ -434,13 +441,13 @@
 
         function playTone(freq, type, duration, volume = 0.1) {
             if (!audioEnabled) return;
+
             try {
                 initAudio();
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 
                 osc.type = type;
-
                 osc.frequency.value = freq;
                 
                 gain.gain.setValueAtTime(volume, audioCtx.currentTime);
@@ -454,13 +461,13 @@
             } catch (e) {}
         }
 
+
         function playKeySound() {
             playTone(180 + Math.random() * 200, 'triangle', 0.05, 0.04);
         }
 
         function playReturnSound() {
             playTone(110, 'sawtooth', 0.15, 0.06);
-
             setTimeout(() => playTone(55, 'sawtooth', 0.2, 0.08), 50);
         }
 
@@ -475,12 +482,12 @@
             });
         }
 
+
         function playAudioGlitch() {
             if (!audioEnabled) return;
             initAudio();
             for (let i = 0; i < 25; i++) {
                 setTimeout(() => {
-
                     const randomFreq = 40 + Math.random() * 260;
                     const waveform = Math.random() > 0.5 ? 'sawtooth' : 'square';
                     const length = 0.05 + Math.random() * 0.15;
@@ -887,25 +894,25 @@
                 writeHtmlLine(`
                     <div class="reward-box">
                         <div class="reward-content-wrapper">
-                            <h2 style="text-align: left !important;">BOOGNISH PROVIDES: TRANSACTION OVERRIDE GLYPH</h2>
-                            <p style="font-style: italic; opacity: 0.95; text-align: left !important;">
+                            <h2 style="text-align: left !important; align-self: flex-start !important;">BOOGNISH PROVIDES: TRANSACTION OVERRIDE GLYPH</h2>
+                            <p style="font-style: italic; opacity: 0.95; text-align: left !important; align-self: flex-start !important;">
                                 Whisper nothing of what the glass has revealed. Breathe this transmission into no other ear. If the circle fractures, the line will fall forever silent and the altar will receive no further offerings. Guard the reels and you will soon be rewarded.
                             </p>
-                            <p style="opacity: 0.95; margin-bottom: 15px; text-align: left !important;">
+                            <p style="opacity: 0.95; margin-bottom: 15px; text-align: left !important; align-self: flex-start !important;">
 
                                 The first 250 disciples to present this glyph at the store checkout gates receive a 25% discount off their total offering counter.
                             </p>
-                            <p style="font-size: 17px; opacity: 0.85; border-top: 1px dashed rgba(0,255,102,0.3); padding-top: 12px; margin-bottom: 15px; text-align: left !important;">
+                            <p style="font-size: 17px; opacity: 0.85; border-top: 1px dashed rgba(0,255,102,0.3); padding-top: 12px; margin-bottom: 15px; text-align: left !important; align-self: flex-start !important;">
                                 To ensure transmission longevity and receive further special offerings directly from the alignment core, register your coordinate nodes below:
                             </p>
                             
-                            <p style="font-size: 26px; font-weight: bold; color: #fff; margin-bottom: 15px; letter-spacing: 2px; text-align: left !important;">PROMO CODE: VALLEJO25</p>
+                            <p style="font-size: 26px; font-weight: bold; color: #fff; margin-bottom: 15px; letter-spacing: 2px; text-align: left !important; align-self: flex-start !important;">PROMO CODE: VALLEJO25</p>
                             
                             <a href="https://store.ween.com/" target="_blank" class="reward-link">ENTER OFFICIAL WEEN STORE</a>
                             <a href="https://store.ween.com/#contact_form" target="_blank" class="reward-link" style="background: #ffaa00 !important;">SUBSCRIBE TO TRANSMISSIONS</a>
                             
-                            <div class="lockout-msg-container">
-                                <p style="font-size: 22px; font-weight: bold; line-height: 1.4; color: #ff3300; text-shadow: 0 0 10px rgba(255,51,0,0.8); border: 2px solid #ff3300; padding: 12px; display: inline-block; background: rgba(255,51,0,0.05); text-align: left !important; margin: 0;">THE SCEPTRE REELS ARE BURNING. COGNITIVE LOCKOUT ACTIVE.</p>
+                            <div class="lockout-msg-container" style="text-align: left !important; align-self: flex-start !important;">
+                                <p style="font-size: 22px; font-weight: bold; line-height: 1.4; color: #ff3300; text-shadow: 0 0 10px rgba(255,51,0,0.8); border: 2px solid #ff3300; padding: 12px; display: inline-block; background: rgba(255,51,0,0.05); text-align: left !important; align-self: flex-start !important; margin: 0;">THE SCEPTRE REELS ARE BURNING. COGNITIVE LOCKOUT ACTIVE.</p>
                             </div>
                         </div>
                     </div>
