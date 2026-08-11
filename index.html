@@ -34,6 +34,7 @@
             background-color: var(--terminal-bg);
             font-family: 'Courier New', Courier, monospace;
             color: var(--terminal-color);
+            font-size: 19px; /* Increased base global font size for better legibility */
             overflow: hidden;
             position: relative;
             transition: background-color 0.5s ease, color 0.3s ease;
@@ -49,7 +50,7 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 22px; /* Increased splash header sizing */
             letter-spacing: 2px;
             text-align: center;
             text-shadow: 0 0 5px var(--terminal-glow);
@@ -62,7 +63,7 @@
         }
 
         .splash-sub {
-            font-size: 13px;
+            font-size: 16px; /* Increased subtext sizing */
             opacity: 0.6;
             display: block;
             margin-top: 15px;
@@ -169,24 +170,34 @@
 
         .reward-box {
             border: 2px dashed var(--terminal-color);
-            padding: 20px;
+            padding: 24px; /* Slightly padded out box margins further */
             margin: 15px 0;
             background: rgba(181, 107, 18, 0.08);
             text-align: left; /* Force crisp uniform left alignment */
         }
 
-        .reward-box h2, .reward-box p {
-            text-align: left; /* Safeguard children layout boundaries */
+        .reward-box h2 {
+            font-size: 24px; /* Boosted reward title hierarchy */
+            text-align: left;
+        }
+
+        .reward-box p {
+            font-size: 20px; /* Made the inner reward block text prominently larger */
+            line-height: 1.5;
+            margin-bottom: 12px;
+            text-align: left;
         }
 
         .reward-link {
             color: #000000; /* Dark text configuration for strong readability contrast */
             background: var(--terminal-color);
-            padding: 6px 14px;
+            padding: 8px 16px; /* Enhanced padding scales layout density beautifully */
             text-decoration: none;
             display: inline-block;
-            margin-top: 12px;
+            margin-top: 14px;
+            margin-right: 15px; /* Offset separation spacing cleanly */
             font-weight: bold;
+            font-size: 18px; /* Bigger button fonts */
             text-shadow: none;
             transition: opacity 0.15s ease;
         }
@@ -231,7 +242,7 @@
             color: transparent;
             caret-color: transparent;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 16px;
+            font-size: 19px; /* Matched to global baseline layout scaling */
             position: absolute;
             left: 0;
             top: 0;
@@ -240,7 +251,7 @@
         }
 
         #visual-input-render {
-            font-size: 16px;
+            font-size: 19px; /* Matched to global baseline layout scaling */
             color: var(--terminal-color);
             white-space: pre-wrap;
             pointer-events: none;
@@ -252,8 +263,8 @@
 
         .cursor {
             display: inline-block;
-            width: 10px;
-            height: 18px;
+            width: 11px;
+            height: 22px; /* Scaled cursor height slightly to wrap larger text vectors neatly */
             background-color: var(--terminal-color);
             box-shadow: 0 0 5px var(--terminal-color);
             animation: blink 0.8s infinite;
@@ -273,7 +284,7 @@
             margin-bottom: 20px;
             border-bottom: 1px dashed rgba(0, 255, 102, 0.2);
             padding-bottom: 10px;
-            font-size: 12px;
+            font-size: 14px; /* Scaled up header bar text slightly */
             opacity: 0.8;
         }
 
@@ -320,7 +331,7 @@
             font-weight: bold;
             letter-spacing: 3px;
             margin-top: 8px;
-            font-size: 14px;
+            font-size: 18px; /* Scaled sub-caption size up */
         }
     </style>
 </head>
@@ -795,16 +806,20 @@
             simulateLoading(celebrationSteps, () => {
                 writeHtmlLine(`
                     <div class="reward-box">
-                        <h2 style="color: #ffaa00; margin-bottom: 10px; text-shadow: 0 0 10px rgba(255,170,0,0.5);">BOOGNISH PROVIDES: TRANSACTION OVERRIDE GLYPH</h2>
-                        <p style="margin-bottom: 12px; line-height: 1.5; font-style: italic; opacity: 0.9;">
-                            Whisper nothing of what the glass has revealed. Breathe this transmission into no other ear. If the circle fractures, the line will fall forever silent and the altar will receive no further offerings. Guard the reels.
+                        <h2>BOOGNISH PROVIDES: TRANSACTION OVERRIDE GLYPH</h2>
+                        <p style="font-style: italic; opacity: 0.95;">
+                            Whisper nothing of what the glass has revealed. Breathe this transmission into no other ear. If the circle fractures, the line will fall forever silent and the altar will receive no further offerings. Guard the reels and you will soon be rewarded.
                         </p>
-                        <p style="font-size: 22px; font-weight: bold; color: #fff; margin: 15px 0; letter-spacing: 2px;">PROMO CODE: VALLEJO25</p>
-                        <p style="font-size: 14px; opacity: 0.85; line-height: 1.5; margin-bottom: 10px;">
+                        <p style="font-size: 26px; font-weight: bold; color: #fff; margin: 18px 0; letter-spacing: 2px;">PROMO CODE: VALLEJO25</p>
+                        <p style="opacity: 0.95; margin-bottom: 15px;">
                             The first 250 disciples to present this glyph at the store checkout gates receive a 25% discount off their total offering counter.
                         </p>
+                        <p style="font-size: 17px; opacity: 0.85; border-top: 1px dashed rgba(0,255,102,0.3); padding-top: 12px; margin-bottom: 8px;">
+                            To ensure transmission longevity and receive further special offerings directly from the alignment core, register your coordinate nodes below:
+                        </p>
                         <a href="https://store.ween.com/" target="_blank" class="reward-link">ENTER OFFICIAL WEEN STORE</a>
-                        <p style="margin-top: 15px; font-size: 11px; opacity: 0.8; color: #ff3300;">THE SCEPTRE REELS ARE BURNING. COGNITIVE LOCKOUT ACTIVE.</p>
+                        <a href="https://store.ween.com/#contact_form" target="_blank" class="reward-link" style="background: #ffaa00;">SUBSCRIBE TO TRANSMISSIONS</a>
+                        <p style="margin-top: 25px; font-size: 22px; font-weight: bold; line-height: 1.4; color: #ff3300; text-shadow: 0 0 10px rgba(255,51,0,0.8); border: 2px solid #ff3300; padding: 12px; display: inline-block; background: rgba(255,51,0,0.05);">THE SCEPTRE REELS ARE BURNING. COGNITIVE LOCKOUT ACTIVE.</p>
                     </div>
                 `);
                 playSuccessChime();
