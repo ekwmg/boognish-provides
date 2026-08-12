@@ -370,7 +370,7 @@ letter-spacing: 1px;
 </head>
 <body>
 <!-- Splash Gate for guaranteed Audio Context triggering across target viewports -->
-<div id="splash-screen" onclick="awakenAltar()">
+<div id="splash-screen">
 <div class="splash-content">
 === APPROACH THE ALTAR OF THE CROWN ===
 <span class="splash-sub" id="splash-action-text">[ TOUCH THE MONITORS TO AWAKEN THE CROWN ]</span>
@@ -404,6 +404,10 @@ let bgGain = null;
 function initAudio() {
 if (!audioCtx) {
 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+// Double-enforce permission status hooks across restricted mobile browsers
+if (audioCtx && audioCtx.state === 'suspended') {
+audioCtx.resume();
 }
 }
 function playTone(freq, type, duration, volume = 0.1) {
@@ -485,21 +489,21 @@ playTone(randomFreq, waveform, length, 0.08);
 const BOOGNISH_ASCII = `⠀⠀⠀⠀⠀⠀⣄⠀⠀⠀⠀⠀⠀⣸⣆⠀⠀⠀⠀⢀⣄⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⢻⣿⣦⡀⠀⠀⠀⣿⣿⣆⠀⠀⢀⣾⣿⡀⠀⠀⠀⠀⣴⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⣤⣤⣀⠀⠀⠀⠈⣿⡟⢿⣦⡀⠀⣿⡇⢻⣆⠀⣼⡏⢸⡇⠀⠀⢀⣼⠟⣿⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀
-⠘⣿⣽⣻⣦⣀⠀⢹⣿⠀⠙⢿⣾⢿⠁⠀⢻⣷⡿⠀⠈⣿⠀⢀⣾⠋⠀⣿⠀⠀⠀⢀⣠⣾⡇⠀⠀⠀⠀
-⠀⠘⢿⣯⠑⠯⣷⣄⣿⡇⠀⠀⠹⣽⡄⠀⠈⢧⡇⠀⠀⢹⣧⡿⠁⠀⠀⣿⠀⢀⣴⠿⠋⣸⡇⠀⠀⠀⠀
-⠀⠀⠈⢿⣧⠀⠈⠛⢯⣿⠀⠀⠀⠈⠃⠀⠀⠈⠁⠀⠀⠸⠟⠁⠀⠀⠀⣿⣶⠟⠁⠀⠀⣿⠁⠀⠀⠀⠀
-⠀⠀⠀⠈⢷⣧⠀⠀⠀⠙⠃⠀⢀⣠⣴⣶⠦⠭⠭⠭⠶⣶⣦⣄⡀⠀⠀⠛⠁⠀⠀⠀⢰⣿⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⢻⣧⠀⠀⠀⢀⣴⠿⢋⣁⡀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠷⣦⣄⠀⠀⠀⠀⣸⡿⠀⢀⣠⣤⠆
-⠀⠀⠀⠀⠀⠀⢻⣧⠀⣠⠟⠁⠀⢾⣗⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣬⡻⣷⣄⠀⠀⡿⣷⣾⢽⣶⠋⠀
-⠀⠀⠀⠀⠀⠀⠀⢻⣿⠏⣖⣲⡦⣬⣭⠤⠤⢤⣀⣀⣀⡀⠀⠀⢸⣷⣆⡿⠈⢿⢦⠀⠛⠉⣠⡿⠃⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⡏⢸⡽⠀⡆⡇⢸⡏⢹⡽⠉⣿⢒⣿⢻⡹⢲⡿⣯⣤⣤⣈⢏⡇⠀⣰⡿⠁⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⡇⠀⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣸⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⡀⢸⠃⢀⢿⠀⣻⢠⡿⢠⡿⢠⡿⢰⡿⢸⡏⢸⢇⣿⣸⠃⢸⣼⠋⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢹⣧⣾⠀⢸⣹⢸⡟⣸⠇⣾⠇⣾⠇⣾⢇⣿⢀⡿⢸⣏⡿⢀⣾⠃⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠻⣯⣭⣭⣕⣾⣷⣿⣾⣾⣾⣾⣼⣿⡼⣇⣸⡇⣿⢹⣧⣾⠃⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⡦⣄⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠛⠛⢿⡉⢉⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠻⣿⣢⣄⣀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣷⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠯⢿⣓⣒⣲⢖⣒⣲⡿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`;
+⠘⣿⣽⣻⣦⣀⠀⢹⣿___⠙⢿⣾⢿⠁___⢻⣷⡿___⠈⣿___⢀⣾⠋___⣿⠀⠀___⢀⣠⣾⡇⠀⠀⠀⠀
+___⠘⢿⣯⠑⠯⣷⣄⣿⡇⠀⠀⠹⣽⡄___⠈⢧⡇⠀⠀⢹⣧⡿⠁⠀⠀⣿___⢀⣴⠿⠋⣸⡇⠀⠀⠀⠀
+⠀⠀⠈⢿⣧___⠈⠛⢯⣿⠀⠀___⠈⠃⠀⠀⠈⠁⠀⠀⠸⠟⠁⠀⠀___⠹⣶⠟⠁⠀⠀⣿⠁⠀⠀⠀⠀
+⠀⠀___⠈⢷⣧_______⠙⠃___⢀⣠⣴⣶⠦⠭⠭⠭⠶⣶⣦⣄⡀⠀⠀⠛⠁_______⢰⣿⠀⠀⠀⠀⠀
+___________⢻⣧_______⢀⣴⠿⢋⣁⡀___________⠉⠛⠷⣦⣄________⣸⡿___⢀⣠⣤⠆
+____________⢻⣧___⣠⠟⠁___⢾⣗⡿________________⢀⣤⣬⡻⣷⣄⠀⠀⡿⣷⣾⢽⣶⠋⠀
+_______________⢻⣿⠏⣖⣲⡦⣬⣭⠤⠤⢤⣀⣀⣀⡀⠀⠀⢸⣷⣆⡿⠈⢿⢦___⠛⠉⣠⡿⠃⠀⠀
+_______________⣿⡏⢸⡽___⡆⡇⢸⡏⢹⡽⠉⣿⢒⣿⢻⡹⢲⡿⣯⣤⣤⣈⢏⡇___⣰⡿⠀⠀⠀
+_______________⣿___⢸⡇___⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣸⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
+_______________⣿⡀⢸⠃⢀⢿___⣻⢠⡿⢠⡿⢠⡿⢰⡿⢸⡏⢸⢇⣿⣸⠃⢸⣼⠋⠀⠀⠀⠀⠀⠀
+_______________⢹⣧⣾___⢸⣹⢸⡟⣸⠇⣾⠇⣾⠇⣾⢇⣿⢀⡿⢸⣏⡿⢀⣾⠃⠀⠀⠀⠀⠀⠀⠀
+__________________⠻⣯⣭⣭⣕⣾⣷⣿⣾⣾⣾⣾⣼⣿⡼⣇⣸⡇⣿⢹⣧⣾⠃⠀⠀⠀⠀⠀⠀⠀⠀
+_____________________⠙⢿⡦⣄____________⠉⠉⠉⠉⠛⠛⢿⡉⢉⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀
+________________________⠙⠻⣿⣢⣄⣀____________⢀⣴⣷⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+______________________________⠉⠛⠯⢿⣓⣒⣲⢖⣒⣲⡿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`;
 
 const INITIATE_SUCCESS_ASCII = `
 +----------------------------------------+
@@ -544,6 +548,7 @@ let commandHistory = [];
 let historyIndex = -1;
 
 function awakenAltar() {
+// Absolute direct browser event pipeline invocation for mobile Web Audio engines
 initAudio();
 playTone(48, 'sawtooth', 3.0, 0.25);
 playTone(49, 'sawtooth', 3.0, 0.25);
@@ -551,7 +556,6 @@ startBackgroundDrone();
 document.getElementById('splash-screen').style.display = 'none';
 setTimeout(runBootSequence, 800);
 }
-// Clean newline additions inside text stream generation to isolate braille structures safely
 function displayBoognish() {
 writeLine("");
 writeHtmlLine(`
@@ -1052,10 +1056,27 @@ let rewardHtml = '<div class="reward-box">' +
 '<div class="lockout-msg-container">' +
 '<p style="font-size: 18px; font-weight: bold; line-height: 1.3; color: #ff3300; text-shadow: 0 0 8px rgba(255,51,0,0.8); border: 2px solid #ff3300; padding: 10px; display: inline-block; background: rgba(255,51,0,0.05); margin: 0;">THE SCEPTRE REELS ARE BURNING. COGNITIVE LOCKOUT ACTIVE.</p>' +
 '</div>' +
+'<div id="mobile-inline-status" style="display:none; margin-top:12px; font-size:14px; color:#ffaa00; font-weight:bold;"></div>' +
 '</div>' +
 '</div>';
 writeHtmlLine(rewardHtml);
-writeLine("\n[+] SUCCESS: Devotion logged. The machine grows louder. Do not stop scanning now, the altar contains deeper unlisted paths for the truly persistent.", "success-text");
+
+// Contextual Mobile Layout Protection Override Check
+const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+const statusText = "[+] SUCCESS: Devotion logged. The machine grows louder. Do not stop scanning now, the altar contains deeper unlisted paths for the truly persistent.";
+
+if (isMobileDevice) {
+// Route status directly inside the card structure container to secure vertical viewport stability
+const inlineStatusElement = document.getElementById('mobile-inline-status');
+if (inlineStatusElement) {
+inlineStatusElement.innerText = statusText;
+inlineStatusElement.style.display = 'block';
+}
+} else {
+// Print downstream text lines normally across spacious desktop screens
+writeLine("\n" + statusText, "success-text");
+}
+
 playSuccessChime();
 terminalInput.disabled = false;
 terminalInput.focus();
@@ -1282,6 +1303,7 @@ inputRenderChars.textContent = '';
 window.onload = () => {
 // Dynamic contextual device classification and optimization engine
 const actionTextElement = document.getElementById('splash-action-text');
+const splashElement = document.getElementById('splash-screen');
 const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
 
 if (isMobileDevice) {
@@ -1299,8 +1321,12 @@ advisoryBanner.style.letterSpacing = '1px';
 advisoryBanner.style.lineHeight = '1.4';
 advisoryBanner.innerHTML = "⚠️ TERMINAL NOTICE:<br>THIS SITE IS BEST EXPERIENCED ON DESKTOP.<br>FOR COMPLETE ARCHIVAL EXTRACTION, A HARDWARE MONOSPACE DISPLAY IS STRONGLY ADVISED.";
 document.querySelector('.splash-content').appendChild(advisoryBanner);
+
+// Explicit mobile touch binding handlers to shatter iOS sound locks instantly
+splashElement.addEventListener('touchstart', awakenAltar, { passive: false });
 } else {
 actionTextElement.innerText = "[ CLICK THE MONITORS TO AWAKEN THE CROWN ]";
+splashElement.addEventListener('click', awakenAltar);
 }
 
 const savedTheme = localStorage.getItem('boognish_theme');
