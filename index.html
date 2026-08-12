@@ -56,6 +56,8 @@ padding: 20px;
 .splash-content {
 animation: pulse 2.5s infinite;
 padding: 20px;
+max-width: 600px;
+width: 100%;
 }
 .splash-sub {
 font-size: 16px;
@@ -301,14 +303,67 @@ letter-spacing: 3px;
 margin-top: 8px;
 font-size: 18px;
 }
-/* Mobile specific media adjustments */
+
+/* Mobile Specific Responsive Hierarchy Engine */
+@media (max-width: 768px) {
+body, html, #terminal-input, #visual-input-render {
+font-size: 15px; /* De-clutter text scales across mid-size displays */
+}
+.line {
+margin-bottom: 5px;
+line-height: 1.35;
+}
+/* Highly condensed layout specs for reward components to fit on one viewport screen */
+.reward-box {
+padding: 14px !important;
+margin: 10px 0 !important;
+border-width: 1.5px !important;
+}
+.reward-box h2 {
+font-size: 18px !important;
+margin-bottom: 8px !important;
+}
+.reward-box p {
+font-size: 14px !important;
+margin-bottom: 8px !important;
+line-height: 1.4 !important;
+}
+.reward-link {
+padding: 8px 12px !important;
+font-size: 14px !important;
+margin-bottom: 6px !important;
+max-width: 100% !important;
+text-align: center !important;
+}
+.lockout-msg-container {
+margin-top: 12px !important;
+}
+.lockout-msg-container p {
+font-size: 13px !important;
+padding: 6px !important;
+border-width: 1px !important;
+}
+}
+
 @media (max-width: 480px) {
 body, html, #terminal-input, #visual-input-render {
-font-size: 16px;
+font-size: 13px; /* Maximum compression factor for standard hand-held dimensions */
+}
+.line {
+margin-bottom: 4px;
+line-height: 1.3;
 }
 .cursor {
-width: 9px;
-height: 18px;
+width: 8px;
+height: 15px;
+}
+.ascii-art {
+font-size: 8px !important; /* Scale down the Braille matrix rows dynamically to protect mono column flow alignment */
+line-height: 1.0 !important;
+}
+.ascii-caption {
+font-size: 13px;
+letter-spacing: 1px;
 }
 }
 </style>
@@ -324,8 +379,8 @@ height: 18px;
 <div class="crt-overlay"></div>
 <div class="terminal-container">
 <header class="terminal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-<span class="header-title" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 10px;">ALTAR INTERFACE MODULE // TRANSMISSION NODE 0.440</span>
-<button class="audio-toggle" id="mute-btn" onclick="toggleAudio()" style="background: transparent; border: 1px solid var(--terminal-color); color: var(--terminal-color); font-family: monospace; padding: 4px 10px; cursor: pointer; text-shadow: 0 0 3px var(--terminal-glow); white-space: nowrap; font-size: 15px; border-radius: 3px;">AUDIO: ON</button>
+<span class="header-title" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 10px; font-size: 14px; opacity: 0.85;">ALTAR INTERFACE MODULE // TRANSMISSION NODE 0.440</span>
+<button class="audio-toggle" id="mute-btn" onclick="toggleAudio()" style="background: transparent; border: 1px solid var(--terminal-color); color: var(--terminal-color); font-family: monospace; padding: 4px 10px; cursor: pointer; text-shadow: 0 0 3px var(--terminal-glow); white-space: nowrap; font-size: 13px; border-radius: 3px;">AUDIO: ON</button>
 </header>
 <main class="terminal-screen" id="screen">
 <!-- Content filled by JavaScript -->
@@ -496,6 +551,7 @@ startBackgroundDrone();
 document.getElementById('splash-screen').style.display = 'none';
 setTimeout(runBootSequence, 800);
 }
+// Clean newline additions inside text stream generation to isolate braille structures safely
 function displayBoognish() {
 writeLine("");
 writeHtmlLine(`
@@ -989,12 +1045,12 @@ let rewardHtml = '<div class="reward-box">' +
 '<h2>BOOGNISH PROVIDES: TRANSACTION OVERRIDE GLYPH</h2>' +
 '<p style="font-style: italic; opacity: 0.95;">Whisper nothing of what the glass has revealed. Breathe this transmission into no other ear. If the circle fractures, the line will fall forever silent and the altar will receive no further offerings. Guard the reels and you will soon be rewarded.</p>' +
 '<p>The first 250 disciples to present this glyph at the store checkout gates receive a 25% discount off their total offering counter.</p>' +
-'<p style="font-size: 17px; opacity: 0.85; border-top: 1px dashed rgba(0,255,102,0.3); padding-top: 12px;">To ensure transmission longevity and receive further special offerings directly from the alignment core, register your coordinate nodes below:</p>' +
-'<p style="font-size: 26px; font-weight: bold; color: #fff; letter-spacing: 2px; margin: 10px 0 20px 0;">PROMO CODE: VALLEJO25</p>' +
+'<p style="font-size: 14px; opacity: 0.85; border-top: 1px dashed rgba(0,255,102,0.3); padding-top: 10px;">To ensure transmission longevity and receive further special offerings directly from the alignment core, register your coordinate nodes below:</p>' +
+'<p style="font-size: 22px; font-weight: bold; color: #fff; letter-spacing: 2px; margin: 8px 0 15px 0;">PROMO CODE: VALLEJO25</p>' +
 '<a href="https://ween.com" target="_blank" class="reward-link">ENTER OFFICIAL WEEN STORE</a>' +
 '<a href="https://ween.com#contact_form" target="_blank" class="reward-link" style="background: #ffaa00 !important;">SUBSCRIBE TO TRANSMISSIONS</a>' +
 '<div class="lockout-msg-container">' +
-'<p style="font-size: 22px; font-weight: bold; line-height: 1.4; color: #ff3300; text-shadow: 0 0 10px rgba(255,51,0,0.8); border: 2px solid #ff3300; padding: 12px; display: inline-block; background: rgba(255,51,0,0.05); margin: 0;">THE SCEPTRE REELS ARE BURNING. COGNITIVE LOCKOUT ACTIVE.</p>' +
+'<p style="font-size: 18px; font-weight: bold; line-height: 1.3; color: #ff3300; text-shadow: 0 0 8px rgba(255,51,0,0.8); border: 2px solid #ff3300; padding: 10px; display: inline-block; background: rgba(255,51,0,0.05); margin: 0;">THE SCEPTRE REELS ARE BURNING. COGNITIVE LOCKOUT ACTIVE.</p>' +
 '</div>' +
 '</div>' +
 '</div>';
@@ -1230,6 +1286,19 @@ const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera
 
 if (isMobileDevice) {
 actionTextElement.innerText = "[ TOUCH THE MONITORS TO AWAKEN THE CROWN ]";
+// Inject explicit best experienced warning banner for touch displays
+const advisoryBanner = document.createElement('div');
+advisoryBanner.style.color = '#ff3300';
+advisoryBanner.style.fontSize = '14px';
+advisoryBanner.style.marginTop = '22px';
+advisoryBanner.style.border = '1px solid #ff3300';
+advisoryBanner.style.padding = '8px 12px';
+advisoryBanner.style.background = 'rgba(255, 51, 0, 0.08)';
+advisoryBanner.style.textTransform = 'uppercase';
+advisoryBanner.style.letterSpacing = '1px';
+advisoryBanner.style.lineHeight = '1.4';
+advisoryBanner.innerHTML = "⚠️ TERMINAL NOTICE:<br>THIS SITE IS BEST EXPERIENCED ON DESKTOP.<br>FOR COMPLETE ARCHIVAL EXTRACTION, A HARDWARE MONOSPACE DISPLAY IS STRONGLY ADVISED.";
+document.querySelector('.splash-content').appendChild(advisoryBanner);
 } else {
 actionTextElement.innerText = "[ CLICK THE MONITORS TO AWAKEN THE CROWN ]";
 }
