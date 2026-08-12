@@ -51,6 +51,7 @@ letter-spacing: 2px;
 text-align: center;
 text-shadow: 0 0 5px var(--terminal-glow);
 transition: background-color 0.5s ease;
+padding: 20px;
 }
 .splash-content {
 animation: pulse 2.5s infinite;
@@ -106,17 +107,22 @@ box-shadow: inset 0 0 100px rgba(0,0,0,0.95);
 50% { opacity: 1; }
 100% { opacity: 0.95; }
 }
-/* Terminal Window Container */
+/* Terminal Window Container - Fluid responsiveness */
 .terminal-container {
 width: 100%;
 height: 100%;
-padding: 25px;
+padding: 4vw; /* Adaptive scaling spacing framework */
 display: flex;
 flex-direction: column;
 justify-content: flex-start;
 position: relative;
 z-index: 1;
 text-shadow: 0 0 5px var(--terminal-glow);
+}
+@media (min-width: 768px) {
+.terminal-container {
+padding: 25px;
+}
 }
 .terminal-screen {
 flex-grow: 1;
@@ -295,6 +301,16 @@ letter-spacing: 3px;
 margin-top: 8px;
 font-size: 18px;
 }
+/* Mobile specific media adjustments */
+@media (max-width: 480px) {
+body, html, #terminal-input, #visual-input-render {
+font-size: 16px;
+}
+.cursor {
+width: 9px;
+height: 18px;
+}
+}
 </style>
 </head>
 <body>
@@ -302,14 +318,14 @@ font-size: 18px;
 <div id="splash-screen" onclick="awakenAltar()">
 <div class="splash-content">
 === APPROACH THE ALTAR OF THE CROWN ===
-<span class="splash-sub">[ TOUCH THE MONITORS TO AWAKEN THE CROWN ]</span>
+<span class="splash-sub" id="splash-action-text">[ TOUCH THE MONITORS TO AWAKEN THE CROWN ]</span>
 </div>
 </div>
 <div class="crt-overlay"></div>
 <div class="terminal-container">
-<header class="terminal-header">
-<span class="header-title">ALTAR INTERFACE MODULE // TRANSMISSION NODE 0.440</span>
-<button class="audio-toggle" id="mute-btn" onclick="toggleAudio()">AUDIO: ON</button>
+<header class="terminal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+<span class="header-title" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 10px;">ALTAR INTERFACE MODULE // TRANSMISSION NODE 0.440</span>
+<button class="audio-toggle" id="mute-btn" onclick="toggleAudio()" style="background: transparent; border: 1px solid var(--terminal-color); color: var(--terminal-color); font-family: monospace; padding: 4px 10px; cursor: pointer; text-shadow: 0 0 3px var(--terminal-glow); white-space: nowrap; font-size: 15px; border-radius: 3px;">AUDIO: ON</button>
 </header>
 <main class="terminal-screen" id="screen">
 <!-- Content filled by JavaScript -->
@@ -413,17 +429,17 @@ playTone(randomFreq, waveform, length, 0.08);
 // --- Exact Reference Braille Boognish Art (Fully Escaped String Literal) ---
 const BOOGNISH_ASCII = `⠀⠀⠀⠀⠀⠀⣄⠀⠀⠀⠀⠀⠀⣸⣆⠀⠀⠀⠀⢀⣄⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⢻⣿⣦⡀⠀⠀⠀⣿⣿⣆⠀⠀⢀⣾⣿⡀⠀⠀⠀⠀⣴⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⣤⣤⣀⠀⠀⠀⠈⣿⡟⢿⣦⡀⠀⣿⡇⢻⣆///⣿⡇⢛⣆___⣼⡏⢸⡇⠀⠀⢀⣠⠟⣿⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀
+⣤⣤⣀⠀⠀⠀⠈⣿⡟⢿⣦⡀⠀⣿⡇⢻⣆⠀⣼⡏⢸⡇⠀⠀⢀⣼⠟⣿⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀
 ⠘⣿⣽⣻⣦⣀⠀⢹⣿⠀⠙⢿⣾⢿⠁⠀⢻⣷⡿⠀⠈⣿⠀⢀⣾⠋⠀⣿⠀⠀⠀⢀⣠⣾⡇⠀⠀⠀⠀
 ⠀⠘⢿⣯⠑⠯⣷⣄⣿⡇⠀⠀⠹⣽⡄⠀⠈⢧⡇⠀⠀⢹⣧⡿⠁⠀⠀⣿⠀⢀⣴⠿⠋⣸⡇⠀⠀⠀⠀
 ⠀⠀⠈⢿⣧⠀⠈⠛⢯⣿⠀⠀⠀⠈⠃⠀⠀⠈⠁⠀⠀⠸⠟⠁⠀⠀⠀⣿⣶⠟⠁⠀⠀⣿⠁⠀⠀⠀⠀
 ⠀⠀⠀⠈⢷⣧⠀⠀⠀⠙⠃⠀⢀⣠⣴⣶⠦⠭⠭⠭⠶⣶⣦⣄⡀⠀⠀⠛⠁⠀⠀⠀⢰⣿⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⢻⣧⠀⠀⠀⢀⣴⠿⢋⣁⡀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠷⣦⣄⠀⠀⠀⠀⣸⡿⠀⢀⣠⣤⠆
-⠀⠀⠀⠀⠀⠀⢻⣧⠀⣠⠟⠁___⢾⣗⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣬⡻⣷⣄⠀⠀⡿⣷⣾⢽⣶⠋⠀
+⠀⠀⠀⠀⠀⠀⢻⣧⠀⣠⠟⠁⠀⢾⣗⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣬⡻⣷⣄⠀⠀⡿⣷⣾⢽⣶⠋⠀
 ⠀⠀⠀⠀⠀⠀⠀⢻⣿⠏⣖⣲⡦⣬⣭⠤⠤⢤⣀⣀⣀⡀⠀⠀⢸⣷⣆⡿⠈⢿⢦⠀⠛⠉⣠⡿⠃⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⣿⡏⢸⡽⠀⡆⡇⢸⡏⢹⡽⠉⣿⢒⣿⢻⡹⢲⡿⣯⣤⣤⣈⢏⡇⠀⣰⡿⠁⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⡇⠀⣿⣿⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣸⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⡀⢸⠃⢀⢿⠀⣻⢠⡿⢠⡿⢠⡿⢰⡿⢸⡏⢸⢇⣿⣸⠃⢸⣼⋰⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⡇⠀⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣸⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣿⡀⢸⠃⢀⢿⠀⣻⢠⡿⢠⡿⢠⡿⢰⡿⢸⡏⢸⢇⣿⣸⠃⢸⣼⠋⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⢹⣧⣾⠀⢸⣹⢸⡟⣸⠇⣾⠇⣾⠇⣾⢇⣿⢀⡿⢸⣏⡿⢀⣾⠃⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠻⣯⣭⣭⣕⣾⣷⣿⣾⣾⣾⣾⣼⣿⡼⣇⣸⡇⣿⢹⣧⣾⠃⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⡦⣄⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠛⠛⢿⡉⢉⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -481,12 +497,14 @@ document.getElementById('splash-screen').style.display = 'none';
 setTimeout(runBootSequence, 800);
 }
 function displayBoognish() {
+writeLine("");
 writeHtmlLine(`
 <div class="ascii-container">
 <pre class="ascii-art">${BOOGNISH_ASCII}</pre>
 <div class="ascii-caption">THE DEMON-GOD BOOGNISH</div>
 </div>
 `);
+writeLine("");
 }
 function writeLine(text, className = '') {
 const line = document.createElement('div');
@@ -1206,6 +1224,16 @@ inputRenderChars.textContent = '';
 }
 });
 window.onload = () => {
+// Dynamic contextual device classification and optimization engine
+const actionTextElement = document.getElementById('splash-action-text');
+const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+if (isMobileDevice) {
+actionTextElement.innerText = "[ TOUCH THE MONITORS TO AWAKEN THE CROWN ]";
+} else {
+actionTextElement.innerText = "[ CLICK THE MONITORS TO AWAKEN THE CROWN ]";
+}
+
 const savedTheme = localStorage.getItem('boognish_theme');
 if (savedTheme === 'brown') {
 document.body.classList.add('theme-brown');
