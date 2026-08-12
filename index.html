@@ -365,7 +365,6 @@
             }
         }
     </style>
-</type>
 </head>
 <body>
     <!-- 
@@ -401,7 +400,7 @@
 ⠀⠀⠀⠀⠀⠀⠀⣿⡏⢸⡽⠀⡆⡇⢸⡏⢹⡽⠉⣿⢒⣿⢻⡹⢲⡿⣯⣤⣤⣈⢏⡇⠀⣰⡿⠁⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⡇⠀⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣸⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⣿⡀⢸⠃⢀⢿⠀⣻⢠⡿⢠⡿⢠⡿⢰⡿⢸⡏⢸⢇⣿⣸⠃⢸⣼⠋⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢹⣧⣾⠀⢸⣹⢸⡟⣸⠇⣾⠇⣾⠇⣾⢇⣿⢀⡿⢸⣏⡿⢀⣾⠃⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢹⣧⣾⠀⢸⣹⢸⡟⣸⠇⣾⠇⣾⠇⣾⢇⣿⢀⡿⢸⣏⡿⢀⣾⠃⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠻⣯⣭⣭⣕⣾⣷⣿⣾⣾⣾⣾⣼⣿⡼⣇⣸⡇⣿⢹⣧⣾⠃⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⡦⣄⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠛⠛⢿⡉⢉⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠻⣿⣢⣄⣀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣷⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -438,6 +437,12 @@ let audioCtx = null;
 let bgOsc1 = null;
 let bgOsc2 = null;
 let bgGain = null;
+
+// Vallejo Tab Loop State Variables
+let vallejoIntervalId = null;
+const vallejoBPM = 170;
+const eighthNoteDuration = 60 / vallejoBPM / 2; // Eighth note duration in seconds (~0.176s)
+
 function initAudio() {
 if (!audioCtx) {
 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -462,8 +467,68 @@ osc.start();
 osc.stop(audioCtx.currentTime + duration);
 } catch (e) {}
 }
+
+// Custom Polyphonic Synth Function to cleanly play the Open E-Minor Chord Stab Tab Architecture
+function playEMinorChordStab(volume = 0.08) {
+    if (!audioEnabled) return;
+    try {
+        initAudio();
+        // E-Minor Open Chord Array Layout Frequencies (Low to High):
+        // E2 (82.41 Hz), B2 (110.00 Hz), E3 (164.81 Hz), G3 (196.00 Hz), B3 (246.94 Hz), E4 (329.63 Hz)
+        const chordFrequencies = [82.41, 110.00, 164.81, 196.00, 246.94, 329.63];
+        const now = audioCtx.currentTime;
+        const strumDuration = 0.18; // Short, punchy down-stroke strum layout
+
+        chordFrequencies.forEach((freq, index) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            // Overdrive-parody configuration combining sawtooth warmth with a triangle base
+            osc.type = index < 2 ? 'sawtooth' : 'triangle';
+            osc.frequency.value = freq;
+            
+            // Stagger string triggers slightly (micro-arpeggiation) to mimic a real guitar string stroke
+            const stringDelay = index * 0.006; 
+            
+            gain.gain.setValueAtTime(0.001, now + stringDelay);
+            gain.gain.exponentialRampToValueAtTime(volume / chordFrequencies.length, now + stringDelay + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.00001, now + stringDelay + strumDuration);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start(now + stringDelay);
+            osc.stop(now + stringDelay + strumDuration);
+        });
+    } catch(e) {}
+}
+
+// Loop Routine Engine playing the repeating 4/4 Eighth-Note Tab sequence pattern at 170 BPM
+function startVallejoMelodyLoop() {
+    if (vallejoIntervalId) return;
+    stopBackgroundDrone(); // Mute background drone so the signature riff cleanly cuts through space
+    
+    let beatStep = 0;
+    // Each measure contains 8 steps (eighth notes). 
+    // The tab blueprint shows alternating Down-stroke Stabs on every single eighth-note beat interval followed instantly by a micro rest.
+    // Pattern Matrix: [Chord, Rest, Chord, Rest, Chord, Rest, Chord, Rest]
+    vallejoIntervalId = setInterval(() => {
+        if (beatStep % 2 === 0) {
+            playEMinorChordStab(0.12);
+        }
+        beatStep = (beatStep + 1) % 8;
+    }, eighthNoteDuration * 1000);
+}
+
+function stopVallejoMelodyLoop() {
+    if (vallejoIntervalId) {
+        clearInterval(vallejoIntervalId);
+        vallejoIntervalId = null;
+    }
+}
+
 function startBackgroundDrone() {
-if (!audioEnabled || bgOsc1) return;
+if (!audioEnabled || bgOsc1 || vallejoIntervalId) return; // Guard drone if riff is playing
 try {
 initAudio();
 bgOsc1 = audioCtx.createOscillator();
@@ -496,9 +561,15 @@ bgOsc2 = null;
 function playKeySound() {
 playTone(180 + Math.random() * 200, 'triangle', 0.05, 0.04);
 }
-function playReturnSound() {
+function playOriginalReturnSound() {
 playTone(110, 'sawtooth', 0.15, 0.06);
 setTimeout(() => playTone(55, 'sawtooth', 0.2, 0.08), 50);
+}
+function playReturnSound() {
+    // Only interrupt or play default keystroke return feedback sound mapping if custom loop is inactive
+    if (!vallejoIntervalId) {
+        playOriginalReturnSound();
+    }
 }
 function playErrorSound() {
 playTone(80, 'sawtooth', 0.45, 0.12);
@@ -570,7 +641,6 @@ document.getElementById('splash-screen').style.display = 'none';
 setTimeout(runBootSequence, 800);
 }
 
-// --- Safe runtime DOM parser retrieval framework ---
 function displayBoognish() {
 writeLine("");
 const templateContent = document.getElementById('boognish-matrix-source').innerHTML;
@@ -647,6 +717,13 @@ if (!trimmed) return;
 commandHistory.push(trimmed);
 historyIndex = commandHistory.length;
 writeLine(`> ${trimmed}`);
+
+// Stop the Vallejo riff immediately if the user inputs any new terminal text execution command sequence
+if (vallejoIntervalId) {
+    stopVallejoMelodyLoop();
+    startBackgroundDrone();
+}
+
 if (trimmed === '175750') {
 runBackdoorOverride();
 return;
@@ -747,6 +824,12 @@ if (args[1] === 'blessed_glyph.txt') {
 writeHtmlLine(`<pre class="ascii-art success-text">${INITIATE_SUCCESS_ASCII}</pre>`);
 }
 writeLine(fileSystem[args[1]]);
+
+// --- TRIGGER AUDIT TRAP: Fire up the looping rhythm riff when 'cat sceptre.txt' runs ---
+if (args[1] === 'sceptre.txt') {
+    startVallejoMelodyLoop();
+}
+
 } else {
 writeLine("Error: Fragment node '" + args[1] + "' does not exist or has been eaten by the waste.", "system-alert");
 playErrorSound();
@@ -1142,6 +1225,7 @@ function handleCacheClear() {
 terminalInput.disabled = true;
 playAudioGlitch();
 stopBackgroundDrone();
+stopVallejoMelodyLoop();
 writeLine("\n[!] WARNING: INITIATING ABSOLUTION OVERLAY PROCESS...", "system-alert");
 setTimeout(() => {
 localStorage.clear();
@@ -1309,7 +1393,11 @@ audioEnabled = !audioEnabled;
 document.getElementById('mute-btn').innerText = `AUDIO: ${audioEnabled ? 'ON' : 'OFF'}`;
 if (audioEnabled) {
 playReturnSound();
-startBackgroundDrone();
+if (vallejoIntervalId) {
+    // Keep drone muted if the rhythm tab riff loop is active
+} else {
+    startBackgroundDrone();
+}
 } else {
 stopBackgroundDrone();
 }
