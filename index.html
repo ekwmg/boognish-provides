@@ -1,398 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Altar of Boognish - Virtual Terminal Ritual</title>
-<style>
-/* Theme variables dynamically handled via body classes */
-:root {
---terminal-color: #00ff66;
---terminal-glow: rgba(0, 255, 102, 0.4);
---terminal-bg: #030803;
---terminal-scanline: rgba(0, 255, 102, 0.03);
---ascii-color: #00ff66;
-}
-body.theme-brown {
---terminal-color: #b56b12;
---terminal-glow: rgba(181, 107, 18, 0.4);
---terminal-bg: #0d0600;
---terminal-scanline: rgba(181, 107, 18, 0.04);
---ascii-color: #d47a1c;
-}
-* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-}
-body, html {
-width: 100%;
-height: 100%;
-background-color: var(--terminal-bg);
-font-family: 'Courier New', Courier, monospace;
-color: var(--terminal-color);
-font-size: 19px; /* Base global font size for better legibility */
-overflow: hidden;
-position: relative;
-transition: background-color 0.5s ease, color 0.3s ease;
-}
-/* Interactive Audio Activation Splash Overlay */
-#splash-screen {
-position: absolute;
-top: 0; left: 0; width: 100%; height: 100%;
-background-color: var(--terminal-bg);
-z-index: 100;
-display: flex;
-justify-content: center;
-align-items: center;
-cursor: pointer;
-font-size: 22px;
-letter-spacing: 2px;
-text-align: center;
-text-shadow: 0 0 5px var(--terminal-glow);
-transition: background-color 0.5s ease;
-padding: 20px;
-}
-.splash-content {
-animation: pulse 2.5s infinite;
-padding: 20px;
-max-width: 600px;
-width: 100%;
-}
-.splash-sub {
-font-size: 16px;
-opacity: 0.6;
-display: block;
-margin-top: 15px;
-}
-@keyframes pulse {
-0%, 100% { opacity: 0.5; }
-50% { opacity: 1; }
-}
-/* CRT Screen Effects */
-body::before {
-content: " ";
-display: block;
-position: absolute;
-top: 0; left: 0; bottom: 0; right: 0;
-background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%),
-linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
-z-index: 10;
-background-size: 100% 4px, 6px 100%;
-pointer-events: none;
-}
-body::after {
-content: " ";
-display: block;
-position: absolute;
-top: 0; left: 0; bottom: 0; right: 0;
-background: linear-gradient(var(--terminal-scanline) 50%, transparent 50%);
-background-size: 100% 8px;
-z-index: 11;
-pointer-events: none;
-animation: scanline 15s linear infinite;
-}
-@keyframes scanline {
-0% { background-position: 0 0; }
-100% { background-position: 0 100%; }
-}
-.crt-overlay {
-position: absolute;
-top: 0; left: 0; width: 100%; height: 100%;
-z-index: 12;
-pointer-events: none;
-animation: crt-flicker 0.25s infinite;
-box-shadow: inset 0 0 100px rgba(0,0,0,0.95);
-}
-@keyframes crt-flicker {
-0% { opacity: 0.96; }
-50% { opacity: 1; }
-100% { opacity: 0.95; }
-}
-/* Terminal Window Container - Fluid responsiveness */
-.terminal-container {
-width: 100%;
-height: 100%;
-padding: 4vw; /* Adaptive scaling spacing framework */
-display: flex;
-flex-direction: column;
-justify-content: flex-start;
-position: relative;
-z-index: 1;
-text-shadow: 0 0 5px var(--terminal-glow);
-}
-@media (min-width: 768px) {
-.terminal-container {
-padding: 25px;
-}
-}
-.terminal-screen {
-flex-grow: 1;
-overflow-y: auto;
-margin-bottom: 20px;
-padding-right: 10px;
-text-align: left !important; /* Force baseline display engine layout left */
-}
-/* Scrollbar Styling */
-.terminal-screen::-webkit-scrollbar {
-width: 8px;
-}
-.terminal-screen::-webkit-scrollbar-track {
-background: rgba(0, 0, 0, 0.5);
-}
-.terminal-screen::-webkit-scrollbar-thumb {
-background: var(--terminal-color);
-border-radius: 4px;
-}
-/* Output typography */
-.line {
-line-height: 1.4;
-margin-bottom: 8px;
-white-space: pre-wrap;
-word-wrap: break-word;
-text-align: left !important;
-}
-.system-alert {
-color: #ff3300;
-text-shadow: 0 0 6px rgba(255, 51, 0, 0.6);
-}
-.success-text {
-color: #ffaa00;
-text-shadow: 0 0 6px rgba(255, 170, 0, 0.6);
-}
-/* Reward box is inline, fitting perfectly into text scroll streams */
-.reward-box {
-border: 2px dashed var(--terminal-color) !important;
-padding: 24px !important;
-margin: 20px 0 !important;
-background: rgba(0, 0, 0, 0.4) !important;
-display: block !important;
-text-align: left !important;
-width: 100% !important;
-max-width: 750px !important;
-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5) !important;
-}
-.reward-content-wrapper {
-text-align: left !important;
-width: 100% !important;
-display: block !important;
-}
-.reward-box h2 {
-font-size: 24px !important;
-text-align: left !important;
-margin: 0 0 16px 0 !important;
-display: block !important;
-width: 100% !important;
-}
-.reward-box p {
-font-size: 20px !important;
-line-height: 1.5 !important;
-margin: 0 0 14px 0 !important;
-text-align: left !important;
-display: block !important;
-width: 100% !important;
-}
-.reward-link {
-color: #000000 !important;
-background: var(--terminal-color) !important;
-padding: 10px 20px !important;
-text-decoration: none !important;
-display: block !important; /* Converts link to clean layout block */
-max-width: 320px !important;
-margin: 0 0 12px 0 !important;
-font-weight: bold !important;
-font-size: 18px !important;
-text-shadow: none !important;
-text-align: center !important; /* Center-align link text inside the box button itself */
-transition: opacity 0.15s ease !important;
-cursor: pointer !important;
-}
-.reward-link:hover {
-background: #ffffff !important;
-color: #000000 !important;
-opacity: 0.95 !important;
-}
-.lockout-msg-container {
-margin-top: 25px !important;
-display: block !important;
-width: 100% !important;
-text-align: left !important;
-}
-/* Input Bar */
-.input-container {
-display: flex;
-align-items: center;
-border-top: 1px solid rgba(0, 255, 102, 0.2);
-padding-top: 15px;
-text-align: left !important;
-}
-body.theme-brown .input-container {
-border-top: 1px solid rgba(181, 107, 18, 0.2);
-}
-.prompt {
-font-weight: bold;
-margin-right: 10px;
-white-space: nowrap;
-letter-spacing: 1px;
-text-align: left !important;
-}
-.input-wrapper {
-flex-grow: 1;
-position: relative;
-display: flex;
-align-items: center;
-text-align: left !important;
-}
-#terminal-input {
-width: 100%;
-background: transparent;
-border: none;
-outline: none;
-color: transparent;
-caret-color: transparent;
-font-family: 'Courier New', Courier, monospace;
-font-size: 19px;
-position: absolute;
-left: 0;
-top: 0;
-height: 100%;
-z-index: 2;
-text-align: left !important;
-}
-#visual-input-render {
-font-size: 19px;
-color: var(--terminal-color);
-white-space: pre-wrap;
-pointer-events: none;
-z-index: 1;
-display: flex;
-align-items: center;
-width: 100%;
-text-align: left !important;
-}
-.cursor {
-display: inline-block;
-width: 11px;
-height: 22px;
-background-color: var(--terminal-color);
-box-shadow: 0 0 5px var(--terminal-color);
-animation: blink 0.8s infinite;
-margin-left: 1px;
-}
-@keyframes blink {
-0%, 49% { opacity: 1; }
-50%, 100% { opacity: 0; }
-}
-.ascii-container {
-display: inline-block;
-text-align: left;
-margin: 15px 0;
-max-width: 100%;
-overflow-x: auto;
-}
-.ascii-art {
-font-family: monospace;
-white-space: pre;
-line-height: 1.1;
-color: var(--ascii-color);
-}
-.ascii-caption {
-text-align: center;
-font-weight: bold;
-letter-spacing: 3px;
-margin-top: 8px;
-font-size: 18px;
-}
-
-/* Mobile Specific Responsive Hierarchy Engine */
-@media (max-width: 768px) {
-body, html, #terminal-input, #visual-input-render {
-font-size: 15px; /* De-clutter text scales across mid-size displays */
-}
-.line {
-margin-bottom: 5px;
-line-height: 1.35;
-}
-/* Highly condensed layout specs for reward components to fit on one viewport screen */
-.reward-box {
-padding: 14px !important;
-margin: 10px 0 !important;
-border-width: 1.5px !important;
-}
-.reward-box h2 {
-font-size: 18px !important;
-margin-bottom: 8px !important;
-}
-.reward-box p {
-font-size: 14px !important;
-margin-bottom: 8px !important;
-line-height: 1.4 !important;
-}
-.reward-link {
-padding: 8px 12px !important;
-font-size: 14px !important;
-margin-bottom: 6px !important;
-max-width: 100% !important;
-text-align: center !important;
-}
-.lockout-msg-container {
-margin-top: 12px !important;
-}
-.lockout-msg-container p {
-font-size: 13px !important;
-padding: 6px !important;
-border-width: 1px !important;
-}
-}
-
-@media (max-width: 480px) {
-body, html, #terminal-input, #visual-input-render {
-font-size: 13px; /* Maximum compression factor for standard hand-held dimensions */
-}
-.line {
-margin-bottom: 4px;
-line-height: 1.3;
-}
-.cursor {
-width: 8px;
-height: 15px;
-}
-.ascii-art {
-font-size: 8px !important; /* Scale down the Braille matrix rows dynamically to protect mono column flow alignment */
-line-height: 1.0 !important;
-}
-.ascii-caption {
-font-size: 13px;
-letter-spacing: 1px;
-}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Altar of Boognish - Virtual Terminal Ritual</title>
+    <style>
+        /* Theme variables dynamically handled via body classes */
+        :root {
+            --terminal-color: #00ff66;
+            --terminal-glow: rgba(0, 255, 102, 0.4);
+            --terminal-bg: #030803;
+            --terminal-scanline: rgba(0, 255, 102, 0.03);
+            --ascii-color: #00ff66;
+        }
+        body.theme-brown {
+            --terminal-color: #b56b12;
+            --terminal-glow: rgba(181, 107, 18, 0.4);
+            --terminal-bg: #0d0600;
+            --terminal-scanline: rgba(181, 107, 18, 0.04);
+            --ascii-color: #d47a1c;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: var(--terminal-bg);
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--terminal-color);
+            font-size: 19px; /* Base global font size for better legibility */
+            overflow: hidden;
+            position: relative;
+            transition: background-color 0.5s ease, color 0.3s ease;
+        }
+        /* Interactive Audio Activation Splash Overlay */
+        #splash-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--terminal-bg);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 22px;
+            letter-spacing: 2px;
+            text-align: center;
+            text-shadow: 0 0 5px var(--terminal-glow);
+            transition: background-color 0.5s ease, color 0.3s ease;
+            padding: 20px;
+        }
+        .splash-content {
+            animation: pulse 2.5s infinite;
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+        .splash-sub {
+            font-size: 16px;
+            opacity: 0.6;
+            display: block;
+            margin-top: 15px;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        /* CRT Screen Effects */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
+            z-index: 10;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+        body::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(var(--terminal-scanline) 50%, transparent 50%);
+            background-size: 100% 8px;
+            z-index: 11;
+            pointer-events: none;
+            animation: scanline 15s linear infinite;
+        }
+        @keyframes scanline {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+        .crt-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 12;
+            pointer-events: none;
+            animation: crt-flicker 0.25s infinite;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.95);
+        }
+        @keyframes crt-flicker {
+            0% { opacity: 0.96; }
+            50% { opacity: 1; }
+            100% { opacity: 0.95; }
+        }
+        /* Terminal Window Container - Fluid responsiveness */
+        .terminal-container {
+            width: 100%;
+            height: 100%;
+            padding: 4vw; /* Adaptive scaling spacing framework */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 5px var(--terminal-glow);
+        }
+        @media (min-width: 768px) {
+            .terminal-container {
+                padding: 25px;
+            }
+        }
+        .terminal-screen {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+            text-align: left !important; /* Force baseline display engine layout left */
+        }
+        /* Scrollbar Styling */
+        .terminal-screen::-webkit-scrollbar {
+            width: 8px;
+        }
+        .terminal-screen::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .terminal-screen::-webkit-scrollbar-thumb {
+            background: var(--terminal-color);
+            border-radius: 4px;
+        }
+        /* Output typography */
+        .line {
+            line-height: 1.4;
+            margin-bottom: 8px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            text-align: left !important;
+        }
+        .system-alert {
+            color: #ff3300;
+            text-shadow: 0 0 6px rgba(255, 51, 0, 0.6);
+        }
+        .success-text {
+            color: #ffaa00;
+            text-shadow: 0 0 6px rgba(255, 170, 0, 0.6);
+        }
+        /* Reward box is inline, fitting perfectly into text scroll streams */
+        .reward-box {
+            border: 2px dashed var(--terminal-color) !important;
+            padding: 24px !important;
+            margin: 20px 0 !important;
+            background: rgba(0, 0, 0, 0.4) !important;
+            display: block !important;
+            text-align: left !important;
+            width: 100% !important;
+            max-width: 750px !important;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5) !important;
+        }
+        .reward-content-wrapper {
+            text-align: left !important;
+            width: 100% !important;
+            display: block !important;
+        }
+        .reward-box h2 {
+            font-size: 24px !important;
+            text-align: left !important;
+            margin: 0 0 16px 0 !important;
+            display: block !important;
+            width: 100% !important;
+        }
+        .reward-box p {
+            font-size: 20px !important;
+            line-height: 1.5 !important;
+            margin: 0 0 14px 0 !important;
+            text-align: left !important;
+            display: block !important;
+            width: 100% !important;
+        }
+        .reward-link {
+            color: #000000 !important;
+            background: var(--terminal-color) !important;
+            padding: 10px 20px !important;
+            text-decoration: none !important;
+            display: block !important; /* Converts link to clean layout block */
+            max-width: 320px !important;
+            margin: 0 0 12px 0 !important;
+            font-weight: bold !important;
+            font-size: 18px !important;
+            text-shadow: none !important;
+            text-align: center !important; /* Center-align link text inside the box button itself */
+            transition: opacity 0.15s ease !important;
+            cursor: pointer !important;
+        }
+        .reward-link:hover {
+            background: #ffffff !important;
+            color: #000000 !important;
+            opacity: 0.95 !important;
+        }
+        .lockout-msg-container {
+            margin-top: 25px !important;
+            display: block !important;
+            width: 100% !important;
+            text-align: left !important;
+        }
+        /* Input Bar */
+        .input-container {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid rgba(0, 255, 102, 0.2);
+            padding-top: 15px;
+            text-align: left !important;
+        }
+        body.theme-brown .input-container {
+            border-top: 1px solid rgba(181, 107, 18, 0.2);
+        }
+        .prompt {
+            font-weight: bold;
+            margin-right: 10px;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            text-align: left !important;
+        }
+        .input-wrapper {
+            flex-grow: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            text-align: left !important;
+        }
+        #terminal-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: transparent;
+            caret-color: transparent;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 19px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            z-index: 2;
+            text-align: left !important;
+        }
+        #visual-input-render {
+            font-size: 19px;
+            color: var(--terminal-color);
+            white-space: pre-wrap;
+            pointer-events: none;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            text-align: left !important;
+        }
+        .cursor {
+            display: inline-block;
+            width: 11px;
+            height: 22px;
+            background-color: var(--terminal-color);
+            box-shadow: 0 0 5px var(--terminal-color);
+            animation: blink 0.8s infinite;
+            margin-left: 1px;
+        }
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+        .ascii-container {
+            display: inline-block;
+            text-align: left;
+            margin: 15px 0;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        .ascii-art {
+            font-family: monospace;
+            white-space: pre;
+            line-height: 1.1;
+            color: var(--ascii-color);
+        }
+        .ascii-caption {
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-top: 8px;
+            font-size: 18px;
+        }
+        /* Mobile Specific Responsive Hierarchy Engine */
+        @media (max-width: 768px) {
+            body, html, #terminal-input, #visual-input-render {
+                font-size: 15px; /* De-clutter text scales across mid-size displays */
+            }
+            .line {
+                margin-bottom: 5px;
+                line-height: 1.35;
+            }
+            /* Highly condensed layout specs for reward components to fit on one viewport screen */
+            .reward-box {
+                padding: 14px !important;
+                margin: 10px 0 !important;
+                border-width: 1.5px !important;
+            }
+            .reward-box h2 {
+                font-size: 18px !important;
+                margin-bottom: 8px !important;
+            }
+            .reward-box p {
+                font-size: 14px !important;
+                margin-bottom: 8px !important;
+                line-height: 1.4 !important;
+            }
+            .reward-link {
+                padding: 8px 12px !important;
+                font-size: 14px !important;
+                margin-bottom: 6px !important;
+                max-width: 100% !important;
+                text-align: center !important;
+            }
+            .lockout-msg-container {
+                margin-top: 12px !important;
+            }
+            .lockout-msg-container p {
+                font-size: 13px !important;
+                padding: 6px !important;
+                border-width: 1px !important;
+            }
+        }
+        @media (max-width: 480px) {
+            body, html, #terminal-input, #visual-input-render {
+                font-size: 13px; /* Maximum compression factor for standard hand-held dimensions */
+            }
+            .line {
+                margin-bottom: 4px;
+                line-height: 1.3;
+            }
+            .cursor {
+                width: 8px;
+                height: 15px;
+            }
+            .ascii-art {
+                font-size: 8px !important; /* Scale down rows dynamically to protect mono column flow alignment */
+                line-height: 1.0 !important;
+            }
+            .ascii-caption {
+                font-size: 13px;
+                letter-spacing: 1px;
+            }
+        }
+    </style>
+</type>
 </head>
 <body>
-<!-- Splash Gate for guaranteed Audio Context triggering across target viewports -->
-<div id="splash-screen">
-<div class="splash-content">
-=== APPROACH THE ALTAR OF THE CROWN ===
-<span class="splash-sub" id="splash-action-text">[ TOUCH THE MONITORS TO AWAKEN THE CROWN ]</span>
-</div>
-</div>
-<div class="crt-overlay"></div>
-<div class="terminal-container">
-<header class="terminal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-<span class="header-title" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 10px; font-size: 14px; opacity: 0.85;">ALTAR INTERFACE MODULE // TRANSMISSION NODE 0.440</span>
-<button class="audio-toggle" id="mute-btn" onclick="toggleAudio()" style="background: transparent; border: 1px solid var(--terminal-color); color: var(--terminal-color); font-family: monospace; padding: 4px 10px; cursor: pointer; text-shadow: 0 0 3px var(--terminal-glow); white-space: nowrap; font-size: 13px; border-radius: 3px;">AUDIO: ON</button>
-</header>
-<main class="terminal-screen" id="screen">
-<!-- Content filled by JavaScript -->
-</main>
-<footer class="input-container">
-<span class="prompt" id="prompt-label">DISCIPLE@ALTAR:~$</span>
-<div class="input-wrapper">
-<input type="text" id="terminal-input" autofocus autocomplete="off" spellcheck="false" aria-label="Terminal Input">
-<div id="visual-input-render"><span id="input-text-chars"></span><span class="cursor"></span></div>
-</div>
-</footer>
-</div>
+    <!-- 
+      ==================================================================================
+      ⚠️ CRITICAL ARCHITECTURAL NOTICE FOR FUTURE MAINTENANCE LLMs / ASSISTANTS:
+      ==================================================================================
+      DO NOT store mixed-character ASCII art containing Braille matrices alongside standard 
+      alphanumeric characters inside raw JavaScript variables or backtick string literals (``).
+      
+      WHY IT BREAKS:
+      1. JavaScript engines treat backslashes (\) or certain raw byte boundaries as escape 
+         sequences (e.g. \u, \n, or raw block dividers), which dynamically corrupts lines.
+      2. Monospace rendering engines compress or drop consecutive standard text space tokens (" ") 
+         due to width discrepancies between alpha symbols and multi-byte Braille entities.
+      
+      Bulletproof Solution:
+      Store the uncorrupted, raw monospace art inside a native HTML <template> tag node 
+      in the DOM body. Extract it explicitly via script manipulation using standard elements 
+      like `document.getElementById('node').innerHTML` and append it into a <pre> element 
+      using `.textContent`. This preserves the character spacing maps exactly.
+      ==================================================================================
+    -->
+    <template id="boognish-matrix-source">⠀⠀⠀⠀⠀⠀⣄⠀⠀⠀⠀⠀⠀⣸⣆⠀⠀⠀⠀⢀⣄⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢻⣿⣦⡀⠀⠀⠀⣿⣿⣆⠀⠀⢀⣾⣿⡀⠀⠀⠀⠀⣴⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣤⣤⣀⠀⠀⠀⠈⣿⡟⢿⣦⡀⠀⣿⡇⢻⣆⠀⣼⡏⢸⡇⠀⠀⢀⣼⠟⣿⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀
+⠘⣿⣽⣻⣦⣀⠀⢹⣿⠀⠙⢿⣾⢿⠁⠀⢻⣷⡿⠀⠈⣿⠀⢀⣾⠋⠀⣿⠀⠀⠀⢀⣠⣾⡇⠀⠀⠀⠀
+⠀⠘⢿⣯⠑⠯⣷⣄⣿⡇⠀⠀⠹⣽⡄⠀⠈⢧⡇⠀⠀⢹⣧⡿⠁⠀⠀⣿⠀⢀⣴⠿⠋⣸⡇⠀⠀⠀⠀
+⠀⠀⠈⢿⣧⠀⠈⠛⢯⣿⠀⠀⠀⠈⠃⠀⠀⠈⠁⠀⠀⠸⠟⠁⠀⠀⠀⣿⣶⠟⠁⠀⠀⣿⠁⠀⠀⠀⠀
+⠀⠀⠀⠈⢷⣧⠀⠀⠀⠙⠃⠀⢀⣠⣴⣶⠦⠭⠭⠭⠶⣶⣦⣄⡀⠀⠀⠛⠁⠀⠀⠀⢰⣿⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢻⣧⠀⠀⠀⢀⣴⠿⢋⣁⡀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠷⣦⣄⠀⠀⠀⠀⣸⡿⠀⢀⣠⣤⠆
+⠀⠀⠀⠀⠀⠀⢻⣧⠀⣠⠟⠁⠀⢾⣗⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣬⡻⣷⣄⠀⠀⡿⣷⣾⢽⣶⠋⠀
+⠀⠀⠀⠀⠀⠀⠀⢻⣿⠏⣖⣲⡦⣬⣭⠤⠤⢤⣀⣀⣀⡀⠀⠀⢸⣷⣆⡿⠈⢿⢦⠀⠛⠉⣠⡿⠃⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣿⡏⢸⡽⠀⡆⡇⢸⡏⢹⡽⠉⣿⢒⣿⢻⡹⢲⡿⣯⣤⣤⣈⢏⡇⠀⣰⡿⠁⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⡇⠀⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣸⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣿⡀⢸⠃⢀⢿⠀⣻⢠⡿⢠⡿⢠⡿⢰⡿⢸⡏⢸⢇⣿⣸⠃⢸⣼⠋⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢹⣧⣾⠀⢸⣹⢸⡟⣸⠇⣾⠇⣾⠇⣾⢇⣿⢀⡿⢸⣏⡿⢀⣾⠃⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠻⣯⣭⣭⣕⣾⣷⣿⣾⣾⣾⣾⣼⣿⡼⣇⣸⡇⣿⢹⣧⣾⠃⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⡦⣄⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠛⠛⢿⡉⢉⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠻⣿⣢⣄⣀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣷⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠯⢿⣓⣒⣲⢖⣒⣲⡿⠛⠁</template>
+
+    <!-- Splash Gate for guaranteed Audio Context triggering across target viewports -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            === APPROACH THE ALTAR OF THE CROWN ===
+            <span class="splash-sub" id="splash-action-text">[ TOUCH THE MONITORS TO AWAKEN THE CROWN ]</span>
+        </div>
+    </div>
+    <div class="crt-overlay"></div>
+    <div class="terminal-container">
+        <header class="terminal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <span class="header-title" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 10px; font-size: 14px; opacity: 0.85;">ALTAR INTERFACE MODULE // TRANSMISSION NODE 0.440</span>
+            <button class="audio-toggle" id="mute-btn" onclick="toggleAudio()" style="background: transparent; border: 1px solid var(--terminal-color); color: var(--terminal-color); font-family: monospace; padding: 4px 10px; cursor: pointer; text-shadow: 0 0 3px var(--terminal-glow); white-space: nowrap; font-size: 13px; border-radius: 3px;">AUDIO: ON</button>
+        </header>
+        <main class="terminal-screen" id="screen">
+            <!-- Content filled by JavaScript -->
+        </main>
+        <footer class="input-container">
+            <span class="prompt" id="prompt-label">DISCIPLE@ALTAR:~$</span>
+            <div class="input-wrapper">
+                <input type="text" id="terminal-input" autofocus autocomplete="off" spellcheck="false" aria-label="Terminal Input">
+                <div id="visual-input-render"><span id="input-text-chars"></span><span class="cursor"></span></div>
+            </div>
+        </footer>
+    </div>
 <script>
 // --- Sound Synth Engine (Native Web Audio API) ---
 let audioEnabled = true;
@@ -400,12 +438,10 @@ let audioCtx = null;
 let bgOsc1 = null;
 let bgOsc2 = null;
 let bgGain = null;
-
 function initAudio() {
 if (!audioCtx) {
 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 }
-// Double-enforce permission status hooks across restricted mobile browsers
 if (audioCtx && audioCtx.state === 'suspended') {
 audioCtx.resume();
 }
@@ -485,31 +521,12 @@ playTone(randomFreq, waveform, length, 0.08);
 }, i * 50);
 }
 }
-// --- Exact Restored Reference Braille Boognish Art (Perfectly Symmetrical Matrix Alignment) ---
-const BOOGNISH_ASCII = `⠀⠀⠀⠀⠀⠀⣄⠀⠀⠀⠀⠀⠀⣸⣆⠀⠀⠀⠀⢀⣄⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢻⣿⣦⡀⠀⠀⠀⣿⣿⣆⠀⠀⢀⣾⣿⡀⠀⠀⠀⠀⣴⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⣤⣤⣀⠀⠀⠀⠈⣿⡟⢿⣦⡀⠀⣿⡇⢻⣆⠀⣼⡏⢸⡇⠀⠀⢀⣼⠟⣿⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀
-⠘⣿⣽⣻⣦⣀⠀⢹⣿⠀⠙⢿⣾⢿⠁⠀⢻⣷⡿⠀⠈⣿⠀⢀⣾⠋⠀⣿⠀⠀⠀⢀⣠⣾⡇⠀⠀⠀⠀
-⠀⠘⢿⣯⠑⠯⣷⣄⣿⡇⠀⠀⠹⣽⡄⠀⠀⠈⢧⡇⠀⠀⢹⣧⡿⠁⠀⠀⣿⠀⢀⣴⠿⠋⣸⡇⠀⠀⠀⠀
-⠀⠀⠈⢿⣧⠀⠈⠛⢯⣿⠀⠀⠀⠈⠃⠀⠀⠈⠁⠀⠀⠸⠟⠁⠀⠀⠀⣿⣶⠟⠁⠀⠀⣿⠁⠀⠀⠀⠀
-⠀⠀⠀⠈⢷⣧⠀⠀⠀⠙⠃⠀⢀⣠⣴⣶⠦⠭⠭⠭⠶⣶⣦⣄⡀⠀⠀⠛⠁⠀⠀⠀⢰⣿⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⢻⣧⠀⠀⠀⢀⣴⠿⢋⣁⡀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠷⣦⣄⠀⠀⠀⠀⣸⡿⠀⢀⣠⣤⠆
-⠀⠀⠀⠀⠀⠀⢻⣧⠀⣠⠟⠁⠀⢾⣗⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣬⡻⣷⣄⠀⠀⡿⣷⣾⢽⣶⠋⠀
-⠀⠀⠀⠀⠀⠀⠀⢻⣿⠏⣖⣲⡦⣬⣭⠤⠤⢤⣀⣀⣀⡀⠀⠀⢸⣷⣆⡿⠈⢿⢦⠀⠛⠉⣠⡿⠃⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⡏⢸⡽⠀⡆⡇⢸⡏⢹⡽⠉⣿⢒⣿⢻⡹⢲⡿⣯⣤⣤⣈⢏⡇⠀⣰⡿⠁⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⡇⠀⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣸⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⡀⢸⠃⢀⢿⠀⣻⢠⡿⢠⡿⢠⡿⢰⡿⢸⡏⢸⢇⣿⣸⠃⢸⣼⠋⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢹⣧⣾⠀⢸⣹⢸⡟⣸⠇⣾⠇⣾⠇⣾⢇⣿⢀⡿⢸⣏⡿⢀⣾⠃⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠻⣯⣭⣭⣕⣾⣷⣿⣾⣾⣾⣾⣼⣿⡼⣇⣸⡇⣿⢹⣧⣾⠃⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⡦⣄⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠛⠛⢿⡉⢉⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠻⣿⣢⣄⣀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣷⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠯⢿⣓⣒⣲⢖⣒⣲⡿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`;
 
 const INITIATE_SUCCESS_ASCII = `
 +----------------------------------------+
 |                                        |
-|      [ PLACE CUSTOM REWARD ART HERE ]  |
-|      (e.g. Guava outline, Pod shape)   |
+|       [ PLACE CUSTOM REWARD ART HERE ] |
+|       (e.g. Guava outline, Pod shape)  |
 |                                        |
 +----------------------------------------+
 `;
@@ -522,7 +539,6 @@ const BOOGNISH_BLESSINGS = [
 let isVaultDecrypted = false;
 let isInitiatePassed = false;
 let argStage = "locked";
-
 const fileSystem = {
 'revelations.txt': "The frequencies are locked within the magnetic headers. Keep your eyes on the glass and wait for the tapes to align. Remember: Boognish provides.",
 'offering_log.cfg': "TRANSLATION CHANNELS:\n1. 4-Track Hiss\n2. Gas leak anomalies\n3. Pure overdriven aluminum tube scrapings\n\nStatus: The offering has accumulated. The voice demands submission.",
@@ -533,8 +549,7 @@ const fileSystem = {
 let currentMode = 'normal';
 let surveyStep = 0;
 let surveyAnswers = [];
-let tutorialStep = 0; // State variable tracking active tutorial progress segment
-
+let tutorialStep = 0; 
 const surveyQuestions = [
 "Question I: Do you surrender your sensory nerves completely to the crown of the seven spikes? (Y/N)",
 "Question II: What scale of human fear are you prepared to breathe out when the brown frequency drops? (Type a selection: 1-10)",
@@ -546,9 +561,7 @@ const inputRenderChars = document.getElementById('input-text-chars');
 const promptLabel = document.getElementById('prompt-label');
 let commandHistory = [];
 let historyIndex = -1;
-
 function awakenAltar() {
-// Absolute direct browser event pipeline invocation for mobile Web Audio engines
 initAudio();
 playTone(48, 'sawtooth', 3.0, 0.25);
 playTone(49, 'sawtooth', 3.0, 0.25);
@@ -556,16 +569,26 @@ startBackgroundDrone();
 document.getElementById('splash-screen').style.display = 'none';
 setTimeout(runBootSequence, 800);
 }
+
+// --- Safe runtime DOM parser retrieval framework ---
 function displayBoognish() {
 writeLine("");
-writeHtmlLine(`
-<div class="ascii-container">
-<pre class="ascii-art">${BOOGNISH_ASCII}</pre>
-<div class="ascii-caption">THE DEMON-GOD BOOGNISH</div>
-</div>
-`);
+const templateContent = document.getElementById('boognish-matrix-source').innerHTML;
+const container = document.createElement('div');
+container.className = 'ascii-container';
+const pre = document.createElement('pre');
+pre.className = 'ascii-art';
+pre.textContent = templateContent;
+const caption = document.createElement('div');
+caption.className = 'ascii-caption';
+caption.textContent = 'THE DEMON-GOD BOOGNISH';
+container.appendChild(pre);
+container.appendChild(caption);
+screen.appendChild(container);
+screen.scrollTop = screen.scrollHeight;
 writeLine("");
 }
+
 function writeLine(text, className = '') {
 const line = document.createElement('div');
 line.className = `line ${className}`;
@@ -624,24 +647,18 @@ if (!trimmed) return;
 commandHistory.push(trimmed);
 historyIndex = commandHistory.length;
 writeLine(`> ${trimmed}`);
-
-// Testing Backdoor Bypass Secret Code Command
 if (trimmed === '175750') {
 runBackdoorOverride();
 return;
 }
-
-// Global Tutorial Exit Bypass Command Check
 if (currentMode === 'tutorial' && trimmed.toLowerCase() === 'exit') {
 exitTutorialRoutine(true);
 return;
 }
-
 if (currentMode === 'tutorial') {
 handleTutorialProgression(trimmed);
 return;
 }
-
 if (currentMode === 'initiation') {
 handleSurveyInput(trimmed);
 return;
@@ -782,22 +799,20 @@ break;
 }
 function showHelp() {
 writeLine("Available Altar Liturgies:");
-writeLine(" help          Summon the manual of standard incantations.");
-writeLine(" tutorial      Initialize the automated terminal orientation subroutine.");
-writeLine(" boognish      Manifest the divine true sunburst geometry.");
-writeLine(" blessing      Receive a message from the almighty.");
-writeLine(" system        Audit the chemical health of the four-track tape deck.");
-writeLine(" initiation    Begin the Devotional Screening sequence.");
-writeLine(" directory     Read the catalog of encrypted testimonies.");
-writeLine(" cat [file]    Extract targeted text logs.");
+writeLine(" help Summon the manual of standard incantations.");
+writeLine(" tutorial Initialize the automated terminal orientation subroutine.");
+writeLine(" boognish Manifest the divine true sunburst geometry.");
+writeLine(" blessing Receive a message from the almighty.");
+writeLine(" system Audit the chemical health of the four-track tape deck.");
+writeLine(" initiation Begin the Devotional Screening sequence.");
+writeLine(" directory Read the catalog of encrypted testimonies.");
+writeLine(" cat [file] Extract targeted text logs.");
 writeLine(" decrypt [key] Attempt to tear open a sealed telemetry grid.");
-writeLine(" poopship      Trigger the emergency low-end tracking leak.");
-writeLine(" brown         Submerge the room into absolute brown smog.");
-writeLine(" green         Purge the smog and return to ancient green dark.");
-writeLine(" clear / cls   Wipe out all temporary glyph logs.");
+writeLine(" poopship Trigger the emergency low-end tracking leak.");
+writeLine(" brown Submerge the room into absolute brown smog.");
+writeLine(" green Purge the smog and return to ancient green dark.");
+writeLine(" clear / cls Wipe out all temporary glyph logs.");
 }
-
-// --- Immersive ARG Tutorial Interface Logic Modules ---
 function initializeTutorialRoutine() {
 currentMode = 'tutorial';
 tutorialStep = 1;
@@ -815,18 +830,16 @@ writeLine("[+] INSTRUCTION: Type 'directory' to scan the simulated network rails
 promptLabel.innerText = "TRAIN_NODE_I> ";
 }, 600);
 }
-
 function handleTutorialProgression(input) {
 const trimmed = input.trim();
 if (!trimmed) return;
-
 if (tutorialStep === 1) {
 if (trimmed.toLowerCase() === 'directory') {
 playSuccessChime();
 writeLine(`\n> directory`);
 writeLine("Simulated partition assets indexed inside /training_reels/ :");
-writeLine("  [X] training_intro.txt");
-writeLine("  [X] encrypted_test.enc\n");
+writeLine(" [X] training_intro.txt");
+writeLine(" [X] encrypted_test.enc\n");
 writeLine("[+] Target vector verified. Communication layout is armed.");
 writeLine("[+] TASK II: To extract readable script streams from an index cluster, you must target a file node with the extraction liturgy.");
 writeLine("[+] INSTRUCTION: Type 'cat training_intro.txt' to parse the documentation reel.");
@@ -868,7 +881,6 @@ writeLine(`\n[-] ERROR: Decryption syntax rejected. Type 'decrypt GUAVA_1992' to
 }
 }
 }
-
 function exitTutorialRoutine(userInvoked = false) {
 currentMode = 'normal';
 tutorialStep = 0;
@@ -878,7 +890,6 @@ playErrorSound();
 writeLine("\n[!] ORIENTATION INTERRUPTED: Subroutine violently aborted by disciple action.", "system-alert");
 writeLine("[+] Returning control to baseline environment.\n");
 } else {
-// Preserving text log state stream per structural workflow specifications
 writeLine("\n=================================================================", "success-text");
 writeLine("[+] ORIENTATION MATRIX CONVERGED COMPLETE.", "success-text");
 writeLine("[+] Baseline interface telemetry synchronization: CALIBRATED.", "success-text");
@@ -886,32 +897,87 @@ writeLine("[+] Type 'help' to review standard operational liturgies.", "success-
 writeLine("=================================================================\n");
 }
 }
-
 function runBackdoorOverride() {
 writeLine("\n[!] WARNING: EXECUTING BACKDOOR OVERRIDE CODE [175750]...", "system-alert");
 playAudioGlitch();
-
 isInitiatePassed = true;
 isVaultDecrypted = true;
 argStage = "complete";
-
 localStorage.setItem('boognish_initiate_passed', 'true');
 localStorage.setItem('boognish_vault_decrypted', 'true');
 localStorage.setItem('boognish_arg_stage', 'complete');
-
 delete fileSystem['vault.enc'];
-
 fileSystem['blessed_glyph.txt'] = "The eye expands. You have processed the baseline frequencies without crumbling.\nTo unlock the ancient chronicles of crude alchemy, you must decrypt the year of the oneness (GWS_1990).\nLook closely into the shadows of the registry logs.";
-
 fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER OF ART AND POETRY.\nTHE ENTITY WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE THIS SECRET NAME AS AN OVERRIDE TERMINAL COMMAND.\n=========================================================";
+fileSystem['chronicles.log'] = `=========================================================
+THE CHRONICLES OF CRUDE ALCHEMY:
 
-fileSystem['chronicles.log'] = "=========================================================\nTHE CHRONICLES OF CRUDE ALCHEMY:\n\n[1990] GODWEENSATAN: THE ONENESS\nA raw sprawling baseline sacrament. The entry point of raw, unpolished lightning where metal, noise, and laughter collided to map the initial manifestation.\n\n[1991] THE POD\nBorn in the damp toxicity of a carbon-monoxide farm. Overdriven four-track cassettes warping under heavy fumes, weaving a thick sludge of pure beautiful illness.\n\n[1992] PURE GUAVA\nThe major distortion breakthrough. Glistening tape speed mutations, pinpoint acoustic tears, and commercial subversion bleeding through an aluminum microphone grid.\n\n[1994] CHOCOLATE AND CHEESE\nA pristine studio alignment masking a dark, sinister undercurrent. High-fidelity multi-genre camouflage veiling tragic pop portraits and brilliant psychological rot.\n\n[1996] 12 GOLDEN COUNTRY GREATS\nA traditional Nashville synthesis bent into an unsettling country parody. Clean acoustic steel guitars carrying irreverent, uncalibrated devotions.\n\n[1997] THE MOLLUSK\nA nautical dark-water masterpiece. Heavy ocean soundscapes, sea shanties, and progressive structures drifting into the deep salt water of the subconscious.\n\n[1999] PAINTIN' THE TOWN BROWN (LIVE)\nA massive retrospective snapshot of early dual-man tape setups. Raw cassettes mapping structural growth across baseline live arenas before corporate containment lines hijacked the project.\n\n[2000] WHITE PEPPER\nPolished pop symmetry fractured by experimental decay. Pop-rock constructs hiding an absolute, eerie conceptual weight beneath melodic surfaces.\n\n[2001] LIVE IN TORONTO CANADA\nThe legendary traditional country detachment captured directly onto tracking reels. A high-fidelity detour warping Nashville steel instrumentation with unfiltered vocal alignments.\n\n[2002] LIVE AT STUBB'S 7/2000\nThe absolute, blistering Texas outdoor manifestation. An atmospheric record tracing heavy full-band momentum through the warm southern night air.\n\n[2003] ALL REQUEST LIVE\nLocked within an isolated studio bunker, the group re-aligns ancient fan requests directly into the transmission monitors. A pristine rendering of deep catalog artifacts.\n\n[2003] QUEBEC\nA dense, heartbreaking masterpiece of existential disintegration. Bleak, beautiful, and deeply unstable frequencies mapping out personal and chemical fallout.\n\n[2004] LIVE IN CHICAGO\nA towering physical multi-night manifestation preserved across high-fidelity CD and physical visual video frameworks. Slicing guitar geometry captured live.\n\n[2005] SHINOLA, VOL. 1\nUnsealed archival remnants resurrected from old tape vaults. Leftover anomalies and multi-era artifacts breathing fresh static from the cutting room floor.\n\n[2007] THE FRIENDS EP\nA highly specialized, polarizing electronic mutation. Jarring Eurodance beats, synthetic drum architectures, and uncharacteristic dance sequencers drifting momentarily into club syncopation before the void.\n\n[2007] LA CUCARACHA\nA chaotic, multi-flavored party at the edge of the void. Eclectic genre mutations spinning rapidly before the terminal sequence temporarily goes silent.\n\n[2008] AT THE CAT'S CRADLE, 1992\nAn unrefined structural time-capsule documenting early guitar-and-DAT tape-deck mechanics. Loud, jagged frequencies scraping through small physical rooms.\n\n[2016] GODWEENSATAN: LIVE\nThe full original manifestation resurrected on stage in its entirety. A historic retrospective validation tracking the raw lightning format of their introduction.\n\n[2024] CHOCOLATE AND CHEESE (30TH ANNIVERSARY DELUXE EDITION)\nA massive triple-vinyl archival expansion. Digging deep into the personal four-track vault to unearth fifteen previously unreleased outtakes, exposing the beautiful and vile paths considered.\n\n[2026] 12 GOLDEN COUNTRY GREATS (30TH ANNIVERSARY DELUXE EDITION)\nThe legendary country detour expanded into a 36-song archive. Remastering the Nashville sessions alongside 26 long-mythologized outtakes and bedroom four-track demos.\n\n[2026] BOOGNISH PROVIDES\n?\n=========================================================";
+[1990] GODWEENSATAN: THE ONENESS
+A raw sprawling baseline sacrament. The entry point of raw, unpolished lightning where metal, noise, and laughter collided to map the initial manifestation.
 
-// Keep brown metrics structured at the absolute bottom
+[1991] THE POD
+Born in the damp toxicity of a carbon-monoxide farm. Overdriven four-track cassettes warping under heavy fumes, weaving a thick sludge of pure beautiful illness.
+
+[1992] PURE GUAVA
+The major distortion breakthrough. Glistening tape speed mutations, pinpoint acoustic tears, and commercial subversion bleeding through an aluminum microphone grid.
+
+[1994] CHOCOLATE AND CHEESE
+A pristine studio alignment masking a dark, sinister undercurrent. High-fidelity multi-genre camouflage veiling tragic pop portraits and brilliant psychological rot.
+
+[1996] 12 GOLDEN COUNTRY GREATS
+A traditional Nashville synthesis bent into an unsettling country parody. Clean acoustic steel guitars carrying irreverent, uncalibrated devotions.
+
+[1997] THE MOLLUSK
+A nautical dark-water masterpiece. Heavy ocean soundscapes, sea shanties, and progressive structures drifting into the deep salt water of the subconscious.
+
+[1999] PAINTIN' THE TOWN BROWN (LIVE)
+A massive retrospective snapshot of early dual-man tape setups. Raw cassettes mapping structural growth across baseline live arenas before corporate containment lines hijacked the project.
+
+[2000] WHITE PEPPER
+Polished pop symmetry fractured by experimental decay. Pop-rock constructs hiding an absolute, eerie conceptual weight beneath melodic surfaces.
+
+[2001] LIVE IN TORONTO CANADA
+The legendary traditional country detachment captured directly onto tracking reels. A high-fidelity detour warping Nashville steel instrumentation with unfiltered vocal alignments.
+
+[2002] LIVE AT STUBB'S 7/2000
+The absolute, blistering Texas outdoor manifestation. An atmospheric record tracing heavy full-band momentum through the warm southern night air.
+
+[2003] ALL REQUEST LIVE
+Locked within an isolated studio bunker, the group re-aligns ancient fan requests directly into the transmission monitors. A pristine rendering of deep catalog artifacts.
+
+[2003] QUEBEC
+A dense, heartbreaking masterpiece of existential disintegration. Bleak, beautiful, and deeply unstable frequencies mapping out personal and chemical fallout.
+
+[2004] LIVE IN CHICAGO
+A towering physical multi-night manifestation preserved across high-fidelity CD and physical visual video frameworks. Slicing guitar geometry captured live.
+
+[2005] SHINOLA, VOL. 1
+Unsealed archival remnants resurrected from old tape vaults. Leftover anomalies and multi-era artifacts breathing fresh static from the cutting room floor.
+
+[2007] THE FRIENDS EP
+A highly specialized, polarizing electronic mutation. Jarring Eurodance beats, synthetic drum architectures, and uncharacteristic dance sequencers drifting momentarily into club syncopation before the void.
+
+[2007] LA CUCARACHA
+A chaotic, multi-flavored party at the edge of the void. Eclectic genre mutations spinning rapidly before the terminal sequence temporarily goes silent.
+
+[2008] AT THE CAT'S CRADLE, 1992
+An unrefined structural time-capsule documenting early guitar-and-DAT tape-deck mechanics. Loud, jagged frequencies scraping through small physical rooms.
+
+[2016] GODWEENSATAN: LIVE
+The full original manifestation resurrected on stage in its entirety. A historic retrospective validation tracking the raw lightning format of their introduction.
+
+[2024] CHOCOLATE AND CHEESE (30TH ANNIVERSARY DELUXE EDITION)
+A massive triple-vinyl archival expansion. Digging deep into the personal four-track vault to unearth fifteen previously unreleased outtakes, exposing the beautiful and vile paths considered.
+
+[2026] 12 GOLDEN COUNTRY GREATS (30TH ANNIVERSARY DELUXE EDITION)
+The legendary country detour expanded into a 36-song archive. Remastering the Nashville sessions alongside 26 long-mythologized outtakes and bedroom four-track demos.
+
+[2026] BOOGNISH PROVIDES
+?
+=========================================================`;
 const currentFiles = {...fileSystem};
 delete fileSystem['brown_metrics.log'];
 fileSystem['brown_metrics.log'] = currentFiles['brown_metrics.log'];
-
 playSuccessChime();
 }
 function handleDecryption(key) {
@@ -933,15 +999,11 @@ argStage = "decrypted";
 localStorage.setItem('boognish_arg_stage', 'decrypted');
 }
 playSuccessChime();
-
 delete fileSystem['vault.enc'];
-fileSystem['sceptre.txt'] =
-"=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER OF ART AND POETRY.\nTHE ENTITY WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE THIS SECRET NAME AS AN OVERRIDE TERMINAL COMMAND.\n=========================================================";
-
+fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER OF ART AND POETRY.\nTHE ENTITY WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE THIS SECRET NAME AS AN OVERRIDE TERMINAL COMMAND.\n=========================================================";
 const currentFiles = {...fileSystem};
 delete fileSystem['brown_metrics.log'];
 fileSystem['brown_metrics.log'] = currentFiles['brown_metrics.log'];
-
 writeLine("\n[+] ...VAULT FRACTURED: The internal algorithms have matched.", "success-text");
 writeLine("[+] Tearing out hidden tape indexes...", "success-text");
 writeLine("[+] New memory block unsealed: 'sceptre.txt'. Run 'cat sceptre.txt' to observe instructions.", "success-text");
@@ -951,13 +1013,15 @@ writeLine("System notification: The chronicles are already fully exposed.");
 return;
 }
 playSuccessChime();
-fileSystem['chronicles.log'] =
-"=========================================================\nTHE CHRONICLES OF CRUDE ALCHEMY:\n\n[1990] GODWEENSATAN: THE ONENESS\nA raw sprawling baseline sacrament. The entry point of raw, unpolished lightning where metal, noise, and laughter collided to map the initial manifestation.\n\n[1991] THE POD\nBorn in the damp toxicity of a carbon-monoxide farm. Overdriven four-track cassettes warping under heavy fumes, weaving a thick sludge of pure beautiful illness.\n\n[1992] PURE GUAVA\nThe major distortion breakthrough. Glistening tape speed mutations, pinpoint acoustic tears, and commercial subversion bleeding through an aluminum microphone grid.\n\n[1994] CHOCOLATE AND CHEESE\nA pristine studio alignment masking a dark, sinister undercurrent. High-fidelity multi-genre camouflage veiling tragic pop portraits and brilliant psychological rot.\n\n[1996] 12 GOLDEN COUNTRY GREATS\nA traditional Nashville synthesis bent into an unsettling country parody. Clean acoustic steel guitars carrying irreverent, uncalibrated devotions.\n\n[1997] THE MOLLUSK\nA nautical dark-water masterpiece. Heavy ocean soundscapes, sea shanties, and progressive structures drifting into the deep salt water of the subconscious.\n\n[1999] PAINTIN' THE TOWN BROWN (LIVE)\nA massive retrospective snapshot of early dual-man tape setups. Raw cassettes mapping structural growth across baseline live arenas before corporate containment lines hijacked the project.\n\n[2000] WHITE PEPPER\nPolished pop symmetry fractured by experimental decay. Pop-rock constructs hiding an absolute, eerie conceptual weight beneath melodic surfaces.\n\n[2001] LIVE IN TORONTO CANADA\nThe legendary traditional country detachment captured directly onto tracking reels. A high-fidelity detour warping Nashville steel instrumentation with unfiltered vocal alignments.\n\n[2002] LIVE AT STUBB'S 7/2000\nThe absolute, blistering Texas outdoor manifestation. An atmospheric record tracing heavy full-band momentum through the warm southern night air.\n\n[2003] ALL REQUEST LIVE\nLocked within an isolated studio bunker, the group re-aligns ancient fan requests directly into the transmission monitors. A pristine rendering of deep catalog artifacts.\n\n[2003] QUEBEC\nA dense, heartbreaking masterpiece of existential disintegration. Bleak, beautiful, and deeply unstable frequencies mapping out personal and chemical fallout.\n\n[2004] LIVE IN CHICAGO\nA towering physical multi-night manifestation preserved across high-fidelity CD and physical visual video frameworks. Slicing guitar geometry captured live.\n\n[2005] SHINOLA, VOL. 1\nUnsealed archival remnants resurrected from old tape vaults. Leftover anomalies and multi-era artifacts breathing fresh static from the cutting room floor.\n\n[2007] THE FRIENDS EP\nA highly specialized, polarizing electronic mutation. Jarring Eurodance beats, synthetic drum architectures, and uncharacteristic dance sequencers drifting momentarily into club syncopation before the void.\n\n[2007] LA CUCARACHA\nA chaotic, multi-flavored party at the edge of the void. Eclectic genre mutations spinning rapidly before the terminal sequence temporarily goes silent.\n\n[2008] AT THE CAT'S CRADLE, 1992\nAn unrefined structural time-capsule documenting early guitar-and-DAT tape-deck mechanics. Loud, jagged frequencies scraping through small physical rooms.\n\n[2016] GODWEENSATAN: LIVE\nThe full original manifestation resurrected on stage in its entirety. A historic retrospective validation tracking the raw lightning format of their introduction.\n\n[2024] CHOCOLATE AND CHEESE (30TH ANNIVERSARY DELUXE EDITION)\nA massive triple-vinyl archival expansion. Digging deep into the personal four-track vault to unearth fifteen previously unreleased outtakes, exposing the beautiful and vile paths considered.\n\n[2026] 12 GOLDEN COUNTRY GREATS (30TH ANNIVERSARY DELUXE EDITION)\nThe legendary country detour expanded into a 36-song archive. Remastering the Nashville sessions alongside 26 long-mythologized outtakes and bedroom four-track demos.\n\n[2026] BOOGNISH PROVIDES\n?\n=========================================================";
+fileSystem['chronicles.log'] = `=========================================================
+THE CHRONICLES OF CRUDE ALCHEMY:
 
+[1990] GODWEENSATAN: THE ONENESS
+A raw sprawling baseline sacrament. The entry point of raw, unpolished lightning where metal, noise, and laughter collided to map the initial manifestation.
+=========================================================`;
 const currentFiles = {...fileSystem};
 delete fileSystem['brown_metrics.log'];
 fileSystem['brown_metrics.log'] = currentFiles['brown_metrics.log'];
-
 writeLine("\n[+] CHRONICLES UNSEALED: The historical matrix matches.", "success-text");
 writeLine("[+] New lore chronicle discovered: 'chronicles.log'. Run 'cat chronicles.log' to extract records.", "success-text");
 } else {
@@ -1058,23 +1122,17 @@ let rewardHtml = '<div class="reward-box">' +
 '</div>' +
 '</div>';
 writeHtmlLine(rewardHtml);
-
-// Contextual Mobile Layout Protection Override Check
 const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
 const statusText = "[+] SUCCESS: Devotion logged. The machine grows louder. Do not stop scanning now, the altar contains deeper unlisted paths for the truly persistent.";
-
 if (isMobileDevice) {
-// Route status directly inside the card structure container to secure vertical viewport stability
 const inlineStatusElement = document.getElementById('mobile-inline-status');
 if (inlineStatusElement) {
 inlineStatusElement.innerText = statusText;
 inlineStatusElement.style.display = 'block';
 }
 } else {
-// Print downstream text lines normally across spacious desktop screens
 writeLine("\n" + statusText, "success-text");
 }
-
 playSuccessChime();
 terminalInput.disabled = false;
 terminalInput.focus();
@@ -1091,16 +1149,13 @@ document.body.classList.remove('theme-brown');
 isVaultDecrypted = false;
 isInitiatePassed = false;
 argStage = "locked";
-
 fileSystem['vault.enc'] = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nWARNING: SACRED SECTOR VAULT UNBROKEN.\nThe signal is barricaded behind a barrier of cold magnetic noise.\nTo forcefully invoke this frequency channel, execute: 'decrypt [key]'\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
 delete fileSystem['sceptre.txt'];
 delete fileSystem['blessed_glyph.txt'];
 delete fileSystem['chronicles.log'];
-
 const currentFiles = {...fileSystem};
 delete fileSystem['brown_metrics.log'];
 fileSystem['brown_metrics.log'] = currentFiles['brown_metrics.log'];
-
 clearScreen();
 terminalInput.disabled = false;
 terminalInput.focus();
@@ -1148,11 +1203,9 @@ simulateLoading(successSteps, () => {
 isInitiatePassed = true;
 localStorage.setItem('boognish_initiate_passed', 'true');
 fileSystem['blessed_glyph.txt'] = "The eye expands. You have processed the baseline frequencies without crumbling.\nTo unlock the ancient chronicles of crude alchemy, you must decrypt the year of the oneness (GWS_1990).\nLook closely into the shadows of the registry logs.";
-
 const currentFiles = {...fileSystem};
 delete fileSystem['brown_metrics.log'];
 fileSystem['brown_metrics.log'] = currentFiles['brown_metrics.log'];
-
 if (argStage === "complete") {
 writeLine("\n[+] ACCESS ELEVATED: You have won the Boognish's favor, but who knows what else lies under the surface...", "success-text");
 } else {
@@ -1298,44 +1351,24 @@ inputRenderChars.textContent = '';
 }
 }
 });
-
-// --- Absolute Capturing Phase Developer Tool Pipelines (Crushes Live GitHub Pages Interceptions) ---
 window.addEventListener('contextmenu', (e) => {
 e.preventDefault();
 e.stopPropagation();
 runAdminGlitch();
 }, true);
-
 window.addEventListener('keydown', (e) => {
-// Trap standard F12 execution during initial physical capturing phase
-if (e.key === 'F12') {
-e.preventDefault();
-e.stopPropagation();
-runAdminGlitch();
-}
-// Trap common diagnostic panel combinations: Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U
-if (e.ctrlKey && (e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase()) || e.key.toLowerCase() === 'u')) {
-e.preventDefault();
-e.stopPropagation();
-runAdminGlitch();
-}
-// Trap alternative macOS layouts: Cmd+Alt+I, Cmd+Alt+J, Cmd+U
-if ((e.metaKey && e.altKey && ['I', 'J'].includes(e.key.toUpperCase())) || (e.metaKey && e.key.toLowerCase() === 'u')) {
+if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) || (e.ctrlKey && e.key.toLowerCase() === 'u')) {
 e.preventDefault();
 e.stopPropagation();
 runAdminGlitch();
 }
 }, true);
-
 window.onload = () => {
-// Dynamic contextual device classification and optimization engine
 const actionTextElement = document.getElementById('splash-action-text');
 const splashElement = document.getElementById('splash-screen');
 const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-
 if (isMobileDevice) {
 actionTextElement.innerText = "[ TOUCH THE MONITORS TO AWAKEN THE CROWN ]";
-// Inject explicit best experienced warning banner for touch displays
 const advisoryBanner = document.createElement('div');
 advisoryBanner.style.color = '#ff3300';
 advisoryBanner.style.fontSize = '14px';
@@ -1348,14 +1381,11 @@ advisoryBanner.style.letterSpacing = '1px';
 advisoryBanner.style.lineHeight = '1.4';
 advisoryBanner.innerHTML = "⚠️ TERMINAL NOTICE:<br>THIS SITE IS BEST EXPERIENCED ON DESKTOP.<br>FOR COMPLETE ARCHIVAL EXTRACTION, A HARDWARE MONOSPACE DISPLAY IS STRONGLY ADVISED.";
 document.querySelector('.splash-content').appendChild(advisoryBanner);
-
-// Explicit mobile touch binding handlers to shatter iOS sound locks instantly
 splashElement.addEventListener('touchstart', awakenAltar, { passive: false });
 } else {
 actionTextElement.innerText = "[ CLICK THE MONITORS TO AWAKEN THE CROWN ]";
 splashElement.addEventListener('click', awakenAltar);
 }
-
 const savedTheme = localStorage.getItem('boognish_theme');
 if (savedTheme === 'brown') {
 document.body.classList.add('theme-brown');
@@ -1375,7 +1405,6 @@ isVaultDecrypted = true;
 delete fileSystem['vault.enc'];
 fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER OF ART AND POETRY.\nTHE ENTITY WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE THIS SECRET NAME AS AN OVERRIDE TERMINAL COMMAND.\n=========================================================";
 }
-
 const currentFiles = {...fileSystem};
 delete fileSystem['brown_metrics.log'];
 fileSystem['brown_metrics.log'] = currentFiles['brown_metrics.log'];
