@@ -413,17 +413,17 @@ playTone(randomFreq, waveform, length, 0.08);
 // --- Exact Reference Braille Boognish Art (Fully Escaped String Literal) ---
 const BOOGNISH_ASCII = `⠀⠀⠀⠀⠀⠀⣄⠀⠀⠀⠀⠀⠀⣸⣆⠀⠀⠀⠀⢀⣄⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⢻⣿⣦⡀⠀⠀⠀⣿⣿⣆⠀⠀⢀⣾⣿⡀⠀⠀⠀⠀⣴⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⣤⣤⣀⠀⠀⠀⠈⣿⡟⢿⣦⡀⠀⣿⡇⢻⣆⠀⣼⡏⢸⡇⠀⠀⢀⣼⠟⣿⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀
+⣤⣤⣀⠀⠀⠀⠈⣿⡟⢿⣦⡀⠀⣿⡇⢻⣆///⣿⡇⢛⣆___⣼⡏⢸⡇⠀⠀⢀⣠⠟⣿⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀
 ⠘⣿⣽⣻⣦⣀⠀⢹⣿⠀⠙⢿⣾⢿⠁⠀⢻⣷⡿⠀⠈⣿⠀⢀⣾⠋⠀⣿⠀⠀⠀⢀⣠⣾⡇⠀⠀⠀⠀
 ⠀⠘⢿⣯⠑⠯⣷⣄⣿⡇⠀⠀⠹⣽⡄⠀⠈⢧⡇⠀⠀⢹⣧⡿⠁⠀⠀⣿⠀⢀⣴⠿⠋⣸⡇⠀⠀⠀⠀
 ⠀⠀⠈⢿⣧⠀⠈⠛⢯⣿⠀⠀⠀⠈⠃⠀⠀⠈⠁⠀⠀⠸⠟⠁⠀⠀⠀⣿⣶⠟⠁⠀⠀⣿⠁⠀⠀⠀⠀
 ⠀⠀⠀⠈⢷⣧⠀⠀⠀⠙⠃⠀⢀⣠⣴⣶⠦⠭⠭⠭⠶⣶⣦⣄⡀⠀⠀⠛⠁⠀⠀⠀⢰⣿⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⢻⣧⠀⠀⠀⢀⣴⠿⢋⣁⡀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠷⣦⣄⠀⠀⠀⠀⣸⡿⠀⢀⣠⣤⠆
-⠀⠀⠀⠀⠀⠀⢻⣧⠀⣠⠟⠁⠀⢾⣗⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣬⡻⣷⣄⠀⠀⡿⣷⣾⢽⣶⠋⠀
+⠀⠀⠀⠀⠀⠀⢻⣧⠀⣠⠟⠁___⢾⣗⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣬⡻⣷⣄⠀⠀⡿⣷⣾⢽⣶⠋⠀
 ⠀⠀⠀⠀⠀⠀⠀⢻⣿⠏⣖⣲⡦⣬⣭⠤⠤⢤⣀⣀⣀⡀⠀⠀⢸⣷⣆⡿⠈⢿⢦⠀⠛⠉⣠⡿⠃⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⣿⡏⢸⡽⠀⡆⡇⢸⡏⢹⡽⠉⣿⢒⣿⢻⡹⢲⡿⣯⣤⣤⣈⢏⡇⠀⣰⡿⠁⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⡇⠀⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣸⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⡀⢸⠃⢀⢿⠀⣻⢠⡿⢠⡿⢠⡿⢰⡿⢸⡏⢸⢇⣿⣸⠃⢸⣼⠋⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⡇⠀⣿⣿⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣸⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣿⡀⢸⠃⢀⢿⠀⣻⢠⡿⢠⡿⢠⡿⢰⡿⢸⡏⢸⢇⣿⣸⠃⢸⣼⋰⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⢹⣧⣾⠀⢸⣹⢸⡟⣸⠇⣾⠇⣾⠇⣾⢇⣿⢀⡿⢸⣏⡿⢀⣾⠃⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠻⣯⣭⣭⣕⣾⣷⣿⣾⣾⣾⣾⣼⣿⡼⣇⣸⡇⣿⢹⣧⣾⠃⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⡦⣄⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠛⠛⢿⡉⢉⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -458,6 +458,8 @@ const fileSystem = {
 let currentMode = 'normal';
 let surveyStep = 0;
 let surveyAnswers = [];
+let tutorialStep = 0; // State variable tracking active tutorial progress segment
+
 const surveyQuestions = [
 "Question I: Do you surrender your sensory nerves completely to the crown of the seven spikes? (Y/N)",
 "Question II: What scale of human fear are you prepared to breathe out when the brown frequency drops? (Type a selection: 1-10)",
@@ -551,6 +553,17 @@ runBackdoorOverride();
 return;
 }
 
+// Global Tutorial Exit Bypass Command Check
+if (currentMode === 'tutorial' && trimmed.toLowerCase() === 'exit') {
+exitTutorialRoutine(true);
+return;
+}
+
+if (currentMode === 'tutorial') {
+handleTutorialProgression(trimmed);
+return;
+}
+
 if (currentMode === 'initiation') {
 handleSurveyInput(trimmed);
 return;
@@ -569,7 +582,7 @@ writeLine("The right hand of the manifestation. Weeping transparent echoes direc
 } else if (cmd === 'pod') {
 writeLine("The toxic chamber where the structure solidified under the influence of heavy vapors.");
 } else if (cmd === 'dave') {
-writeLine("The low tether anchoring the physical room. Holding the lower register steady while the gas spreads.");
+writeLine("The low tethers anchoring the physical room. Holding the lower register steady while the gas spreads.");
 } else if (cmd === 'claude') {
 writeLine("The engine's rhythmic pulse. Beating out patterns like the movement of a creature shifting through salt water.");
 } else if (cmd === 'mang') {
@@ -582,6 +595,9 @@ return;
 switch (cmd) {
 case 'help':
 showHelp();
+break;
+case 'tutorial':
+initializeTutorialRoutine();
 break;
 case 'clear':
 case 'cls':
@@ -689,6 +705,7 @@ break;
 function showHelp() {
 writeLine("Available Altar Liturgies:");
 writeLine(" help          Summon the manual of standard incantations.");
+writeLine(" tutorial      Initialize the automated terminal orientation subroutine.");
 writeLine(" boognish      Manifest the divine true sunburst geometry.");
 writeLine(" blessing      Receive a message from the almighty.");
 writeLine(" system        Audit the chemical health of the four-track tape deck.");
@@ -701,6 +718,97 @@ writeLine(" brown         Submerge the room into absolute brown smog.");
 writeLine(" green         Purge the smog and return to ancient green dark.");
 writeLine(" clear / cls   Wipe out all temporary glyph logs.");
 }
+
+// --- Immersive ARG Tutorial Interface Logic Modules ---
+function initializeTutorialRoutine() {
+currentMode = 'tutorial';
+tutorialStep = 1;
+clearScreen();
+writeLine("[!] INITIALIZING TRANSMISSION NODE TUTORIAL PROTOCOL...", "system-alert");
+playAudioGlitch();
+setTimeout(() => {
+writeLine("\n=================================================================", "success-text");
+writeLine("ALTAR FAMILIARIZATION ROUTINE // LOG_NODE_001", "success-text");
+writeLine("You have intercepted a legacy terminal training sequence.");
+writeLine("You can type 'exit' at any prompt to terminate the sub-routine.");
+writeLine("=================================================================\n");
+writeLine("[+] TASK I: To balance the terminal pressure and map local index tracks, you must audit the active archival partition array layout.");
+writeLine("[+] INSTRUCTION: Type 'directory' to scan the simulated network rails.");
+promptLabel.innerText = "TRAIN_NODE_I> ";
+}, 600);
+}
+
+function handleTutorialProgression(input) {
+const trimmed = input.trim();
+if (!trimmed) return;
+
+if (tutorialStep === 1) {
+if (trimmed.toLowerCase() === 'directory') {
+playSuccessChime();
+writeLine(`\n> directory`);
+writeLine("Simulated partition assets indexed inside /training_reels/ :");
+writeLine("  [X] training_intro.txt");
+writeLine("  [X] encrypted_test.enc\n");
+writeLine("[+] Target vector verified. Communication layout is armed.");
+writeLine("[+] TASK II: To extract readable script streams from an index cluster, you must target a file node with the extraction liturgy.");
+writeLine("[+] INSTRUCTION: Type 'cat training_intro.txt' to parse the documentation reel.");
+tutorialStep = 2;
+promptLabel.innerText = "TRAIN_NODE_II> ";
+} else {
+playErrorSound();
+writeLine(`\n[-] ERROR: Uncalibrated tracking input. The routine requires 'directory' to scan the array layout.`);
+}
+} else if (tutorialStep === 2) {
+if (trimmed.toLowerCase() === 'cat training_intro.txt') {
+playSuccessChime();
+writeLine(`\n> cat training_intro.txt`);
+writeLine("=== TRANSLATION CHANNELS: training_intro.txt ===");
+writeLine("The tape spools do not forget. A balance key code consists of a sector string name linked directly with a calendar timestamp. Watch your syntax layout.");
+writeLine("Registry hints suggest the cryptographic test file override phrase is: 'GUAVA_1992'.\n");
+writeLine("[+] Data extraction calibrated. Final sequence loaded.");
+writeLine("[+] TASK III: To shatter a sealed database lockout block, you must invoke the decryption routine followed immediately by the key code phrase.");
+writeLine("[+] INSTRUCTION: Type 'decrypt GUAVA_1992' to test the array circuit pressure.");
+tutorialStep = 3;
+promptLabel.innerText = "TRAIN_NODE_III> ";
+} else {
+playErrorSound();
+writeLine(`\n[-] ERROR: Invalid target. Type 'cat training_intro.txt' verbatim to parse the document logs.`);
+}
+} else if (tutorialStep === 3) {
+if (trimmed.toLowerCase() === 'decrypt guava_1992') {
+playSuccessChime();
+writeLine(`\n> decrypt GUAVA_1992`);
+writeLine("\n[+] ...TEST VAULT FRACTURED: Calibration absolute.", "success-text");
+writeLine("[+] The telemetry grids match. The deck responds smoothly.", "success-text");
+writeLine("[+] Subroutine finished. You are now prepared to search the true Altar logs.", "success-text");
+setTimeout(() => {
+exitTutorialRoutine(false);
+}, 1500);
+} else {
+playErrorSound();
+writeLine(`\n[-] ERROR: Decryption syntax rejected. Type 'decrypt GUAVA_1992' to complete verification.`);
+}
+}
+}
+
+function exitTutorialRoutine(userInvoked = false) {
+currentMode = 'normal';
+tutorialStep = 0;
+promptLabel.innerText = "DISCIPLE@ALTAR:~$";
+if (userInvoked) {
+playErrorSound();
+writeLine("\n[!] ORIENTATION INTERRUPTED: Subroutine violently aborted by disciple action.", "system-alert");
+writeLine("[+] Returning control to baseline environment.\n");
+} else {
+// Preserving text log state stream per structural workflow specifications
+writeLine("\n=================================================================", "success-text");
+writeLine("[+] ORIENTATION MATRIX CONVERGED COMPLETE.", "success-text");
+writeLine("[+] Baseline interface telemetry synchronization: CALIBRATED.", "success-text");
+writeLine("[+] Type 'help' to review standard operational liturgies.", "success-text");
+writeLine("=================================================================\n");
+}
+}
+
 function runBackdoorOverride() {
 writeLine("\n[!] WARNING: EXECUTING BACKDOOR OVERRIDE CODE [175750]...", "system-alert");
 playAudioGlitch();
