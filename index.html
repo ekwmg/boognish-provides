@@ -497,7 +497,7 @@ const BOOGNISH_ASCII = `⠀⠀⠀⠀⠀⠀⣄⠀⠀⠀⠀⠀⠀⣸⣆⠀⠀⠀�
 ⠀⠀⠀⠀⠀⠀⢻⣧⠀⣠⠟⠁⠀⢾⣗⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣬⡻⣷⣄⠀⠀⡿⣷⣾⢽⣶⠋⠀
 ⠀⠀⠀⠀⠀⠀⠀⢻⣿⠏⣖⣲⡦⣬⣭⠤⠤⢤⣀⣀⣀⡀⠀⠀⢸⣷⣆⡿⠈⢿⢦⠀⠛⠉⣠⡿⠃⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⣿⡏⢸⡽⠀⡆⡇⢸⡏⢹⡽⠉⣿⢒⣿⢻⡹⢲⡿⣯⣤⣤⣈⢏⡇⠀⣰⡿⠁⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⡇///⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣸⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⡇⠀⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣸⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⣿⡀⢸⠃⢀⢿⠀⣻⢠⡿⢠⡿⢠⡿⢰⡿⢸⡏⢸⢇⣿⣸⠃⢸⣼⠋⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⢹⣧⣾⠀⢸⣹⢸⡟⣸⠇⣾⠇⣾⠇⣾⢇⣿⢀⡿⢸⣏⡿⢀⣾⠃⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠻⣯⣭⣭⣕⣾⣷⣿⣾⣾⣾⣾⣼⣿⡼⣇⣸⡇⣿⢹⣧⣾⠃⠀⠀⠀⠀⠀⠀⠀⠀
@@ -1299,29 +1299,33 @@ inputRenderChars.textContent = '';
 }
 });
 
-// --- Immersive Developer Tool Interception Pipeline Countermeasures ---
-document.addEventListener('contextmenu', (e) => {
+// --- Absolute Capturing Phase Developer Tool Pipelines (Crushes Live GitHub Pages Interceptions) ---
+window.addEventListener('contextmenu', (e) => {
 e.preventDefault();
+e.stopPropagation();
 runAdminGlitch();
-});
+}, true);
 
-document.addEventListener('keydown', (e) => {
-// Trap standard F12 execution
+window.addEventListener('keydown', (e) => {
+// Trap standard F12 execution during initial physical capturing phase
 if (e.key === 'F12') {
 e.preventDefault();
+e.stopPropagation();
 runAdminGlitch();
 }
 // Trap common diagnostic panel combinations: Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U
 if (e.ctrlKey && (e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase()) || e.key.toLowerCase() === 'u')) {
 e.preventDefault();
+e.stopPropagation();
 runAdminGlitch();
 }
-// Trap alternative macOS architectures: Cmd+Alt+I, Cmd+Alt+J, Cmd+M
+// Trap alternative macOS layouts: Cmd+Alt+I, Cmd+Alt+J, Cmd+U
 if ((e.metaKey && e.altKey && ['I', 'J'].includes(e.key.toUpperCase())) || (e.metaKey && e.key.toLowerCase() === 'u')) {
 e.preventDefault();
+e.stopPropagation();
 runAdminGlitch();
 }
-});
+}, true);
 
 window.onload = () => {
 // Dynamic contextual device classification and optimization engine
