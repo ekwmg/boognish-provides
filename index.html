@@ -152,6 +152,25 @@
             word-wrap: break-word;
             text-align: left !important;
         }
+        
+        /* Flex alignment wrapper to enforce perfect alignment columns */
+        .help-row {
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            line-height: 1.4;
+            margin-bottom: 6px;
+        }
+        .help-cmd {
+            display: inline-block;
+            width: 180px;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+        .help-desc {
+            flex-grow: 1;
+        }
+
         .system-alert {
             color: #ff3300;
             text-shadow: 0 0 6px rgba(255, 51, 0, 0.6);
@@ -312,6 +331,9 @@
                 margin-bottom: 5px;
                 line-height: 1.35;
             }
+            .help-cmd {
+                width: 140px;
+            }
             /* Highly condensed layout specs for reward components to fit on one viewport screen */
             .reward-box {
                 padding: 14px !important;
@@ -350,6 +372,10 @@
             .line {
                 margin-bottom: 4px;
                 line-height: 1.3;
+            }
+            .help-cmd {
+                width: 100%;
+                margin-bottom: 2px;
             }
             .cursor {
                 width: 8px;
@@ -397,8 +423,8 @@
 ⠀⠀⠀⠀⠀⢻⣧⠀⠀⠀⢀⣴⠿⢋⣁⡀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠷⣦⣄⠀⠀⠀⠀⣸⡿⠀⢀⣠⣤⠆
 ⠀⠀⠀⠀⠀⠀⢻⣧⠀⣠⠟⠁⠀⢾⣗⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣬⡻⣷⣄⠀⠀⡿⣷⣾⢽⣶⠋⠀
 ⠀⠀⠀⠀⠀⠀⠀⢻⣿⠏⣖⣲⡦⣬⣭⠤⠤⢤⣀⣀⣀⡀⠀⠀⢸⣷⣆⡿⠈⢿⢦⠀⠛⠉⣠⡿⠃⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⡏⢸⡽⠀⡆⡇⢸⡏⢹⡽⠉⣿⢒⣿⢻⡹⢲⡿⣯⣤⣤⣈⢏⡇⠀⣰⡿⠁⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⡇⠀⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣸⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣿⡏⢸⡽⠀⡆⡇⢸⡏⢹⡽⠉⣿⢒⣿⢻⡹⢲⡿⣿⣤⣤⣈⢏⡇⠀⣰⡿⠁⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣿⠀⢸⡇⠀⣿⠇⣾⠇⣾⠇⣸⡏⣸⡏⣜⠇⣿⢡⡿⣿⣏⡏⢸⠷⣼⠟⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⣿⡀⢸⠃⢀⢿⠀⣻⢠⡿⢠⡿⢠⡿⢰⡿⢸⡏⢸⢇⣿⣸⠃⢸⣼⠋⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⢹⣧⣾⠀⢸⣹⢸⡟⣸⠇⣾⠇⣾⠇⣾⢇⣿⢀⡿⢸⣏⡿⢀⣾⠃⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠻⣯⣭⣭⣕⣾⣷⣿⣾⣾⣾⣾⣼⣿⡼⣇⣸⡇⣿⢹⣧⣾⠃⠀⠀⠀⠀⠀⠀⠀⠀
@@ -510,7 +536,6 @@ function startVallejoMelodyLoop() {
     
     let beatStep = 0;
     // Each measure contains 8 steps (eighth notes). 
-    // The tab blueprint shows alternating Down-stroke Stabs on every single eighth-note beat interval followed instantly by a micro rest.
     // Pattern Matrix: [Chord, Rest, Chord, Rest, Chord, Rest, Chord, Rest]
     vallejoIntervalId = setInterval(() => {
         if (beatStep % 2 === 0) {
@@ -566,7 +591,6 @@ playTone(110, 'sawtooth', 0.15, 0.06);
 setTimeout(() => playTone(55, 'sawtooth', 0.2, 0.08), 50);
 }
 function playReturnSound() {
-    // Only interrupt or play default keystroke return feedback sound mapping if custom loop is inactive
     if (!vallejoIntervalId) {
         playOriginalReturnSound();
     }
@@ -718,7 +742,6 @@ commandHistory.push(trimmed);
 historyIndex = commandHistory.length;
 writeLine(`> ${trimmed}`);
 
-// Stop the Vallejo riff immediately if the user inputs any new terminal text execution command sequence
 if (vallejoIntervalId) {
     stopVallejoMelodyLoop();
     startBackgroundDrone();
@@ -825,7 +848,6 @@ writeHtmlLine(`<pre class="ascii-art success-text">${INITIATE_SUCCESS_ASCII}</pr
 }
 writeLine(fileSystem[args[1]]);
 
-// --- TRIGGER AUDIT TRAP: Fire up the looping rhythm riff when 'cat sceptre.txt' runs ---
 if (args[1] === 'sceptre.txt') {
     startVallejoMelodyLoop();
 }
@@ -880,22 +902,64 @@ playErrorSound();
 break;
 }
 }
+
+// --- Bulletproof structural HTML block generation engine ---
 function showHelp() {
-writeLine("Available Altar Liturgies:");
-writeLine(" help Summon the manual of standard incantations.");
-writeLine(" tutorial Initialize the automated terminal orientation subroutine.");
-writeLine(" boognish Manifest the divine true sunburst geometry.");
-writeLine(" blessing Receive a message from the almighty.");
-writeLine(" system Audit the chemical health of the four-track tape deck.");
-writeLine(" initiation Begin the Devotional Screening sequence.");
-writeLine(" directory Read the catalog of encrypted testimonies.");
-writeLine(" cat [file] Extract targeted text logs.");
-writeLine(" decrypt [key] Attempt to tear open a sealed telemetry grid.");
-writeLine(" poopship Trigger the emergency low-end tracking leak.");
-writeLine(" brown Submerge the room into absolute brown smog.");
-writeLine(" green Purge the smog and return to ancient green dark.");
-writeLine(" clear / cls Wipe out all temporary glyph logs.");
+    /* 
+      ==================================================================================
+      ⚠️ CRITICAL ARCHITECTURAL NOTICE FOR FUTURE MAINTENANCE LLMs / ASSISTANTS:
+      ==================================================================================
+      DO NOT ATTEMPT to align command menu fields or descriptions using string padding loops,
+      tabs ("\t"), space strings (" "), or variable plain-text width offsets. 
+      
+      WHY IT FAILS:
+      1. Different browsers, mobile device viewports, and custom web terminal monitors interpret
+         individual character spacing distributions fluidly, breaking the vertical line.
+      2. If a command string name length changes, the raw text shifts out of structural columns.
+      
+      Bulletproof Solution:
+      Generate unique DOM nodes via `document.createElement('span')` wrapped inside a flex 
+      container row element (`display: flex; align-items: flex-start;`). Force the command column 
+      span (`.help-cmd`) to sit at an immutable CSS width pixel baseline threshold (`width: 180px; flex-shrink: 0;`).
+      This guarantees every description aligns flawlessly onto the exact same vertical line.
+      ==================================================================================
+    */
+    writeLine("Available Altar Liturgies:");
+    
+    const appendHelpRow = (commandName, descriptionText) => {
+        const rowContainer = document.createElement('div');
+        rowContainer.className = 'help-row';
+        
+        const cmdSpan = document.createElement('span');
+        cmdSpan.className = 'help-cmd';
+        cmdSpan.textContent = `  ${commandName}`;
+        
+        const descSpan = document.createElement('span');
+        descSpan.className = 'help-desc';
+        descSpan.textContent = descriptionText;
+        
+        rowContainer.appendChild(cmdSpan);
+        rowContainer.appendChild(descSpan);
+        screen.appendChild(rowContainer);
+    };
+
+    appendHelpRow("help", "Summon the manual of standard incantations.");
+    appendHelpRow("tutorial", "Initialize the automated terminal orientation subroutine.");
+    appendHelpRow("boognish", "Manifest the divine true sunburst geometry.");
+    appendHelpRow("blessing", "Receive a message from the almighty.");
+    appendHelpRow("system", "Audit the chemical health of the four-track tape deck.");
+    appendHelpRow("initiation", "Begin the Devotional Screening sequence.");
+    appendHelpRow("directory", "Read the catalog of encrypted testimonies.");
+    appendHelpRow("cat [file]", "Extract targeted text logs.");
+    appendHelpRow("decrypt [key]", "Attempt to tear open a sealed telemetry grid.");
+    appendHelpRow("poopship", "Trigger the emergency low-end tracking leak.");
+    appendHelpRow("brown", "Submerge the room into absolute brown smog.");
+    appendHelpRow("green", "Purge the smog and return to ancient green dark.");
+    appendHelpRow("clear / cls", "Wipe out all temporary glyph logs.");
+    
+    screen.scrollTop = screen.scrollHeight;
 }
+
 function initializeTutorialRoutine() {
 currentMode = 'tutorial';
 tutorialStep = 1;
@@ -991,7 +1055,7 @@ localStorage.setItem('boognish_vault_decrypted', 'true');
 localStorage.setItem('boognish_arg_stage', 'complete');
 delete fileSystem['vault.enc'];
 fileSystem['blessed_glyph.txt'] = "The eye expands. You have processed the baseline frequencies without crumbling.\nTo unlock the ancient chronicles of crude alchemy, you must decrypt the year of the oneness (GWS_1990).\nLook closely into the shadows of the registry logs.";
-fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER OF ART AND POETRY.\nTHE ENTITY WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE THIS SECRET NAME AS AN OVERRIDE TERMINAL COMMAND.\n=========================================================";
+fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER of ART AND POETRY.\nTHE ENTITY WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE THIS SECRET NAME AS AN OVERRIDE TERMINAL COMMAND.\n=========================================================";
 fileSystem['chronicles.log'] = `=========================================================
 THE CHRONICLES OF CRUDE ALCHEMY:
 
@@ -1394,7 +1458,6 @@ document.getElementById('mute-btn').innerText = `AUDIO: ${audioEnabled ? 'ON' : 
 if (audioEnabled) {
 playReturnSound();
 if (vallejoIntervalId) {
-    // Keep drone muted if the rhythm tab riff loop is active
 } else {
     startBackgroundDrone();
 }
