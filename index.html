@@ -431,7 +431,7 @@ body.theme-brown .input-container {
     <span class="splash-sub" id="splash-action-text">[ TOUCH THE MONITORS TO AWAKEN THE CROWN ]</span>
     <!-- Terms and conditions pointing explicitly to the verified production target route -->
     <span class="splash-terms">
-      By clicking you acknowledge the <a href="https://wmg.com" target="_blank" onclick="event.stopPropagation();">Rhino & WMG Terms and Conditions</a>
+      By clicking you acknowledge the <a href="https://privacy.wmg.com/rhino/privacy-policy" target="_blank" onclick="event.stopPropagation();">Rhino & WMG Terms and Conditions</a>
     </span>
   </div>
 </div>
@@ -629,11 +629,12 @@ const INITIATE_SUCCESS_ASCII = `
 +----------------------------------------+
 `;
 
+// Updated Liturgical Blessings parameters array mapping configuration exactly
 const BOOGNISH_BLESSINGS = [
-  "Midway upon the journey of our life\nI found myself within a forest dark,\nFor the straightforward pathway had been lost.\nThe spikes pierce the deep fog.",
-  "Let us go then, you and I,\nWhen the evening is spread out against the sky\nLike a patient etherized upon a table;\nThe tape reels roll silently into the dark floorboards.",
-  "somewhere i have never travelled\ncalls me into the deep beyond\nyour eyes longing from a distance\nthe silence encloses me, a frail gesture\ni cannot see",
-  "I had not thought death had undone so many.\nSighs, short and infrequent, were exhaled,\nAnd each man fixed eyes before feet.\nBoognish watches from the center of the gyre."
+  "Midway upon the journey of our life\nI found myself within a forest dark,\nFor the straightforward pathway had been lost.\nSpikes pierced the fog, growing ever closer",
+  "Let us go\nInto an evening unknown\nThe black tearing us apart\nTape reels rolling silently\nThe spikes bore into my soul",
+  "somewhere i have never travelled\ncalls me into the deep beyond\nyour eyes longing from a distance\nthe silence encloses me, a frail gesture\ni cannot see\nit is cold",
+  "i had not thought death had undone so many.\nThis new fear brings me to atonement\nLike the man before me I begged\nBegged for just one more\nOne more\nOn"
 ];
 
 let isVaultDecrypted = false;
@@ -1250,6 +1251,7 @@ function handleVallejoTrigger() {
     return;
   }
   
+  // Custom context modification: Redirected privacy anchor link back to the first-party official target address layout
   let formHtml = '<div class="reward-box" id="devotional-form-container">' +
     '<div class="reward-content-wrapper">' +
     '<h2>VALLEJO CORE CONVERGENCE IDENTIFIED</h2>' +
@@ -1259,7 +1261,7 @@ function handleVallejoTrigger() {
     '<input type="email" id="subscriber-email" style="width: 100%; max-width: 420px; background: #000; border: 1px solid var(--terminal-color); color: var(--terminal-color); padding: 8px; font-family: monospace; font-size: 18px; outline: none; margin-bottom: 16px;" placeholder="username@domain.com">' +
     '<div style="margin-bottom: 12px; display: flex; align-items: flex-start;">' +
     '<input type="checkbox" id="privacy-agree" style="margin-top: 5px; margin-right: 12px; transform: scale(1.2); accent-color: var(--terminal-color); cursor: pointer;">' +
-    '<label for="privacy-agree" style="font-size: 15px; line-height: 1.4;">I agree to the <a href="https://wmg.com" target="_blank" style="color: var(--terminal-color); text-decoration: underline; font-weight: bold;">WMG & Rhino Privacy Policy and Terms and Conditions</a>. (Required)</label>' +
+    '<label for="privacy-agree" style="font-size: 15px; line-height: 1.4;">I agree to the <a href="https://privacy.wmg.com/rhino/privacy-policy" target="_blank" style="color: var(--terminal-color); text-decoration: underline; font-weight: bold;">WMG & Rhino Privacy Policy and Terms and Conditions</a>. (Required)</label>' +
     '</div>' +
     '<div style="margin-bottom: 20px; display: flex; align-items: flex-start;">' +
     '<input type="checkbox" id="email-optin" style="margin-top: 5px; margin-right: 12px; transform: scale(1.2); accent-color: var(--terminal-color); cursor: pointer;">' +
