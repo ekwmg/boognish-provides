@@ -464,6 +464,7 @@ let audioCtx = null;
 let bgOsc1 = null;
 let bgOsc2 = null;
 let bgGain = null;
+let isSplashDismissed = false;
 
 // Vallejo Tab Loop State Variables
 let vallejoIntervalId = null;
@@ -674,6 +675,7 @@ function awakenAltar() {
   playTone(49, 'sawtooth', 3.0, 0.25);
   startBackgroundDrone();
   document.getElementById('splash-screen').style.display = 'none';
+  isSplashDismissed = true;
   setTimeout(runBootSequence, 800);
 }
 
@@ -1251,7 +1253,6 @@ function handleVallejoTrigger() {
     return;
   }
   
-  // Custom context modification: Redirected privacy anchor link back to the first-party official target address layout
   let formHtml = '<div class="reward-box" id="devotional-form-container">' +
     '<div class="reward-content-wrapper">' +
     '<h2>VALLEJO CORE CONVERGENCE IDENTIFIED</h2>' +
@@ -1616,6 +1617,27 @@ window.addEventListener('keydown', (e) => {
     runAdminGlitch();
   }
 }, true);
+
+// Anti-Bypass Platform Security Integration hooks protecting against system menu context searches
+window.addEventListener('blur', () => {
+  if (isSplashDismissed) {
+    // If the user navigates away to use Help > Search/Inspect, aggressively capture execution threads
+    runAdminGlitch();
+    setTimeout(() => {
+      terminalInput.focus();
+    }, 20);
+  }
+});
+
+// Force text insertion element capture configuration parameters
+setInterval(() => {
+  if (isSplashDismissed && document.activeElement !== terminalInput) {
+    if (document.getElementById('devotional-form-container') && document.getElementById('devotional-form-container').contains(document.activeElement)) {
+      return; 
+    }
+    terminalInput.focus();
+  }
+}, 1500);
 
 window.onload = () => {
   const actionTextElement = document.getElementById('splash-action-text');
