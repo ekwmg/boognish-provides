@@ -1,5 +1,3 @@
-# Altar of Boognish - Virtual Terminal Ritual
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +17,6 @@ body.theme-brown {
   --terminal-color: #b56b12;
   --terminal-glow: rgba(181, 107, 18, 0.4);
   --terminal-bg: #0d0600;
-
   --terminal-scanline: rgba(181, 107, 18, 0.04);
   --ascii-color: #d47a1c;
 }
@@ -39,7 +36,6 @@ body, html {
   position: relative;
   transition: background-color 0.5s ease, color 0.3s ease;
 }
-
 /* Interactive Audio Activation Splash Overlay */
 #splash-screen {
   position: absolute;
@@ -59,7 +55,6 @@ body, html {
 }
 .splash-content {
   animation: pulse 2.5s infinite;
-
   padding: 20px;
   max-width: 600px;
   width: 100%;
@@ -79,7 +74,6 @@ body, html {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-
 .splash-terms a {
   color: var(--terminal-color);
   text-decoration: underline;
@@ -100,7 +94,6 @@ body::before {
   background-size: 100% 4px, 6px 100%;
   pointer-events: none;
 }
-
 body::after {
   content: " ";
   display: block;
@@ -120,7 +113,6 @@ body::after {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
   z-index: 12;
-
   pointer-events: none;
   animation: crt-flicker 0.25s infinite;
   box-shadow: inset 0 0 100px rgba(0,0,0,0.95);
@@ -140,7 +132,6 @@ body::after {
   justify-content: flex-start;
   position: relative;
   z-index: 1;
-
   text-shadow: 0 0 5px var(--terminal-glow);
 }
 @media (min-width: 768px) {
@@ -160,7 +151,6 @@ body::after {
   width: 8px;
 }
 .terminal-screen::-webkit-scrollbar-track {
-
   background: rgba(0, 0, 0, 0.5);
 }
 .terminal-screen::-webkit-scrollbar-thumb {
@@ -180,7 +170,6 @@ body::after {
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
-
   line-height: 1.4;
   margin-bottom: 6px;
 }
@@ -201,7 +190,6 @@ body::after {
   color: #ffaa00;
   text-shadow: 0 0 6px rgba(255, 170, 0, 0.6);
 }
-
 /* Reward box is inline, fitting perfectly into text scroll streams */
 .reward-box {
   border: 2px dashed var(--terminal-color) !important;
@@ -221,7 +209,6 @@ body::after {
 }
 .reward-box h2 {
   font-size: 24px !important;
-
   text-align: left !important;
   margin: 0 0 16px 0 !important;
   display: block !important;
@@ -241,7 +228,6 @@ body::after {
   padding: 10px 20px !important;
   text-decoration: none !important;
   display: block !important; /* Converts link to clean layout block */
-
   max-width: 320px !important;
   margin: 0 0 12px 0 !important;
   font-weight: bold !important;
@@ -262,7 +248,6 @@ body::after {
   width: 100% !important;
   text-align: left !important;
 }
-
 /* Input Bar */
 .input-container {
   display: flex;
@@ -282,7 +267,6 @@ body.theme-brown .input-container {
   text-align: left !important;
 }
 .input-wrapper {
-
   flex-grow: 1;
   position: relative;
   display: flex;
@@ -302,7 +286,6 @@ body.theme-brown .input-container {
   left: 0;
   top: 0;
   height: 100%;
-
   z-index: 2;
   text-align: left !important;
 }
@@ -322,7 +305,6 @@ body.theme-brown .input-container {
   width: 11px;
   height: 22px;
   background-color: var(--terminal-color);
-
   box-shadow: 0 0 5px var(--terminal-color);
   animation: blink 0.8s infinite;
   margin-left: 1px;
@@ -342,7 +324,6 @@ body.theme-brown .input-container {
   font-family: monospace;
   white-space: pre;
   line-height: 1.1;
-
   color: var(--ascii-color);
 }
 .ascii-caption {
@@ -362,7 +343,6 @@ body.theme-brown .input-container {
     line-height: 1.35;
   }
   .help-cmd {
-
     width: 140px;
   }
   /* Highly condensed layout specs for reward components to fit on one viewport screen */
@@ -382,7 +362,6 @@ body.theme-brown .input-container {
   }
   .reward-link {
     padding: 8px 12px !important;
-
     font-size: 14px !important;
     margin-bottom: 6px !important;
     max-width: 100% !important;
@@ -402,7 +381,6 @@ body.theme-brown .input-container {
     font-size: 13px; /* Maximum compression factor for standard hand-held dimensions */
   }
   .line {
-
     margin-bottom: 4px;
     line-height: 1.3;
   }
@@ -427,7 +405,6 @@ body.theme-brown .input-container {
 </head>
 <body>
 
-
 <template id="boognish-matrix-source">⠀⠀⠀⠀⠀⠀⣄⠀⠀⠀⠀⠀⠀⣸⣆⠀⠀⠀⠀⢀⣄⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⢻⣿⣦⡀⠀⠀⠀⣿⣿⣆⠀⠀⢀⣾⣿⡀⠀⠀⠀⠀⣴⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⣤⣤⣀⠀⠀⠀⠈⣿⡟⢿⣦⡀⠀⣿⡇⢻⣆⠀⣼⡏⢸⡇⠀⠀⢀⣼⠟⣿⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀
@@ -447,11 +424,10 @@ body.theme-brown .input-container {
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠻⣿⣢⣄⣀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣷⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠯⢿⣓⣒⣲⢖⣒⣲⡿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</template>
 
-
 <!-- Splash Gate for guaranteed Audio Context triggering across target viewports -->
 <div id="splash-screen">
   <div class="splash-content">
-    === APPROACH THE ALTAR OF THE CROWN ===
+    === APPROACH THE ALTAR ===
     <span class="splash-sub" id="splash-action-text">[ TOUCH THE MONITORS TO AWAKEN THE CROWN ]</span>
     <!-- Terms and conditions pointing explicitly to the verified production target route -->
     <span class="splash-terms">
@@ -467,7 +443,6 @@ body.theme-brown .input-container {
     <span class="header-title" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 10px; font-size: 14px; opacity: 0.85;">ALTAR INTERFACE MODULE // TRANSMISSION NODE 0.440</span>
     <button class="audio-toggle" id="mute-btn" onclick="toggleAudio()" style="background: transparent; border: 1px solid var(--terminal-color); color: var(--terminal-color); font-family: monospace; padding: 4px 10px; cursor: pointer; text-shadow: 0 0 3px var(--terminal-glow); white-space: nowrap; font-size: 13px; border-radius: 3px;">AUDIO: ON</button>
   </header>
-
   
   <main class="terminal-screen" id="screen">
     <!-- Content filled by JavaScript -->
@@ -487,7 +462,6 @@ body.theme-brown .input-container {
 let audioEnabled = true;
 let audioCtx = null;
 let bgOsc1 = null;
-
 let bgOsc2 = null;
 let bgGain = null;
 
@@ -507,7 +481,6 @@ function initAudio() {
 
 function playTone(freq, type, duration, volume = 0.1) {
   if (!audioEnabled) return;
-
   try {
     initAudio();
     const osc = audioCtx.createOscillator();
@@ -527,7 +500,6 @@ function playTone(freq, type, duration, volume = 0.1) {
 function playEMinorChordStab(volume = 0.08) {
   if (!audioEnabled) return;
   try {
-
     initAudio();
     const chordFrequencies = [82.41, 110.00, 164.81, 196.00, 246.94, 329.63];
     const now = audioCtx.currentTime;
@@ -547,7 +519,6 @@ function playEMinorChordStab(volume = 0.08) {
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start(now + stringDelay);
-
       osc.stop(now + stringDelay + strumDuration);
     });
   } catch(e) {}
@@ -567,7 +538,6 @@ function startVallejoMelodyLoop() {
 
 function stopVallejoMelodyLoop() {
   if (vallejoIntervalId) {
-
     clearInterval(vallejoIntervalId);
     vallejoIntervalId = null;
   }
@@ -587,7 +557,6 @@ function startBackgroundDrone() {
     bgOsc2.frequency.value = 55.4; 
     
     const filter = audioCtx.createBiquadFilter();
-
     filter.type = 'lowpass';
     filter.frequency.value = 100; 
     
@@ -607,7 +576,6 @@ function stopBackgroundDrone() {
   try {
     if (bgOsc1) { bgOsc1.stop(); bgOsc1.disconnect(); }
     if (bgOsc2) { bgOsc2.stop(); bgOsc2.disconnect(); }
-
   } catch(e) {}
   bgOsc1 = null;
   bgOsc2 = null;
@@ -628,7 +596,6 @@ function playReturnSound() {
   }
 }
 
-
 function playErrorSound() {
   playTone(80, 'sawtooth', 0.45, 0.12);
 }
@@ -648,7 +615,6 @@ function playAudioGlitch() {
       const randomFreq = 40 + Math.random() * 260;
       const waveform = Math.random() > 0.5 ? 'sawtooth' : 'square';
       const length = 0.05 + Math.random() * 0.15;
-
       playTone(randomFreq, waveform, length, 0.08);
     }, i * 50);
   }
@@ -670,7 +636,6 @@ const BOOGNISH_BLESSINGS = [
   "I had not thought death had undone so many.\nSighs, short and infrequent, were exhaled,\nAnd each man fixed eyes before feet.\nBoognish watches from the center of the gyre."
 ];
 
-
 let isVaultDecrypted = false;
 let isInitiatePassed = false;
 let isTutorialCompleted = false; 
@@ -690,7 +655,6 @@ let surveyAnswers = [];
 let tutorialStep = 0;
 
 const surveyQuestions = [
-
   "Question I: Do you surrender your sensory nerves completely to the crown of the seven spikes? (Y/N)",
   "Question II: What scale of human fear are you prepared to breathe out when the brown frequency drops? (Type a selection: 1-10)",
   "Question III: The sky dripped in a demon sweat the night the partner left. When the wind blows cold, does it all become clear to you now? (Y/N)"
@@ -712,10 +676,8 @@ function awakenAltar() {
   setTimeout(runBootSequence, 800);
 }
 
-
 function displayBoognish() {
   writeLine("");
-  // Fixed explicitly via DOM template querySelector layout extraction pattern
   const templateContent = document.getElementById('boognish-matrix-source').innerHTML;
   const container = document.createElement('div');
   container.className = 'ascii-container';
@@ -731,7 +693,6 @@ function displayBoognish() {
   screen.scrollTop = screen.scrollHeight;
   writeLine("");
 }
-
 
 function writeLine(text, className = '') {
   const line = document.createElement('div');
@@ -753,7 +714,6 @@ function clearScreen() {
   screen.innerHTML = '';
 }
 
-
 function simulateLoading(steps, callback) {
   let i = 0;
   terminalInput.disabled = true;
@@ -773,7 +733,6 @@ function simulateLoading(steps, callback) {
 }
 
 function runBootSequence() {
-
   const bootSteps = [
     { text: "AWAKENING ENGINES IN THE DARK...", sound: 'beep' },
     { text: "OPENING SEVENTH APERTURE VALVE..." },
@@ -793,7 +752,6 @@ function runBootSequence() {
 
 function executeCommand(inputStr) {
   let sanitizedInput = inputStr.replace(/[\[\]\(\)"']/g, '');
-
   const trimmed = sanitizedInput.trim();
   if (!trimmed) return;
   
@@ -813,7 +771,6 @@ function executeCommand(inputStr) {
   }
   
   if (trimmed === '175750') {
-
     runBackdoorOverride();
     return;
   }
@@ -833,7 +790,6 @@ function executeCommand(inputStr) {
     return;
   }
   
-
   const args = trimmed.split(' ');
   let cmd = args[0].toLowerCase();
   if (cmd === 'decode') cmd = 'decrypt';
@@ -853,7 +809,6 @@ function executeCommand(inputStr) {
     }
     playErrorSound();
     return;
-
   }
   
   if (['dean', 'deaner', 'gene', 'gener', 'dave', 'claude', 'pod', 'ween', 'mang'].includes(cmd)) {
@@ -873,7 +828,6 @@ function executeCommand(inputStr) {
     } else if (cmd === 'mang') {
       writeLine("The sacred title of brotherhood bound under the gaze of the seven spikes. We walk together through the mud.");
     }
-
     writeLine("----------------------------------\n");
     playTone(120, 'square', 0.3, 0.06);
     return;
@@ -893,7 +847,6 @@ function executeCommand(inputStr) {
     case 'boognish':
       displayBoognish();
       playTone(200, 'sawtooth', 0.5, 0.08);
-
       break;
     case 'mollusk':
       writeLine("YOU LOOK DIRECTLY INTO THE DARK SALT WATER. IT IS NOT YET TIME.", "system-alert");
@@ -913,7 +866,6 @@ function executeCommand(inputStr) {
       playTone(100, 'square', 0.2, 0.05);
       break;
     case 'blessing':
-
       const randomIndex = Math.floor(Math.random() * BOOGNISH_BLESSINGS.length);
       writeLine("\n--- AN ELEMENT OF TRANSCENDENT SPEECH DESCENDS ---", "success-text");
       writeLine(BOOGNISH_BLESSINGS[randomIndex]);
@@ -933,7 +885,6 @@ function executeCommand(inputStr) {
       break;
     case 'cat':
       if (!args[1]) {
-
         writeLine("Ritual breakdown: cat [index_name]", "system-alert");
         if (isTutorialCompleted) {
           writeLine("The frequencies remain unaligned. If your path is lost in the brown fog, re-invoke the 'tutorial' routine to clear the transmission lines.", "success-text");
@@ -953,7 +904,6 @@ function executeCommand(inputStr) {
         if (args[1] === 'sceptre.txt') {
           startVallejoMelodyLoop();
         }
-
       } else {
         writeLine("Error: Fragment node '" + args[1] + "' does not exist or has been eaten by the waste.", "system-alert");
         if (isTutorialCompleted) {
@@ -973,7 +923,6 @@ function executeCommand(inputStr) {
       handleDecryption(args[1]);
       break;
     case 'vallejo':
-
       handleVallejoTrigger();
       break;
     case 'initiation':
@@ -993,7 +942,6 @@ function executeCommand(inputStr) {
       writeLine("  Altar Convergence Metric:    ABSOLUTE");
       if (!isVaultDecrypted) {
         writeLine("  Warning: Unresolved frequency pressure inside sector 'brown_metrics.log'...", "system-alert");
-
       } else {
         writeLine("  Secured Transmission Tunnel:  OVERRIDDEN BY THE LEGION", "success-text");
       }
@@ -1013,7 +961,6 @@ function executeCommand(inputStr) {
     default:
       writeLine("Sacrilege: The phrase '" + cmd + "' means nothing to the core. Type 'help' to appease the deity.", "system-alert");
       playErrorSound();
-
       break;
   }
 }
@@ -1033,7 +980,6 @@ function showHelp() {
     rowContainer.appendChild(descSpan);
     screen.appendChild(rowContainer);
   };
-
   
   appendHelpRow("help", "Summon the manual of standard incantations.");
   appendHelpRow("tutorial", "Initialize the automated terminal orientation subroutine.");
@@ -1053,7 +999,6 @@ function showHelp() {
 
 function initializeTutorialRoutine() {
   currentMode = 'tutorial';
-
   tutorialStep = 1;
   clearScreen();
   writeLine("[!] INITIALIZING TRANSMISSION NODE TUTORIAL PROTOCOL...", "system-alert");
@@ -1073,7 +1018,6 @@ function initializeTutorialRoutine() {
 function handleTutorialProgression(input) {
   const trimmed = input.trim();
   if (!trimmed) return;
-
   
   if (tutorialStep === 1) {
     if (trimmed.toLowerCase() === 'directory') {
@@ -1093,7 +1037,6 @@ function handleTutorialProgression(input) {
     }
   } else if (tutorialStep === 2) {
     if (trimmed.toLowerCase() === 'cat training_intro.txt') {
-
       playSuccessChime();
       writeLine(`\n> cat training_intro.txt`);
       writeLine("=== TRANSLATION CHANNELS: training_intro.txt ===");
@@ -1113,7 +1056,6 @@ function handleTutorialProgression(input) {
       playSuccessChime();
       writeLine(`\n> decrypt GUAVA_1992`);
       writeLine("\n[+] ...TEST VAULT FRACTURED: Calibration absolute.", "success-text");
-
       writeLine("[+] The telemetry grids match. The deck responds smoothly.", "success-text");
       writeLine("[+] Subroutine finished. You are now prepared to search the true Altar logs.", "success-text");
       setTimeout(() => {
@@ -1133,7 +1075,6 @@ function exitTutorialRoutine(userInvoked = false) {
   if (userInvoked) {
     playErrorSound();
     writeLine("\n[!] ORIENTATION INTERRUPTED: Subroutine violently aborted by disciple action.", "system-alert");
-
     writeLine("[+] Returning control to baseline environment.\n");
   } else {
     isTutorialCompleted = true;
@@ -1153,14 +1094,13 @@ function runBackdoorOverride() {
   isVaultDecrypted = true;
   argStage = "complete";
   localStorage.setItem('boognish_initiate_passed', 'true');
-
   localStorage.setItem('boognish_vault_decrypted', 'true');
   localStorage.setItem('boognish_arg_stage', 'complete');
   delete fileSystem['vault.enc'];
   
   fileSystem['blessed_glyph.txt'] = "The eye expands. You have processed the baseline frequencies without crumbling.\nTo unlock the ancient chronicles of crude alchemy, you must decrypt the year of the oneness (GWS_1990).\nLook closely into the shadows of the registry logs.";
   
-  fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER of ART AND POETRY.\nTHE ENTITY WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE THIS SECRET NAME AS AN OVERRIDE TERMINAL COMMAND.\n=========================================================";
+  fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER OF ART AND POETRY.\nTHE ENTITY WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE THIS SECRET NAME AS AN OVERRIDE TERMINAL COMMAND.\n=========================================================";
   
   fileSystem['chronicles.log'] = `=========================================================
 THE CHRONICLES OF CRUDE ALCHEMY:
@@ -1173,7 +1113,6 @@ Born in the damp toxicity of a carbon-monoxide farm. Overdriven four-track casse
 
 [1992] PURE GUAVA
 The major distortion breakthrough. Glistening tape speed mutations, pinpoint acoustic tears, and commercial subversion bleeding through an aluminum microphone grid.
-
 
 [1994] CHOCOLATE AND CHEESE
 A pristine studio alignment masking a dark, sinister undercurrent. High-fidelity multi-genre camouflage veiling tragic pop portraits and brilliant psychological rot.
@@ -1194,7 +1133,6 @@ Polished pop symmetry fractured by experimental decay. Pop-rock constructs hidin
 The legendary traditional country detachment captured directly onto tracking reels. A high-fidelity detour warping Nashville steel instrumentation with unfiltered vocal alignments.
 
 [2002] LIVE AT STUBB'S 7/2000
-
 The absolute, blistering Texas outdoor manifestation. An atmospheric record tracing heavy full-band momentum through the warm southern night air.
 
 [2003] ALL REQUEST LIVE
@@ -1215,7 +1153,6 @@ A highly specialized, polarizing electronic mutation. Jarring Eurodance beats, s
 [2007] LA CUCARACHA
 A chaotic, multi-flavored party at the edge of the void. Eclectic genre mutations spinning rapidly before the terminal sequence temporarily goes silent.
 
-
 [2008] AT THE CAT'S CRADLE, 1992
 An unrefined structural time-capsule documenting early guitar-and-DAT tape-deck mechanics. Loud, jagged frequencies scraping through small physical rooms.
 
@@ -1235,7 +1172,6 @@ The legendary country detour expanded into a 36-song archive. Remastering the Na
   const currentFiles = {...fileSystem};
   delete fileSystem['brown_metrics.log'];
   fileSystem['brown_metrics.log'] = currentFiles['brown_metrics.log'];
-
   playSuccessChime();
 }
 
@@ -1255,7 +1191,6 @@ function handleDecryption(key) {
   if (cleanKey === 'JAMMY_1991') {
     if (isVaultDecrypted) {
       writeLine("System notification: The channel is already weeping raw telemetry lines.");
-
       return;
     }
     isVaultDecrypted = true;
@@ -1275,7 +1210,6 @@ function handleDecryption(key) {
     
     writeLine("\n[+] ...VAULT FRACTURED: The internal algorithms have matched.", "success-text");
     writeLine("[+] Tearing out hidden tape indexes...", "success-text");
-
     writeLine("[+] New memory block unsealed: 'sceptre.txt'. Run 'cat sceptre.txt' to observe instructions.", "success-text");
     
   } else if (cleanKey === 'GWS_1990') {
@@ -1295,7 +1229,6 @@ A raw sprawling baseline sacrament. The entry point of raw, unpolished lightning
     fileSystem['brown_metrics.log'] = currentFiles['brown_metrics.log'];
     writeLine("\n[+] New lore chronicle discovered: 'chronicles.log'. Run 'cat chronicles.log' to extract records.", "success-text");
   } else {
-
     writeLine("[-] DECRYPTION ERROR: False phrase. The altar rejects your vibration.", "system-alert");
     if (isTutorialCompleted) {
       writeLine("The frequencies remain unaligned. If your path is lost in the brown fog, re-invoke the 'tutorial' routine to clear the transmission lines.", "success-text");
@@ -1315,7 +1248,6 @@ function handleVallejoTrigger() {
     writeLine("Ritual error: You have not yet cracked the seals of the outer files.", "system-alert");
     playErrorSound();
     return;
-
   }
   
   let formHtml = '<div class="reward-box" id="devotional-form-container">' +
@@ -1335,7 +1267,6 @@ function handleVallejoTrigger() {
     '</div>' +
     '<button id="form-submit-btn" onclick="submitDevotionForm()" style="background: var(--terminal-color); color: #000; border: none; padding: 12px 24px; font-family: monospace; font-weight: bold; font-size: 18px; cursor: pointer; text-transform: uppercase;">Submit Devotion</button>' +
     '</div>' +
-
     '</div>' +
     '</div>';
     
@@ -1355,7 +1286,6 @@ window.submitDevotionForm = function() {
   const dotIndex = emailValue.lastIndexOf('.');
   
   if (atIndex < 1 || dotIndex <= atIndex + 1 || dotIndex >= emailValue.length - 1) {
-
     writeLine("[-] REGISTRY ERROR: Invalid coordinate string. Email requires a valid domain mask (e.g. user@domain.com).", "system-alert");
     playErrorSound();
     return;
@@ -1375,7 +1305,6 @@ window.submitDevotionForm = function() {
   
   const GOOGLE_SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwhmXviIv4JIhG6ykyafjXHQKBhQN0c0nm_hLx_Ql5-McW9_N8Jx5r6ytHyfNQYkfB6/exec";
   
-
   fetch(GOOGLE_SHEET_WEBAPP_URL, {
     method: "POST",
     mode: "no-cors",
@@ -1396,7 +1325,6 @@ window.submitDevotionForm = function() {
   });
 };
 
-
 function renderRewardScreen() {
   const formBox = document.getElementById('devotional-form-container');
   if (formBox) formBox.remove();
@@ -1416,7 +1344,6 @@ function renderRewardScreen() {
     '<div class="lockout-msg-container">' +
     '<p style="font-size: 18px; font-weight: bold; line-height: 1.3; color: #ff3300; text-shadow: 0 0 8px rgba(255,51,0,0.8); border: 2px solid #ff3300; padding: 10px; display: inline-block; background: rgba(255,51,0,0.05); margin: 0;">THE SCEPTRE REELS ARE BURNING. COGNITIVE LOCKOUT ACTIVE.</p>' +
     '</div>' +
-
     '<div id="mobile-inline-status" style="display:none; margin-top:12px; font-size:14px; color:#ffaa00; font-weight:bold;"></div>' +
     '</div>' +
     '</div>';
@@ -1436,7 +1363,6 @@ function renderRewardScreen() {
     writeLine("\n" + statusText, "success-text");
   }
   
-
   playSuccessChime();
   terminalInput.disabled = false;
   terminalInput.focus();
@@ -1456,7 +1382,6 @@ function handleCacheClear() {
     isInitiatePassed = false;
     isTutorialCompleted = false;
     argStage = "locked";
-
     fileSystem['vault.enc'] = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nWARNING: SACRED SECTOR VAULT UNBROKEN.\nThe signal is barricaded behind a barrier of cold magnetic noise.\nTo forcefully invoke this frequency channel, execute: 'decrypt [key]'\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
     delete fileSystem['sceptre.txt'];
     delete fileSystem['blessed_glyph.txt'];
@@ -1476,7 +1401,6 @@ function handleCacheClear() {
 
 function startSurvey() {
   currentMode = 'initiation';
-
   surveyStep = 0;
   surveyAnswers = [];
   clearScreen();
@@ -1496,7 +1420,6 @@ function handleSurveyInput(input) {
     writeLine(surveyQuestions[surveyStep]);
     playReturnSound();
   } else {
-
     promptLabel.innerText = "DISCIPLE@ALTAR:~$";
     currentMode = 'normal';
     const ans1 = surveyAnswers[0].toUpperCase().trim();
@@ -1516,7 +1439,6 @@ function handleSurveyInput(input) {
         isInitiatePassed = true;
         localStorage.setItem('boognish_initiate_passed', 'true');
         fileSystem['blessed_glyph.txt'] = "The eye expands. You have processed the baseline frequencies without crumbling.\nTo unlock the ancient chronicles of crude alchemy, you must decrypt the year of the oneness (GWS_1990).\nLook closely into the shadows of the registry logs.";
-
         const currentFiles = {...fileSystem};
         delete fileSystem['brown_metrics.log'];
         fileSystem['brown_metrics.log'] = currentFiles['brown_metrics.log'];
@@ -1536,7 +1458,6 @@ function handleSurveyInput(input) {
       ];
       simulateLoading(failureSteps, () => {
         writeLine("\n[-] ALIGNMENT REJECTED: The Boognish has deemed you unworthy. Your flesh is cold, your spirit uncalibrated. Read more devotionals and return to the altar when you are ready to burn.", "system-alert");
-
         playErrorSound();
       });
     }
@@ -1556,7 +1477,6 @@ function runBrownGlitch(completionMessage = "System equilibrium re-stabilized. P
     instances++;
     if (instances > 30) {
       clearInterval(interval);
-
       clearScreen();
       terminalInput.disabled = false;
       terminalInput.focus();
@@ -1576,7 +1496,6 @@ function runAdminGlitch() {
       garbage += vocabulary[Math.floor(Math.random() * vocabulary.length)] + " ";
     }
     writeLine(garbage, "system-alert");
-
     instances++;
     if (instances > 25) {
       clearInterval(interval);
@@ -1596,7 +1515,6 @@ function runSludgeGlitch() {
     initAudio();
     try {
       const osc = audioCtx.createOscillator();
-
       const gain = audioCtx.createGain();
       osc.type = 'sawtooth';
       osc.frequency.setValueAtTime(45, audioCtx.currentTime);
@@ -1616,7 +1534,6 @@ function runSludgeGlitch() {
       garbage += sludgeVocab[Math.floor(Math.random() * sludgeVocab.length)] + ".. ";
     }
     writeLine(garbage, "system-alert");
-
     instances++;
     if (instances > 20) {
       clearInterval(interval);
@@ -1636,7 +1553,6 @@ function toggleAudio() {
     } else {
       startBackgroundDrone();
     }
-
   } else {
     stopBackgroundDrone();
   }
@@ -1657,7 +1573,6 @@ terminalInput.addEventListener('input', (e) => {
   playKeySound();
 });
 
-
 terminalInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     playReturnSound();
@@ -1677,7 +1592,6 @@ terminalInput.addEventListener('keydown', (e) => {
     if (historyIndex < commandHistory.length - 1) {
       historyIndex++;
       terminalInput.value = commandHistory[historyIndex];
-
       inputRenderChars.textContent = commandHistory[historyIndex];
     } else {
       historyIndex = commandHistory.length;
@@ -1697,7 +1611,6 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) || (e.ctrlKey && e.key.toLowerCase() === 'u')) {
     e.preventDefault();
     e.stopPropagation();
-
     runAdminGlitch();
   }
 }, true);
@@ -1717,7 +1630,6 @@ window.onload = () => {
     advisoryBanner.style.padding = '8px 12px';
     advisoryBanner.style.background = 'rgba(255, 51, 0, 0.08)';
     advisoryBanner.style.textTransform = 'uppercase';
-
     advisoryBanner.style.letterSpacing = '1px';
     advisoryBanner.style.lineHeight = '1.4';
     advisoryBanner.innerHTML = "⚠️ TERMINAL NOTICE:<br>THIS SITE IS BEST EXPERIENCED ON DESKTOP.<br>FOR COMPLETE ARCHIVAL EXTRACTION, A HARDWARE MONOSPACE DISPLAY IS STRONGLY ADVISED.";
@@ -1737,7 +1649,6 @@ window.onload = () => {
   if (savedTheme === 'brown') {
     document.body.classList.add('theme-brown');
   }
-
   const savedInitialize = localStorage.getItem('boognish_initiate_passed');
   if (savedInitialize === 'true') {
     isInitiatePassed = true;
@@ -1757,7 +1668,6 @@ window.onload = () => {
     delete fileSystem['vault.enc'];
     fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER OF ART AND POETRY.\nTHE ENTITY WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE THIS SECRET NAME AS AN OVERRIDE TERMINAL COMMAND.\n=========================================================";
   }
-
   
   const currentFiles = {...fileSystem};
   delete fileSystem['brown_metrics.log'];
@@ -1766,5 +1676,3 @@ window.onload = () => {
 </script>
 </body>
 </html>
-
-
