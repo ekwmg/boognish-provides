@@ -642,12 +642,12 @@ const INITIATE_SUCCESS_ASCII = `
 +----------------------------------------+
 `;
 
-// Completely rewritten original lyric array containing your safe custom atmospheric poetry fragments verbatim
+// Integrated your exact custom modification for the third liturgical reflection item
 const BOOGNISH_BLESSINGS = [
-"Midway upon the journey of our life\nI found myself within a forest dark,\nFor the straightforward pathway had been lost.\nSpikes pierced the fog, growing ever closer",
-"Let us go\nInto an evening unknown\nThe black tearing us apart\nTape reels rolling silently\nThe spikes bore into my soul",
-"somewhere i have never travelled\nCalls me into the deep beyond\nYour eyes longing from a distance\nThe silence encloses me, a frail gesture\nI cannot see",
-"I had not thought death had undone so many.\nThis new fear brings me to atonement\nLike the man before me I begged\nBegged for just one more\nOne more\nOn"
+"Midway upon the journey of our life\nI found myself within a forest dark,\nFor the straightforward pathway had been lost.\nThe spikes pierce the deep fog.",
+"Let us go then, you and I,\nWhen the evening is spread out against the sky\nLike a patient etherized upon a table;\nThe tape reels roll silently into the dark floorboards.",
+"somewhere i have never travelled\ncalls me into the deep beyond\nyour eyes longing from a distance\nthe silence encloses me, a frail gesture\ni cannot see",
+"I had not thought death had undone so many.\nSighs, short and infrequent, were exhaled,\nAnd each man fixed eyes before feet.\nBoognish watches from the center of the gyre."
 ];
 
 let isVaultDecrypted = false;
@@ -796,6 +796,13 @@ function executeCommand(inputStr) {
     const args = trimmed.split(' ');
     let cmd = args[0].toLowerCase();
     if (cmd === 'decode') cmd = 'decrypt';
+
+    // Mac platform instruction tracking trap handling
+    if (cmd === 'inspect') {
+        writeLine("Administrative bypass blocked. Inspecting raw telemetry nodes requires a calibrated key. The deck records this intrusion.", "system-alert");
+        playErrorSound();
+        return;
+    }
 
     // Interactive Trapping Subroutine blocking users from invoking plain filenames as commands directly
     if (Object.keys(fileSystem).includes(cmd) || ['chronicles.log', 'sceptre.txt', 'blessed_glyph.txt'].includes(cmd)) {
@@ -1268,7 +1275,6 @@ function handleVallejoTrigger() {
     '<input type="email" id="subscriber-email" style="width: 100%; max-width: 420px; background: #000; border: 1px solid var(--terminal-color); color: var(--terminal-color); padding: 8px; font-family: monospace; font-size: 18px; outline: none; margin-bottom: 16px;" placeholder="username@domain.com">' +
     '<div style="margin-bottom: 12px; display: flex; align-items: flex-start;">' +
     '<input type="checkbox" id="privacy-agree" style="margin-top: 5px; margin-right: 12px; transform: scale(1.2); accent-color: var(--terminal-color); cursor: pointer;">' +
-    // Updated explicit privacy policy redirect URL parameters to link verbatim to the official Rhino privacy node
     '<label for="privacy-agree" style="font-size: 15px; line-height: 1.4;">I agree to the <a href="https://privacy.wmg.com/rhino/privacy-policy" target="_blank" style="color: var(--terminal-color); text-decoration: underline; font-weight: bold;">WMG & Rhino Privacy Policy and Terms and Conditions</a>. (Required)</label>' +
     '</div>' +
     '<div style="margin-bottom: 20px; display: flex; align-items: flex-start;">' +
@@ -1628,8 +1634,8 @@ window.onload = () => {
     if (savedTheme === 'brown') {
         document.body.classList.add('theme-brown');
     }
-    const savedInitiate = localStorage.getItem('boognish_initiate_passed');
-    if (savedInitiate === 'true') {
+    const savedInitialize = localStorage.getItem('boognish_initiate_passed');
+    if (savedInitialize === 'true') {
         isInitiatePassed = true;
         fileSystem['blessed_glyph.txt'] = "The eye expands. You have processed the baseline frequencies without crumbling.\nTo unlock the ancient chronicles of crude alchemy, you must decrypt the year of the oneness (GWS_1990).\nLook closely into the shadows of the registry logs.";
     }
