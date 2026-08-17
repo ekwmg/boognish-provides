@@ -762,8 +762,8 @@ function executeCommand(inputStr) {
     historyIndex = commandHistory.length;
     writeLine(`> ${trimmed}`);
 
-    // Interactive Pathway Trapping Subroutine for directory path syntax inputs
-    if (trimmed.toLowerCase().includes('/the_pod/archives')) {
+    // Expanded Interactive Pathway Trapping Subroutine to dynamically catch all text variations of the path entry block
+    if (trimmed.toLowerCase().includes('the_pod/archives')) {
         writeLine("You are attempting to crawl directly into the physical geometry of the partition rail. Invoke 'directory' to scan its contents from the safety of the terminal glass.", "system-alert");
         playErrorSound();
         return;
