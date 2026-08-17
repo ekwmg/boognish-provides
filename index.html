@@ -1618,10 +1618,8 @@ window.addEventListener('keydown', (e) => {
   }
 }, true);
 
-// Anti-Bypass Platform Security Integration hooks protecting against system menu context searches
 window.addEventListener('blur', () => {
   if (isSplashDismissed) {
-    // If the user navigates away to use Help > Search/Inspect, aggressively capture execution threads
     runAdminGlitch();
     setTimeout(() => {
       terminalInput.focus();
@@ -1629,7 +1627,44 @@ window.addEventListener('blur', () => {
   }
 });
 
-// Force text insertion element capture configuration parameters
+// Advanced DevTools Detonation Engine Layer (Debugger Trap)
+function launchDevToolsBreakTrap() {
+  const triggerFreezeLoop = function(index) {
+    if (String(index / index).length !== 1 || index % 20 === 0) {
+      (function() {
+        return true;
+      }.constructor('debugger')());
+    } else {
+      (function() {
+        return false;
+      }.constructor('debugger')());
+    }
+    triggerFreezeLoop(++index);
+  };
+  try {
+    triggerFreezeLoop(0);
+  } catch (e) {
+    setTimeout(launchDevToolsBreakTrap, 50);
+  }
+}
+
+// DevTools initialization detection getter hooks
+const elementTrap = new Image();
+Object.defineProperty(elementTrap, 'id', {
+  get: function() {
+    runAdminGlitch();
+    launchDevToolsBreakTrap();
+  }
+});
+
+setInterval(() => {
+  if (isSplashDismissed) {
+    // Continuous background terminal scan engine evaluating inspector logging targets
+    console.log(elementTrap);
+    console.clear();
+  }
+}, 300);
+
 setInterval(() => {
   if (isSplashDismissed && document.activeElement !== terminalInput) {
     if (document.getElementById('devotional-form-container') && document.getElementById('devotional-form-container').contains(document.activeElement)) {
