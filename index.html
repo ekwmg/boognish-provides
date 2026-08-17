@@ -65,6 +65,19 @@
             display: block;
             margin-top: 15px;
         }
+        .splash-terms {
+            display: block;
+            font-size: 13px;
+            opacity: 0.5;
+            margin-top: 30px;
+            line-height: 1.4;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .splash-terms a {
+            color: var(--terminal-color);
+            text-decoration: underline;
+        }
         @keyframes pulse {
             0%, 100% { opacity: 0.5; }
             50% { opacity: 1; }
@@ -437,6 +450,10 @@
         <div class="splash-content">
             === APPROACH THE ALTAR OF THE CROWN ===
             <span class="splash-sub" id="splash-action-text">[ TOUCH THE MONITORS TO AWAKEN THE CROWN ]</span>
+            <!-- Embedded Terms & Conditions link updated explicitly to point to the authorized production directory node -->
+            <span class="splash-terms">
+                By clicking you acknowledge the <a href="https://wmg.com" target="_blank" onclick="event.stopPropagation();">Rhino & WMG Terms and Conditions</a>
+            </span>
         </div>
     </div>
     <div class="crt-overlay"></div>
@@ -631,9 +648,12 @@ const BOOGNISH_BLESSINGS = [
 "somewhere i have never travelled, gladly beyond\nany experience, your eyes have their silence:\nin your most frail gesture are things which enclose me,\nor which i cannot touch because they are too near.",
 "I had not thought death had undone so many.\nSighs, short and infrequent, were exhaled,\nAnd each man fixed his eyes before his feet.\nBoognish watches from the center of the gyre."
 ];
+
 let isVaultDecrypted = false;
 let isInitiatePassed = false;
+let isTutorialCompleted = false; // Persistent tracking state for the automated orientation module
 let argStage = "locked";
+
 const fileSystem = {
 'revelations.txt': "The frequencies are locked within the magnetic headers. Keep your eyes on the glass and wait for the tapes to align. Remember: Boognish provides.",
 'offering_log.cfg': "TRANSLATION CHANNELS:\n1. 4-Track Hiss\n2. Gas leak anomalies\n3. Pure overdriven aluminum tube scrapings\n\nStatus: The offering has accumulated. The voice demands submission.",
@@ -832,7 +852,7 @@ break;
 case 'directory':
 case 'ls':
 case 'dir':
-writeLine("Altar Registry indexes located in /the_pod/archives/ :");
+writeLine("True Altar Logs indexed inside /the_pod/archives/ :");
 Object.keys(fileSystem).forEach(file => {
 writeLine(` [X] ${file}`);
 });
@@ -840,6 +860,11 @@ break;
 case 'cat':
 if (!args[1]) {
 writeLine("Ritual breakdown: cat [index_name]", "system-alert");
+if (isTutorialCompleted) {
+    writeLine("The frequencies remain unaligned. If your path is lost in the brown fog, re-invoke the 'tutorial' routine to clear the transmission lines.", "success-text");
+} else {
+    writeLine("You have not calibrated your parameters. It is highly encouraged to type 'tutorial' to run the automated guide routine.", "success-text");
+}
 playErrorSound();
 } else if (fileSystem[args[1]]) {
 writeLine(`=== TRANSLATION CHANNELS: ${args[1]} ===`);
@@ -854,10 +879,21 @@ if (args[1] === 'sceptre.txt') {
 
 } else {
 writeLine("Error: Fragment node '" + args[1] + "' does not exist or has been eaten by the waste.", "system-alert");
+if (isTutorialCompleted) {
+    writeLine("The frequencies remain unaligned. If your path is lost in the brown fog, re-invoke the 'tutorial' routine to clear the transmission lines.", "success-text");
+} else {
+    writeLine("File access paths remain unmapped. Type 'tutorial' to execute the baseline familiarization routine.", "success-text");
+}
 playErrorSound();
 }
 break;
 case 'decrypt':
+// Custom atmospheric exception handler tracking if a user attempts to execute "decrypt vault.enc" verbatim
+if (args[1] && args[1].toLowerCase() === 'vault.enc') {
+    writeLine("Hubris. The barrier of cold magnetic noise cannot be shattered by naming the vessel. The vault requires an explicit code phrase of devotion to align the tapes.", "system-alert");
+    playErrorSound();
+    return;
+}
 handleDecryption(args[1]);
 break;
 case 'vallejo':
@@ -949,8 +985,8 @@ function showHelp() {
     appendHelpRow("blessing", "Receive a message from the almighty.");
     appendHelpRow("system", "Audit the chemical health of the four-track tape deck.");
     appendHelpRow("initiation", "Begin the Devotional Screening sequence.");
-    appendHelpRow("directory", "Read the catalog of encrypted testimonies.");
-    appendHelpRow("cat [file]", "Extract targeted text logs.");
+    appendHelpRow("directory", "Scan and map out the partition track arrays containing the True Altar Logs.");
+    appendHelpRow("cat [file]", "Extract and decrypt targeted text log fragments.");
     appendHelpRow("decrypt [key]", "Attempt to tear open a sealed telemetry grid.");
     appendHelpRow("poopship", "Trigger the emergency low-end tracking leak.");
     appendHelpRow("brown", "Submerge the room into absolute brown smog.");
@@ -1037,6 +1073,8 @@ playErrorSound();
 writeLine("\n[!] ORIENTATION INTERRUPTED: Subroutine violently aborted by disciple action.", "system-alert");
 writeLine("[+] Returning control to baseline environment.\n");
 } else {
+isTutorialCompleted = true; // Set persistent state completion hook parameters
+localStorage.setItem('boognish_tutorial_completed', 'true');
 writeLine("\n=================================================================", "success-text");
 writeLine("[+] ORIENTATION MATRIX CONVERGED COMPLETE.", "success-text");
 writeLine("[+] Baseline interface telemetry synchronization: CALIBRATED.", "success-text");
@@ -1055,7 +1093,7 @@ localStorage.setItem('boognish_vault_decrypted', 'true');
 localStorage.setItem('boognish_arg_stage', 'complete');
 delete fileSystem['vault.enc'];
 fileSystem['blessed_glyph.txt'] = "The eye expands. You have processed the baseline frequencies without crumbling.\nTo unlock the ancient chronicles of crude alchemy, you must decrypt the year of the oneness (GWS_1990).\nLook closely into the shadows of the registry logs.";
-fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER of ART AND POETRY.\nTHE ENTITY WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE THIS SECRET NAME AS AN OVERRIDE TERMINAL COMMAND.\n=========================================================";
+fileSystem['sceptre.txt'] = "=========================================================\nTHE FIRST BARRIER HAS COLLAPSED.\n\nTHE DEITY DEMANDS A FINAL TESTAMENT.\nTO UNLOCK THE SECURED VAULT, YOU MUST NAME THE LOVER OF ART AND POETRY.\nTHE ENTITY WHO CRUISES THE MOIST RAINFOREST CODES WITHOUT EVER TOUCHING NORWAY,\nCOLLECTING THE SACRED MEDALLIONS AND WINE UNTIL COCAINE BLURS THE DAWN.\n\nEXECUTE THIS SECRET NAME AS AN OVERRIDE TERMINAL COMMAND.\n=========================================================";
 fileSystem['chronicles.log'] = `=========================================================
 THE CHRONICLES OF CRUDE ALCHEMY:
 
@@ -1130,6 +1168,11 @@ playSuccessChime();
 function handleDecryption(key) {
 if (!key) {
 writeLine("Error: Cryptographic input key missing. Syntax: 'decrypt [key]'", "system-alert");
+if (isTutorialCompleted) {
+    writeLine("The frequencies remain unaligned. If your path is lost in the brown fog, re-invoke the 'tutorial' routine to clear the transmission lines.", "success-text");
+} else {
+    writeLine("Key formatting remains uncalibrated. Type 'tutorial' to launch orientation instructions.", "success-text");
+}
 playErrorSound();
 return;
 }
@@ -1173,8 +1216,16 @@ writeLine("\n[+] CHRONICLES UNSEALED: The historical matrix matches.", "success-
 writeLine("[+] New lore chronicle discovered: 'chronicles.log'. Run 'cat chronicles.log' to extract records.", "success-text");
 } else {
 writeLine("[-] DECRYPTION ERROR: False phrase. The altar rejects your vibration.", "system-alert");
+if (isTutorialCompleted) {
+    writeLine("The frequencies remain unaligned. If your path is lost in the brown fog, re-invoke the 'tutorial' routine to clear the transmission lines.", "success-text");
+} else {
+    writeLine("Cryptographic layout rules are taught inside the automated system. Consider running 'tutorial'.", "success-text");
+}
 playErrorSound();
 }
+}
+function handleVanlejoTrigger() { // Retain backward compat mapping signature
+    handleVallejoTrigger();
 }
 function handleVallejoTrigger() {
 if (!isVaultDecrypted) {
@@ -1191,6 +1242,7 @@ let formHtml = '<div class="reward-box" id="devotional-form-container">' +
 '<input type="email" id="subscriber-email" style="width: 100%; max-width: 420px; background: #000; border: 1px solid var(--terminal-color); color: var(--terminal-color); padding: 8px; font-family: monospace; font-size: 18px; outline: none; margin-bottom: 16px;" placeholder="username@domain.com">' +
 '<div style="margin-bottom: 12px; display: flex; align-items: flex-start;">' +
 '<input type="checkbox" id="privacy-agree" style="margin-top: 5px; margin-right: 12px; transform: scale(1.2); accent-color: var(--terminal-color); cursor: pointer;">' +
+// Updated explicit privacy policy redirect URL parameters to link verbatim to the production repository layout track
 '<label for="privacy-agree" style="font-size: 15px; line-height: 1.4;">I agree to the <a href="https://wmg.com" target="_blank" style="color: var(--terminal-color); text-decoration: underline; font-weight: bold;">WMG & Rhino Privacy Policy and Terms and Conditions</a>. (Required)</label>' +
 '</div>' +
 '<div style="margin-bottom: 20px; display: flex; align-items: flex-start;">' +
@@ -1260,7 +1312,7 @@ let rewardHtml = '<div class="reward-box">' +
 '<p>The first 250 disciples to present this glyph at the store checkout gates receive a 25% discount off their total offering counter.</p>' +
 '<p style="font-size: 14px; opacity: 0.85; border-top: 1px dashed rgba(0,255,102,0.3); padding-top: 10px;">To ensure transmission longevity and receive further special offerings directly from the alignment core, register your coordinate nodes below:</p>' +
 '<p style="font-size: 22px; font-weight: bold; color: #fff; letter-spacing: 2px; margin: 8px 0 15px 0;">PROMO CODE: VALLEJO25</p>' +
-'<a href="https://ween.com" target="_blank" class="reward-link">ENTER OFFICIAL WEEN STORE</a>' +
+'<a href="https://ween.com" target="_blank" class="reward-box button reward-link">ENTER OFFICIAL WEEN STORE</a>' +
 '<a href="https://ween.com#contact_form" target="_blank" class="reward-link" style="background: #ffaa00 !important;">SUBSCRIBE TO TRANSMISSIONS</a>' +
 '<div class="lockout-msg-container">' +
 '<p style="font-size: 18px; font-weight: bold; line-height: 1.3; color: #ff3300; text-shadow: 0 0 8px rgba(255,51,0,0.8); border: 2px solid #ff3300; padding: 10px; display: inline-block; background: rgba(255,51,0,0.05); margin: 0;">THE SCEPTRE REELS ARE BURNING. COGNITIVE LOCKOUT ACTIVE.</p>' +
@@ -1296,6 +1348,7 @@ localStorage.clear();
 document.body.classList.remove('theme-brown');
 isVaultDecrypted = false;
 isInitiatePassed = false;
+isTutorialCompleted = false; // Purge persistent variable keys from the localized engine state arrays
 argStage = "locked";
 fileSystem['vault.enc'] = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nWARNING: SACRED SECTOR VAULT UNBROKEN.\nThe signal is barricaded behind a barrier of cold magnetic noise.\nTo forcefully invoke this frequency channel, execute: 'decrypt [key]'\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
 delete fileSystem['sceptre.txt'];
@@ -1359,7 +1412,7 @@ writeLine("\n[+] ACCESS ELEVATED: You have won the Boognish's favor, but who kno
 } else {
 writeLine("\n[+] ACCESS ELEVATED: A new text asset has crystallized. The shadows deepen. Keep exploring.", "success-text");
 }
-writeLine("[+] Run 'directory' to audit the newly populated terminal records.", "success-text");
+writeLine("[+] Run 'directory' to audit the newly populated true altar logs.", "success-text");
 playSuccessChime();
 });
 } else {
@@ -1469,6 +1522,10 @@ document.body.addEventListener('click', (e) => {
 if (document.getElementById('devotional-form-container') && document.getElementById('devotional-form-container').contains(e.target)) {
 return;
 }
+// Stop splash clicks from stealing focus from underlying input links
+if (document.getElementById('splash-screen').style.display !== 'none' && e.target.tagName === 'A') {
+return;
+}
 terminalInput.focus();
 });
 terminalInput.addEventListener('input', (e) => {
@@ -1532,10 +1589,14 @@ advisoryBanner.style.letterSpacing = '1px';
 advisoryBanner.style.lineHeight = '1.4';
 advisoryBanner.innerHTML = "⚠️ TERMINAL NOTICE:<br>THIS SITE IS BEST EXPERIENCED ON DESKTOP.<br>FOR COMPLETE ARCHIVAL EXTRACTION, A HARDWARE MONOSPACE DISPLAY IS STRONGLY ADVISED.";
 document.querySelector('.splash-content').appendChild(advisoryBanner);
-splashElement.addEventListener('touchstart', awakenAltar, { passive: false });
+splashElement.addEventListener('touchstart', (e) => {
+    if (e.target.tagName !== 'A') awakenAltar();
+}, { passive: false });
 } else {
 actionTextElement.innerText = "[ CLICK THE MONITORS TO AWAKEN THE CROWN ]";
-splashElement.addEventListener('click', awakenAltar);
+splashElement.addEventListener('click', (e) => {
+    if (e.target.tagName !== 'A') awakenAltar();
+});
 }
 const savedTheme = localStorage.getItem('boognish_theme');
 if (savedTheme === 'brown') {
@@ -1545,6 +1606,10 @@ const savedInitiate = localStorage.getItem('boognish_initiate_passed');
 if (savedInitiate === 'true') {
 isInitiatePassed = true;
 fileSystem['blessed_glyph.txt'] = "The eye expands. You have processed the baseline frequencies without crumbling.\nTo unlock the ancient chronicles of crude alchemy, you must decrypt the year of the oneness (GWS_1990).\nLook closely into the shadows of the registry logs.";
+}
+const savedTutorial = localStorage.getItem('boognish_tutorial_completed');
+if (savedTutorial === 'true') {
+isTutorialCompleted = true;
 }
 const savedArgStage = localStorage.getItem('boognish_arg_stage');
 if (savedArgStage) {
