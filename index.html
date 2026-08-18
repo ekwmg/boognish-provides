@@ -930,6 +930,9 @@ function executeCommand(inputStr) {
       }
       handleDecryption(args[1]);
       break;
+    case 'initiation':
+      startSurvey();
+      break;
     case 'poopship':
     case 'mutilated':
       runSludgeGlitch();
